@@ -10,6 +10,14 @@
             "StackName": "amplify-smmkinggnufrontaws-dev-232759",
             "StackId": "arn:aws:cloudformation:ap-northeast-1:883984334819:stack/amplify-smmkinggnufrontaws-dev-232759/60f16aa0-cb5e-11ea-8ca8-06fa24220ee8",
             "AmplifyAppId": "d3gkrw4px67m1e"
+        },
+        "categories": {
+            "hosting": {
+                "amplifyhosting": {
+                    "appId": "d3gkrw4px67m1e",
+                    "type": "cicd"
+                }
+            }
         }
     }
 }
