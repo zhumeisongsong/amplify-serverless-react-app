@@ -7,9 +7,7 @@ export const onCreateRoom = /* GraphQL */ `
     onCreateRoom {
       id
       title
-      content
-      price
-      rating
+      commentCount
       createdAt
       updatedAt
     }
@@ -20,9 +18,7 @@ export const onUpdateRoom = /* GraphQL */ `
     onUpdateRoom {
       id
       title
-      content
-      price
-      rating
+      commentCount
       createdAt
       updatedAt
     }
@@ -33,9 +29,7 @@ export const onDeleteRoom = /* GraphQL */ `
     onDeleteRoom {
       id
       title
-      content
-      price
-      rating
+      commentCount
       createdAt
       updatedAt
     }

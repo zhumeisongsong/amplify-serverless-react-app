@@ -7,9 +7,7 @@ export const getRoom = /* GraphQL */ `
     getRoom(id: $id) {
       id
       title
-      content
-      price
-      rating
+      commentCount
       createdAt
       updatedAt
     }
@@ -25,9 +23,7 @@ export const listRooms = /* GraphQL */ `
       items {
         id
         title
-        content
-        price
-        rating
+        commentCount
         createdAt
         updatedAt
       }
