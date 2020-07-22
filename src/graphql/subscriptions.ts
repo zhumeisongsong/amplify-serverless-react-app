@@ -6,7 +6,6 @@ export const onCreateRoom = /* GraphQL */ `
   subscription OnCreateRoom {
     onCreateRoom {
       id
-      name
       totalCount
       comments {
         items {
@@ -32,7 +31,6 @@ export const onUpdateRoom = /* GraphQL */ `
   subscription OnUpdateRoom {
     onUpdateRoom {
       id
-      name
       totalCount
       comments {
         items {
@@ -58,7 +56,6 @@ export const onDeleteRoom = /* GraphQL */ `
   subscription OnDeleteRoom {
     onDeleteRoom {
       id
-      name
       totalCount
       comments {
         items {
@@ -87,7 +84,6 @@ export const onCreateComment = /* GraphQL */ `
       roomID
       room {
         id
-        name
         totalCount
         comments {
           nextToken
@@ -113,7 +109,6 @@ export const onUpdateComment = /* GraphQL */ `
       roomID
       room {
         id
-        name
         totalCount
         comments {
           nextToken
@@ -139,7 +134,6 @@ export const onDeleteComment = /* GraphQL */ `
       roomID
       room {
         id
-        name
         totalCount
         comments {
           nextToken

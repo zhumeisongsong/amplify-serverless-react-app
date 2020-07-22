@@ -9,7 +9,6 @@ export const createRoom = /* GraphQL */ `
   ) {
     createRoom(input: $input, condition: $condition) {
       id
-      name
       totalCount
       comments {
         items {
@@ -38,7 +37,6 @@ export const updateRoom = /* GraphQL */ `
   ) {
     updateRoom(input: $input, condition: $condition) {
       id
-      name
       totalCount
       comments {
         items {
@@ -67,7 +65,6 @@ export const deleteRoom = /* GraphQL */ `
   ) {
     deleteRoom(input: $input, condition: $condition) {
       id
-      name
       totalCount
       comments {
         items {
@@ -99,7 +96,6 @@ export const createComment = /* GraphQL */ `
       roomID
       room {
         id
-        name
         totalCount
         comments {
           nextToken
@@ -128,7 +124,6 @@ export const updateComment = /* GraphQL */ `
       roomID
       room {
         id
-        name
         totalCount
         comments {
           nextToken
@@ -157,7 +152,6 @@ export const deleteComment = /* GraphQL */ `
       roomID
       room {
         id
-        name
         totalCount
         comments {
           nextToken

@@ -1,16 +1,15 @@
 type Room @model {
   id: ID!
-  name: String!
-  totalCount: Int!
-	comments: [Comment] @connection(keyName: "byRoom", fields: ["id"])
+  totalCount: Int
+  comments: [Comment] @connection(keyName: "byRoom", fields: ["id"])
 }
 
-type Comment @model @key(name: "byRoom", fields: ["roomID", "content"]){
+type Comment @model @key(name: "byRoom", fields: ["roomID", "content"]) {
   id: ID!
-	roomID: ID!	
-	room: Room @connection(fields: ["roomID"])
-	content: String!
-	userId: String!
+  roomID: ID!
+  room: Room @connection(fields: ["roomID"])
+  content: String!
+  userId: String!
   userName: String!
   userImage: String!
   isNgWord: Boolean!

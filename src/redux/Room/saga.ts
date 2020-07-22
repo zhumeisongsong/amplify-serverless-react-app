@@ -1,11 +1,11 @@
 import { put, takeEvery, all, call, fork } from 'redux-saga/effects';
 import { API, graphqlOperation } from 'aws-amplify';
 import actionTypes from './actionTypes';
-import { createRoom } from './graphql/mutations';
+import { createRoom } from '../../graphql/mutations';
 import { listRooms } from '../../graphql/queries';
 
 function* createSaga() {
-  yield takeEvery(actionTypes.CREATE, function* _({ payload }) {
+  yield takeEvery(actionTypes.CREATE, function* _({ payload }: any) {
     console.log(payload);
 
     try {

@@ -6,7 +6,6 @@ export const getRoom = /* GraphQL */ `
   query GetRoom($id: ID!) {
     getRoom(id: $id) {
       id
-      name
       totalCount
       comments {
         items {
@@ -37,7 +36,6 @@ export const listRooms = /* GraphQL */ `
     listRooms(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        name
         totalCount
         comments {
           nextToken
@@ -56,7 +54,6 @@ export const getComment = /* GraphQL */ `
       roomID
       room {
         id
-        name
         totalCount
         comments {
           nextToken
@@ -87,7 +84,6 @@ export const listComments = /* GraphQL */ `
         roomID
         room {
           id
-          name
           totalCount
           createdAt
           updatedAt

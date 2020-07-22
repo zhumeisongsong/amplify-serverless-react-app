@@ -2,7 +2,7 @@ import { handleActions } from 'redux-actions';
 import actionTypes from './actionTypes';
 
 const initialState = {
-  roomId: '',
+  roomId: 3333,
 };
 
 export default handleActions(
