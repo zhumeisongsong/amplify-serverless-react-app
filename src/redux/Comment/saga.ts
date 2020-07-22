@@ -1,134 +1,45 @@
 import { put, takeEvery, all, call, fork } from 'redux-saga/effects';
+import { API, graphqlOperation } from 'aws-amplify';
 import actionTypes from './actionTypes';
+import { createComment } from './graphql/mutations';
+import { listComments } from '../../graphql/queries';
+
 
 function* createSaga() {
-  yield takeEvery(actionTypes.CREATE_ADMIN_USER, function* _({ payload }: any) {
-    const { email, role: adminRole, organization, prefecture } = payload.data;
-
-    yield put({
-      type: loadingActionTypes.START_LOADING,
-    });
-
-    yield call(getAccessTokenSaga);
-
-    const requestBody: any = {
-      email,
-      adminRole: adminRoleList[adminRole],
-    };
-
-    if (organization) {
-      requestBody.organizationId = organization;
-    }
-
-    if (prefecture) {
-      requestBody.prefectureId = Number.parseInt(prefectureList[prefecture].id);
-    }
-
+  yield takeEvery(actionTypes.CREATE, function* _({ payload }) {
+    console.log(payload)
     try {
-      yield call(postAdminUser, requestBody);
+      const res = yield call([API, 'graphql'], graphqlOperation(createComment, {}));
 
-      yield call(sendEmailSaga, email);
-
-      yield put({
-        type: feedbackActionTypes.SHOW_SUCCESS_MESSAGE,
-        payload: { successMessage: 'createAdminUserSuccess' },
-      });
-
-      payload.callback();
     } catch (error) {
-      const errorMessage = error.status === 409 ? 'adminUserIsExistError' : error.error;
-
-      yield put({
-        type: feedbackActionTypes.SHOW_ERROR_MESSAGE,
-        payload: {
-          errorCode: error.status,
-          errorMessage: errorMessage
-        }
-      });
+      console.log(error)
     }
-
-    yield put({
-      type: loadingActionTypes.END_LOADING,
-    });
   });
 }
 
 function* getSaga() {
-  yield takeEvery(actionTypes.GET_ADMIN_USERS, function* _() {
-    yield put({
-      type: loadingActionTypes.START_LOADING,
-    });
-
-    yield call(getAccessTokenSaga);
-
+  yield takeEvery(actionTypes.GET, function* _() {
     try {
-      const res = yield call(getAdminUsers);
+      const res = yield call([API, 'graphql'], graphqlOperation(listComments));
 
-      const data = res.data.map((item: any) => {
-        return {
-          ...item,
-          createdAt: item.createdAt ? item.createdAt._seconds : null
-        }
-      })
+      console.log(res);
 
       yield put({
-        type: actionTypes.GET_ADMIN_USERS_SUCCESS,
+        type: actionTypes.GET_SUCCESS,
         payload: {
           listData: data,
         },
       });
     } catch (error) {
-      yield put({
-        type: feedbackActionTypes.SHOW_ERROR_MESSAGE,
-        payload: { errorCode: error.status, errorMessage: error.error },
-      });
+      console.log(error)
     }
-
-    yield put({
-      type: loadingActionTypes.END_LOADING,
-    });
   });
 }
 
-function* deleteSaga() {
-  yield takeEvery(actionTypes.DELETE_ADMIN_USER, function* _({
-    payload,
-  }: {
-    type: string;
-    payload: { id: string };
-  }) {
-    yield put({ type: loadingActionTypes.START_LOADING });
-
-    yield call(getAccessTokenSaga);
-
-    try {
-      yield call(deleteAdminUser, payload);
-
-      yield put({ type: actionTypes.DELETE_ADMIN_USER_SUCCESS });
-
-      yield put({
-        type: feedbackActionTypes.SHOW_SUCCESS_MESSAGE,
-        payload: { successMessage: 'deleteSuccess' },
-      });
-
-      yield put({
-        type: actionTypes.GET_ADMIN_USERS,
-      });
-    } catch (error) {
-      yield put({
-        type: feedbackActionTypes.SHOW_ERROR_MESSAGE,
-        payload: { errorCode: error.status, errorMessage: error.error },
-      });
-    }
-
-    yield put({ type: loadingActionTypes.END_LOADING });
-  });
-}
 
 export default function* rootSaga() {
   yield all([
     fork(createSaga),
     fork(getSaga),
-    fork(deleteSaga),
   ]);
 }

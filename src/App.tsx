@@ -6,18 +6,17 @@ import Amplify, { API, graphqlOperation } from 'aws-amplify';
 import awsconfig from './aws-exports';
 import { store } from './redux/store';
 import { createRoom, updateRoom, deleteRoom } from './graphql/mutations';
-import { listRooms } from './graphql/queries';
 
 Amplify.configure(awsconfig);
 
 function App() {
   return (
     <Provider store={store}>
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-      </header>
-    </div>
+      <div className="App">
+        <header className="App-header">
+          <img src={logo} className="App-logo" alt="logo" />
+        </header>
+      </div>
     </Provider>
   );
 }

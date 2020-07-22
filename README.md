@@ -43,11 +43,9 @@ You can learn more in the [Create React App documentation](https://facebook.gith
 
 To learn React, check out the [React documentation](https://reactjs.org/).
 
-
 ## Learn More
 
 https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.htmlaws configure get
-
 
 Adding backend environment dev to AWS Amplify Console app: d3gkrw4px67m1e
 
@@ -61,7 +59,7 @@ aws configure set region ap-northeast-1 --profile appSyncUser
 aws configure list
 aws configure get region --profile appSyncUser
 
-amplify remove api  postComment
+amplify remove api postComment
 
 which aws
 aws --version
@@ -70,3 +68,4 @@ https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2-mac.html#cliv2-ma
 
 https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html
 
+https://github.com/aws-amplify/amplify-js/issues/3703
