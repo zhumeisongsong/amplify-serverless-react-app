@@ -1,23 +1,15 @@
 {
     "dev": {
         "awscloudformation": {
-            "AuthRoleName": "amplify-smmkinggnufrontaws-dev-232759-authRole",
-            "UnauthRoleArn": "arn:aws:iam::883984334819:role/amplify-smmkinggnufrontaws-dev-232759-unauthRole",
-            "AuthRoleArn": "arn:aws:iam::883984334819:role/amplify-smmkinggnufrontaws-dev-232759-authRole",
+            "AuthRoleName": "amplify-serverlessapp-dev-204209-authRole",
+            "UnauthRoleArn": "arn:aws:iam::883984334819:role/amplify-serverlessapp-dev-204209-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::883984334819:role/amplify-serverlessapp-dev-204209-authRole",
             "Region": "ap-northeast-1",
-            "DeploymentBucketName": "amplify-smmkinggnufrontaws-dev-232759-deployment",
-            "UnauthRoleName": "amplify-smmkinggnufrontaws-dev-232759-unauthRole",
-            "StackName": "amplify-smmkinggnufrontaws-dev-232759",
-            "StackId": "arn:aws:cloudformation:ap-northeast-1:883984334819:stack/amplify-smmkinggnufrontaws-dev-232759/60f16aa0-cb5e-11ea-8ca8-06fa24220ee8",
-            "AmplifyAppId": "d3gkrw4px67m1e"
-        },
-        "categories": {
-            "hosting": {
-                "amplifyhosting": {
-                    "appId": "d3gkrw4px67m1e",
-                    "type": "cicd"
-                }
-            }
+            "DeploymentBucketName": "amplify-serverlessapp-dev-204209-deployment",
+            "UnauthRoleName": "amplify-serverlessapp-dev-204209-unauthRole",
+            "StackName": "amplify-serverlessapp-dev-204209",
+            "StackId": "arn:aws:cloudformation:ap-northeast-1:883984334819:stack/amplify-serverlessapp-dev-204209/60fd2f90-cc10-11ea-acc6-0693e5f01c30",
+            "AmplifyAppId": "d1tjy0eeq8rhl5"
         }
     }
 }
