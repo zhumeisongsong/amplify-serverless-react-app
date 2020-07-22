@@ -16,6 +16,11 @@ export const createRoom = /* GraphQL */ `
           id
           roomID
           content
+          userId
+          userName
+          userImage
+          isNgWord
+          isOfficialAccount
           createdAt
           updatedAt
         }
@@ -40,6 +45,11 @@ export const updateRoom = /* GraphQL */ `
           id
           roomID
           content
+          userId
+          userName
+          userImage
+          isNgWord
+          isOfficialAccount
           createdAt
           updatedAt
         }
@@ -64,6 +74,11 @@ export const deleteRoom = /* GraphQL */ `
           id
           roomID
           content
+          userId
+          userName
+          userImage
+          isNgWord
+          isOfficialAccount
           createdAt
           updatedAt
         }
@@ -93,6 +108,11 @@ export const createComment = /* GraphQL */ `
         updatedAt
       }
       content
+      userId
+      userName
+      userImage
+      isNgWord
+      isOfficialAccount
       createdAt
       updatedAt
     }
@@ -117,6 +137,11 @@ export const updateComment = /* GraphQL */ `
         updatedAt
       }
       content
+      userId
+      userName
+      userImage
+      isNgWord
+      isOfficialAccount
       createdAt
       updatedAt
     }
@@ -141,6 +166,11 @@ export const deleteComment = /* GraphQL */ `
         updatedAt
       }
       content
+      userId
+      userName
+      userImage
+      isNgWord
+      isOfficialAccount
       createdAt
       updatedAt
     }

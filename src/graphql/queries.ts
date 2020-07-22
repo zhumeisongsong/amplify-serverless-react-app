@@ -13,6 +13,11 @@ export const getRoom = /* GraphQL */ `
           id
           roomID
           content
+          userId
+          userName
+          userImage
+          isNgWord
+          isOfficialAccount
           createdAt
           updatedAt
         }
@@ -60,6 +65,11 @@ export const getComment = /* GraphQL */ `
         updatedAt
       }
       content
+      userId
+      userName
+      userImage
+      isNgWord
+      isOfficialAccount
       createdAt
       updatedAt
     }
@@ -83,6 +93,11 @@ export const listComments = /* GraphQL */ `
           updatedAt
         }
         content
+        userId
+        userName
+        userImage
+        isNgWord
+        isOfficialAccount
         createdAt
         updatedAt
       }

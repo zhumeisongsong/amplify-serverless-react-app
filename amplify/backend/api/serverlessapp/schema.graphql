@@ -9,5 +9,10 @@ type Comment @model @key(name: "byRoom", fields: ["roomID", "content"]){
   id: ID!
 	roomID: ID!	
 	room: Room @connection(fields: ["roomID"])
-	content: String!	
+	content: String!
+	userId: String!
+  userName: String!
+  userImage: String!
+  isNgWord: Boolean!
+  isOfficialAccount: Boolean!
 }
