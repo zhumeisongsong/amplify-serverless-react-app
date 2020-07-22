@@ -9,10 +9,18 @@ export const createRoom = /* GraphQL */ `
   ) {
     createRoom(input: $input, condition: $condition) {
       id
-      title
-      content
-      price
-      rating
+      name
+      totalCount
+      comments {
+        items {
+          id
+          roomID
+          content
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -25,10 +33,18 @@ export const updateRoom = /* GraphQL */ `
   ) {
     updateRoom(input: $input, condition: $condition) {
       id
-      title
-      content
-      price
-      rating
+      name
+      totalCount
+      comments {
+        items {
+          id
+          roomID
+          content
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -41,10 +57,90 @@ export const deleteRoom = /* GraphQL */ `
   ) {
     deleteRoom(input: $input, condition: $condition) {
       id
-      title
+      name
+      totalCount
+      comments {
+        items {
+          id
+          roomID
+          content
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createComment = /* GraphQL */ `
+  mutation CreateComment(
+    $input: CreateCommentInput!
+    $condition: ModelCommentConditionInput
+  ) {
+    createComment(input: $input, condition: $condition) {
+      id
+      roomID
+      room {
+        id
+        name
+        totalCount
+        comments {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
       content
-      price
-      rating
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateComment = /* GraphQL */ `
+  mutation UpdateComment(
+    $input: UpdateCommentInput!
+    $condition: ModelCommentConditionInput
+  ) {
+    updateComment(input: $input, condition: $condition) {
+      id
+      roomID
+      room {
+        id
+        name
+        totalCount
+        comments {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      content
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteComment = /* GraphQL */ `
+  mutation DeleteComment(
+    $input: DeleteCommentInput!
+    $condition: ModelCommentConditionInput
+  ) {
+    deleteComment(input: $input, condition: $condition) {
+      id
+      roomID
+      room {
+        id
+        name
+        totalCount
+        comments {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      content
       createdAt
       updatedAt
     }

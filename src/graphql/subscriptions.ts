@@ -6,10 +6,18 @@ export const onCreateRoom = /* GraphQL */ `
   subscription OnCreateRoom {
     onCreateRoom {
       id
-      title
-      content
-      price
-      rating
+      name
+      totalCount
+      comments {
+        items {
+          id
+          roomID
+          content
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -19,10 +27,18 @@ export const onUpdateRoom = /* GraphQL */ `
   subscription OnUpdateRoom {
     onUpdateRoom {
       id
-      title
-      content
-      price
-      rating
+      name
+      totalCount
+      comments {
+        items {
+          id
+          roomID
+          content
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -32,10 +48,81 @@ export const onDeleteRoom = /* GraphQL */ `
   subscription OnDeleteRoom {
     onDeleteRoom {
       id
-      title
+      name
+      totalCount
+      comments {
+        items {
+          id
+          roomID
+          content
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateComment = /* GraphQL */ `
+  subscription OnCreateComment {
+    onCreateComment {
+      id
+      roomID
+      room {
+        id
+        name
+        totalCount
+        comments {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
       content
-      price
-      rating
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateComment = /* GraphQL */ `
+  subscription OnUpdateComment {
+    onUpdateComment {
+      id
+      roomID
+      room {
+        id
+        name
+        totalCount
+        comments {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      content
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteComment = /* GraphQL */ `
+  subscription OnDeleteComment {
+    onDeleteComment {
+      id
+      roomID
+      room {
+        id
+        name
+        totalCount
+        comments {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      content
       createdAt
       updatedAt
     }

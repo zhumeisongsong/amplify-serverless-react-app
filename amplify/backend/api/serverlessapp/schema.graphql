@@ -1,5 +1,13 @@
 type Room @model {
-	id: ID!
-	title: String!
-	totalCount: Int
+  id: ID!
+  name: String!
+  totalCount: Int!
+	comments: [Comment] @connection(keyName: "byRoom", fields: ["id"])
+}
+
+type Comment @model @key(name: "byRoom", fields: ["roomID", "content"]){
+  id: ID!
+	roomID: ID!	
+	room: Room @connection(fields: ["roomID"])
+	content: String!	
 }
