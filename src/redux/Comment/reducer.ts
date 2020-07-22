@@ -1,21 +1,37 @@
 import { handleActions } from 'redux-actions';
 import actionTypes from './actionTypes';
 
-const initialState = {
+const initialState: any = {
   listData: [],
-  isOrganizationLoading: false,
+  pagePrev: 1,
+  loadNew: true,
 };
 
 export default handleActions(
   {
-    [actionTypes.GET_ADMIN_USERS_SUCCESS]: (state, { payload: { listData } }) => ({
+    [actionTypes.GET_SUCCESS]: (
+      state,
+      { payload: { listData, pagePrev } }
+    ) => ({
       ...state,
+      pagePrev,
       listData,
     }),
-    [actionTypes.CHANGE_ORGANIZATION_LOADING_STATUS]: (state, { payload: { isOrganizationLoading } }) => ({
+    [actionTypes.TOGGLE_LOAD_NEW_SUCCESS]: (
+      state,
+      { payload: { loadNew } }
+    ) => ({
       ...state,
-      isOrganizationLoading,
-    })
+      loadNew,
+    }),
+    [actionTypes.CREATE_SUCCESS]: (state, { payload: { data } }) => {
+      const listData = state.listData.push(data)
+
+      return {
+        ...state,
+        listData
+      }
+    },
   },
   initialState
 );

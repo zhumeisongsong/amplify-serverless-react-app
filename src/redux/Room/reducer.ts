@@ -2,20 +2,15 @@ import { handleActions } from 'redux-actions';
 import actionTypes from './actionTypes';
 
 const initialState = {
-  listData: [],
-  isOrganizationLoading: false,
+  roomId: '',
 };
 
 export default handleActions(
   {
-    [actionTypes.GET_ADMIN_USERS_SUCCESS]: (state, { payload: { listData } }) => ({
+    [actionTypes.GET_SUCCESS]: (state, { payload: { roomId } }) => ({
       ...state,
-      listData,
+      roomId,
     }),
-    [actionTypes.CHANGE_ORGANIZATION_LOADING_STATUS]: (state, { payload: { isOrganizationLoading } }) => ({
-      ...state,
-      isOrganizationLoading,
-    })
   },
   initialState
 );
