@@ -24,7 +24,7 @@ export const PageContainer = styled.div`
     width: 100%;
     .title {
       width: 100%;
-      padding: 0 0 3%;
+      padding: 0 0 1.5%;
       font-size: 24px;
       font-family: NotoSansCJKjp-Bold, NotoSansCJKjp;
       font-weight: bold;
@@ -58,14 +58,15 @@ export const PageContainer = styled.div`
   }
 
   .video {
-    width: 100%;
+    width: 75%;
     height: 100%;
     background-color: #171616;
   }
 
   .comment {
     position: relative;
-    width: 270px;
+    width: 25%;
+    min-width: 240px;
     margin-left: 8px;
     border: 1px solid rgba(0, 0, 0, 0.12);
     border-radius: 4px;

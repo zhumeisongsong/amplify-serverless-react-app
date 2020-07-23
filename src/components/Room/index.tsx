@@ -2,6 +2,6 @@ import React from 'react';
 
 export default () => {
   return (
-    <div>room</div>
+    <div>コメント数：</div>
   )
 }
