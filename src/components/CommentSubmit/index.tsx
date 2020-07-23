@@ -1,11 +1,11 @@
 import React from 'react';
 import { Form, Input, Button } from 'antd';
-
 import { CommentForm } from './style';
+import { TopProps } from '../../containers/Top';
 
-export default ({ create }: any) => {
+export default ({ createComment }: TopProps) => {
   const onFinish = (values: any) => {
-    create(values);
+    createComment(values);
   };
   return (
     <CommentForm>
@@ -17,7 +17,6 @@ export default ({ create }: any) => {
         onFinish={onFinish}
       >
         <Form.Item
-          label="content"
           name="content"
           rules={[{ required: true }]}
         >

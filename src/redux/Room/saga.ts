@@ -1,6 +1,7 @@
 import { put, takeEvery, all, call, fork, select } from 'redux-saga/effects';
 import { API, graphqlOperation } from 'aws-amplify';
 import actionTypes from './actionTypes';
+import commentActionTypes from '../Comment/actionTypes';
 import { createRoom } from '../../graphql/mutations';
 import { getRoom } from '../../graphql/queries';
 
@@ -35,10 +36,17 @@ function* getSaga() {
         graphqlOperation(getRoom, { id })
       );
 
+      console.log(res)
+
       if (res.data.getRoom) {
         yield put({
           type: actionTypes.GET_SUCCESS,
         });
+
+        yield put({
+          type: commentActionTypes.LIST
+        });
+
       } else {
         yield put({
           type: actionTypes.CREATE,

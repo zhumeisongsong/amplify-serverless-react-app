@@ -1,11 +1,12 @@
 import React from 'react';
 import { CommentList } from './style';
+import { TopProps } from '../../containers/Top';
 
-export default ({ list, data }: any) => {
+export default ({ listComments, comments, loadNew }: TopProps) => {
   return (
     <CommentList>
       <ul>
-        {data && data.map((item: any) => (
+        {comments.map((item: any) => (
           <li key={item.id}>
             <div className='image' style={{}} />
             <div className="text">
