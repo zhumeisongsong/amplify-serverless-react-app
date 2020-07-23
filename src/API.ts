@@ -57,6 +57,7 @@ export type CreateCommentInput = {
   userName: string,
   userImage: string,
   isNgWord: boolean,
+  createdAt?: string | null,
   isOfficialAccount: boolean,
 };
 
@@ -67,6 +68,7 @@ export type ModelCommentConditionInput = {
   userName?: ModelStringInput | null,
   userImage?: ModelStringInput | null,
   isNgWord?: ModelBooleanInput | null,
+  createdAt?: ModelStringInput | null,
   isOfficialAccount?: ModelBooleanInput | null,
   and?: Array< ModelCommentConditionInput | null > | null,
   or?: Array< ModelCommentConditionInput | null > | null,
@@ -130,6 +132,7 @@ export type UpdateCommentInput = {
   userName?: string | null,
   userImage?: string | null,
   isNgWord?: boolean | null,
+  createdAt?: string | null,
   isOfficialAccount?: boolean | null,
 };
 
@@ -153,11 +156,28 @@ export type ModelCommentFilterInput = {
   userName?: ModelStringInput | null,
   userImage?: ModelStringInput | null,
   isNgWord?: ModelBooleanInput | null,
+  createdAt?: ModelStringInput | null,
   isOfficialAccount?: ModelBooleanInput | null,
   and?: Array< ModelCommentFilterInput | null > | null,
   or?: Array< ModelCommentFilterInput | null > | null,
   not?: ModelCommentFilterInput | null,
 };
+
+export type ModelStringKeyConditionInput = {
+  eq?: string | null,
+  le?: string | null,
+  lt?: string | null,
+  ge?: string | null,
+  gt?: string | null,
+  between?: Array< string | null > | null,
+  beginsWith?: string | null,
+};
+
+export enum ModelSortDirection {
+  ASC = "ASC",
+  DESC = "DESC",
+}
+
 
 export type CreateRoomMutationVariables = {
   input: CreateRoomInput,
@@ -180,8 +200,8 @@ export type CreateRoomMutation = {
         userName: string,
         userImage: string,
         isNgWord: boolean,
-        isOfficialAccount: boolean,
         createdAt: string,
+        isOfficialAccount: boolean,
         updatedAt: string,
       } | null > | null,
       nextToken: string | null,
@@ -212,8 +232,8 @@ export type UpdateRoomMutation = {
         userName: string,
         userImage: string,
         isNgWord: boolean,
-        isOfficialAccount: boolean,
         createdAt: string,
+        isOfficialAccount: boolean,
         updatedAt: string,
       } | null > | null,
       nextToken: string | null,
@@ -244,8 +264,8 @@ export type DeleteRoomMutation = {
         userName: string,
         userImage: string,
         isNgWord: boolean,
-        isOfficialAccount: boolean,
         createdAt: string,
+        isOfficialAccount: boolean,
         updatedAt: string,
       } | null > | null,
       nextToken: string | null,
@@ -281,8 +301,8 @@ export type CreateCommentMutation = {
     userName: string,
     userImage: string,
     isNgWord: boolean,
-    isOfficialAccount: boolean,
     createdAt: string,
+    isOfficialAccount: boolean,
     updatedAt: string,
   } | null,
 };
@@ -313,8 +333,8 @@ export type UpdateCommentMutation = {
     userName: string,
     userImage: string,
     isNgWord: boolean,
-    isOfficialAccount: boolean,
     createdAt: string,
+    isOfficialAccount: boolean,
     updatedAt: string,
   } | null,
 };
@@ -345,8 +365,8 @@ export type DeleteCommentMutation = {
     userName: string,
     userImage: string,
     isNgWord: boolean,
-    isOfficialAccount: boolean,
     createdAt: string,
+    isOfficialAccount: boolean,
     updatedAt: string,
   } | null,
 };
@@ -371,8 +391,8 @@ export type GetRoomQuery = {
         userName: string,
         userImage: string,
         isNgWord: boolean,
-        isOfficialAccount: boolean,
         createdAt: string,
+        isOfficialAccount: boolean,
         updatedAt: string,
       } | null > | null,
       nextToken: string | null,
@@ -431,8 +451,8 @@ export type GetCommentQuery = {
     userName: string,
     userImage: string,
     isNgWord: boolean,
-    isOfficialAccount: boolean,
     createdAt: string,
+    isOfficialAccount: boolean,
     updatedAt: string,
   } | null,
 };
@@ -462,8 +482,44 @@ export type ListCommentsQuery = {
       userName: string,
       userImage: string,
       isNgWord: boolean,
-      isOfficialAccount: boolean,
       createdAt: string,
+      isOfficialAccount: boolean,
+      updatedAt: string,
+    } | null > | null,
+    nextToken: string | null,
+  } | null,
+};
+
+export type GetCommentsByRoomQueryVariables = {
+  roomID?: string | null,
+  createdAt?: ModelStringKeyConditionInput | null,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelCommentFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type GetCommentsByRoomQuery = {
+  getCommentsByRoom:  {
+    __typename: "ModelCommentConnection",
+    items:  Array< {
+      __typename: "Comment",
+      id: string,
+      roomID: string,
+      room:  {
+        __typename: "Room",
+        id: string,
+        totalCount: number | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      content: string,
+      userId: string,
+      userName: string,
+      userImage: string,
+      isNgWord: boolean,
+      createdAt: string,
+      isOfficialAccount: boolean,
       updatedAt: string,
     } | null > | null,
     nextToken: string | null,
@@ -486,8 +542,8 @@ export type OnCreateRoomSubscription = {
         userName: string,
         userImage: string,
         isNgWord: boolean,
-        isOfficialAccount: boolean,
         createdAt: string,
+        isOfficialAccount: boolean,
         updatedAt: string,
       } | null > | null,
       nextToken: string | null,
@@ -513,8 +569,8 @@ export type OnUpdateRoomSubscription = {
         userName: string,
         userImage: string,
         isNgWord: boolean,
-        isOfficialAccount: boolean,
         createdAt: string,
+        isOfficialAccount: boolean,
         updatedAt: string,
       } | null > | null,
       nextToken: string | null,
@@ -540,8 +596,8 @@ export type OnDeleteRoomSubscription = {
         userName: string,
         userImage: string,
         isNgWord: boolean,
-        isOfficialAccount: boolean,
         createdAt: string,
+        isOfficialAccount: boolean,
         updatedAt: string,
       } | null > | null,
       nextToken: string | null,
@@ -572,8 +628,8 @@ export type OnCreateCommentSubscription = {
     userName: string,
     userImage: string,
     isNgWord: boolean,
-    isOfficialAccount: boolean,
     createdAt: string,
+    isOfficialAccount: boolean,
     updatedAt: string,
   } | null,
 };
@@ -599,8 +655,8 @@ export type OnUpdateCommentSubscription = {
     userName: string,
     userImage: string,
     isNgWord: boolean,
-    isOfficialAccount: boolean,
     createdAt: string,
+    isOfficialAccount: boolean,
     updatedAt: string,
   } | null,
 };
@@ -626,8 +682,8 @@ export type OnDeleteCommentSubscription = {
     userName: string,
     userImage: string,
     isNgWord: boolean,
-    isOfficialAccount: boolean,
     createdAt: string,
+    isOfficialAccount: boolean,
     updatedAt: string,
   } | null,
 };

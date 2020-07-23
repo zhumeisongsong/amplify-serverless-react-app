@@ -2,7 +2,7 @@ import { put, takeEvery, all, call, fork, select } from 'redux-saga/effects';
 import { API, graphqlOperation } from 'aws-amplify';
 import actionTypes from './actionTypes';
 import { createComment } from '../../graphql/mutations';
-import { listComments } from '../../graphql/queries';
+import { getCommentsByRoom } from '../../graphql/queries';
 import { CreateCommentInput } from '../../API';
 
 function* createSaga() {
@@ -57,21 +57,19 @@ function* listSaga() {
       const filter = {};
       const res = yield call(
         [API, 'graphql'],
-        graphqlOperation(listComments, {
-          filter: {
-            roomID: {
-              eq: roomID,
-            },
-          },
+        graphqlOperation(getCommentsByRoom, {
+          limit: 50,
+          roomID,
+          sortDirection: 'DESC',
         })
       );
 
-      console.log(res.data);
+      console.log(res.data.getCommentsByRoom.items);
 
       yield put({
         type: actionTypes.LIST_SUCCESS,
         payload: {
-          listData: [],
+          listData: res.data.getCommentsByRoom.items.reverse(),
         },
       });
     } catch (error) {

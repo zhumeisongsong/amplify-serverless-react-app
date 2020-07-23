@@ -16,8 +16,8 @@ export const getRoom = /* GraphQL */ `
           userName
           userImage
           isNgWord
-          isOfficialAccount
           createdAt
+          isOfficialAccount
           updatedAt
         }
         nextToken
@@ -66,8 +66,8 @@ export const getComment = /* GraphQL */ `
       userName
       userImage
       isNgWord
-      isOfficialAccount
       createdAt
+      isOfficialAccount
       updatedAt
     }
   }
@@ -93,8 +93,47 @@ export const listComments = /* GraphQL */ `
         userName
         userImage
         isNgWord
-        isOfficialAccount
         createdAt
+        isOfficialAccount
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getCommentsByRoom = /* GraphQL */ `
+  query GetCommentsByRoom(
+    $roomID: ID
+    $createdAt: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelCommentFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    getCommentsByRoom(
+      roomID: $roomID
+      createdAt: $createdAt
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        roomID
+        room {
+          id
+          totalCount
+          createdAt
+          updatedAt
+        }
+        content
+        userId
+        userName
+        userImage
+        isNgWord
+        createdAt
+        isOfficialAccount
         updatedAt
       }
       nextToken

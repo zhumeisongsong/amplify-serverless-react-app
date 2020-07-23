@@ -9,7 +9,7 @@ const initialState: any = {
 
 export default handleActions(
   {
-    [actionTypes.GET_SUCCESS]: (
+    [actionTypes.LIST_SUCCESS]: (
       state,
       { payload: { listData, pagePrev } }
     ) => ({

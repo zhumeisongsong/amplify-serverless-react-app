@@ -16,8 +16,8 @@ export const onCreateRoom = /* GraphQL */ `
           userName
           userImage
           isNgWord
-          isOfficialAccount
           createdAt
+          isOfficialAccount
           updatedAt
         }
         nextToken
@@ -41,8 +41,8 @@ export const onUpdateRoom = /* GraphQL */ `
           userName
           userImage
           isNgWord
-          isOfficialAccount
           createdAt
+          isOfficialAccount
           updatedAt
         }
         nextToken
@@ -66,8 +66,8 @@ export const onDeleteRoom = /* GraphQL */ `
           userName
           userImage
           isNgWord
-          isOfficialAccount
           createdAt
+          isOfficialAccount
           updatedAt
         }
         nextToken
@@ -96,8 +96,8 @@ export const onCreateComment = /* GraphQL */ `
       userName
       userImage
       isNgWord
-      isOfficialAccount
       createdAt
+      isOfficialAccount
       updatedAt
     }
   }
@@ -121,8 +121,8 @@ export const onUpdateComment = /* GraphQL */ `
       userName
       userImage
       isNgWord
-      isOfficialAccount
       createdAt
+      isOfficialAccount
       updatedAt
     }
   }
@@ -146,8 +146,8 @@ export const onDeleteComment = /* GraphQL */ `
       userName
       userImage
       isNgWord
-      isOfficialAccount
       createdAt
+      isOfficialAccount
       updatedAt
     }
   }

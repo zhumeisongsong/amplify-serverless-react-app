@@ -4,7 +4,13 @@ type Room @model {
   comments: [Comment] @connection(keyName: "byRoom", fields: ["id"])
 }
 
-type Comment @model @key(name: "byRoom", fields: ["roomID", "content"]) {
+type Comment
+  @model
+  @key(
+    name: "byRoom"
+    fields: ["roomID", "createdAt"]
+    queryField: "getCommentsByRoom"
+  ) {
   id: ID!
   roomID: ID!
   room: Room @connection(fields: ["roomID"])
@@ -13,5 +19,6 @@ type Comment @model @key(name: "byRoom", fields: ["roomID", "content"]) {
   userName: String!
   userImage: String!
   isNgWord: Boolean!
+  createdAt: String!
   isOfficialAccount: Boolean!
 }
