@@ -43,6 +43,7 @@ export const PageContainer = styled.div`
   .comment-video-container {
     .wrapper {
       flex-direction: row;
+      height: 66vh;
     }
   }
   .description-content {
@@ -58,7 +59,7 @@ export const PageContainer = styled.div`
 
   .video {
     width: 100%;
-    padding-top: 56%;
+    height: 100%;
     background-color: #171616;
   }
 
