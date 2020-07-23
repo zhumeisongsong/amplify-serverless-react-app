@@ -17,15 +17,15 @@ function* createSaga() {
   });
 }
 
-function* getSaga() {
-  yield takeEvery(actionTypes.GET, function* _() {
+function* listSaga() {
+  yield takeEvery(actionTypes.LIST, function* _() {
     try {
       const res = yield call([API, 'graphql'], graphqlOperation(listComments));
 
       console.log(res);
 
       yield put({
-        type: actionTypes.GET_SUCCESS,
+        type: actionTypes.LIST_SUCCESS,
         payload: {
           listData: res,
         },
@@ -40,6 +40,6 @@ function* getSaga() {
 export default function* rootSaga() {
   yield all([
     fork(createSaga),
-    fork(getSaga),
+    fork(listSaga),
   ]);
 }

@@ -1,16 +1,13 @@
 import { handleActions } from 'redux-actions';
-import actionTypes from './actionTypes';
+
+const info = JSON.parse(sessionStorage.getItem('info') || '');
 
 const initialState = {
-  roomId: 3333,
+  id: info.roomId || '',
 };
 
 export default handleActions(
   {
-    [actionTypes.GET_SUCCESS]: (state, { payload: { roomId } }) => ({
-      ...state,
-      roomId,
-    }),
   },
   initialState
 );

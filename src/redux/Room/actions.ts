@@ -5,6 +5,5 @@ export const createRoomAction = createAction(actionTypes.CREATE);
 
 export const getRoomAction = createAction(actionTypes.GET);
 
-export const listRoomsAction = createAction(actionTypes.LIST);
 
 

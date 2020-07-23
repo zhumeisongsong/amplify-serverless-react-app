@@ -1,41 +1,52 @@
-import { put, takeEvery, all, call, fork } from 'redux-saga/effects';
+import { put, takeEvery, all, call, fork, select } from 'redux-saga/effects';
 import { API, graphqlOperation } from 'aws-amplify';
 import actionTypes from './actionTypes';
 import { createRoom } from '../../graphql/mutations';
-import { listRooms } from '../../graphql/queries';
+import { getRoom } from '../../graphql/queries';
 
 function* createSaga() {
   yield takeEvery(actionTypes.CREATE, function* _({ payload }: any) {
-    console.log(payload);
+    const { id }: any = payload;
 
     try {
-      const res = yield call([API, 'graphql'], graphqlOperation(createRoom, {}));
+      const res = yield call(
+        [API, 'graphql'],
+        graphqlOperation(createRoom, { input: { id, totalCount: 0 } })
+      );
 
-      yield put({
-        type: actionTypes.CREATE_SUCCESS,
-        payload: {},
-      });
+      if (res.data.createRoom) {
+        yield put({
+          type: actionTypes.CREATE_SUCCESS,
+        });
+      }
     } catch (error) {
-      console.log(error);
+      console.log(error.errors[0].message);
     }
   });
 }
 
 function* getSaga() {
   yield takeEvery(actionTypes.GET, function* _() {
+    const id = yield select((state) => state.room.id);
+
     try {
-      const res = yield call([API, 'graphql'], graphqlOperation(listRooms));
+      const res = yield call(
+        [API, 'graphql'],
+        graphqlOperation(getRoom, { id })
+      );
 
-      console.log(res);
-
-      yield put({
-        type: actionTypes.GET_SUCCESS,
-        payload: {
-          listData: res,
-        },
-      });
+      if (res.data.getRoom) {
+        yield put({
+          type: actionTypes.GET_SUCCESS,
+        });
+      } else {
+        yield put({
+          type: actionTypes.CREATE,
+          payload: { id }
+        });
+      }
     } catch (error) {
-      console.log(error);
+      console.log(error.errors[0].message);
     }
   });
 }
