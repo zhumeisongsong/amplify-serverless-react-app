@@ -25,12 +25,12 @@ export default handleActions(
       loadNew,
     }),
     [actionTypes.CREATE_SUCCESS]: (state, { payload: { data } }) => {
-      const listData = state.listData.push(data)
+      const listData = [...state.listData, data];
 
       return {
         ...state,
-        listData
-      }
+        listData,
+      };
     },
   },
   initialState

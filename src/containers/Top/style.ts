@@ -63,6 +63,7 @@ export const PageContainer = styled.div`
   }
 
   .comment {
+    position: relative;
     width: 270px;
     margin-left: 8px;
     border: 1px solid rgba(0, 0, 0, 0.12);

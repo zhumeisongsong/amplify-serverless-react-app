@@ -3,26 +3,30 @@ import { API, graphqlOperation } from 'aws-amplify';
 import actionTypes from './actionTypes';
 import { createComment } from '../../graphql/mutations';
 import { listComments } from '../../graphql/queries';
+import { CreateCommentInput } from '../../API';
 
 
 function* createSaga() {
-  yield takeEvery(actionTypes.CREATE, function* _({ payload }: any) {
-    console.log(payload)
+  yield takeEvery(actionTypes.CREATE, function* _({ payload }: { type: string, payload: { content: string } }) {
     const { content } = payload;
+    const roomID: string = yield select(state => state.room.id);
     const { userName, userId, userImage, isOfficialAccount } = yield select(state => state.user);
-    const data = { content: '44444', userName, userId, userImage, isOfficialAccount };
+    const data: CreateCommentInput = { content, userName, userId, userImage, isOfficialAccount, roomID, isNgWord: false };
 
     try {
-      const res = yield call([API, 'graphql'], graphqlOperation(createComment, data));
+      const res = yield call([API, 'graphql'], graphqlOperation(createComment, { input: data }));
 
-      yield put({
-        type: actionTypes.CREATE_SUCCESS,
-        payload: {
-          data
-        }
-      })
+      if (res.data.createComment) {
+        yield put({
+          type: actionTypes.CREATE_SUCCESS,
+          payload: {
+            data: res.data.createComment
+          }
+        })
+      }
+
     } catch (error) {
-      console.log(error)
+      console.log(error.errors[0].message);
     }
   });
 }
@@ -41,7 +45,7 @@ function* listSaga() {
         },
       });
     } catch (error) {
-      console.log(error)
+      console.log(error.errors[0].message);
     }
   });
 }

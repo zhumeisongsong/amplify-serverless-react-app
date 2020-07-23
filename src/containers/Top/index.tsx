@@ -19,7 +19,7 @@ export default () => {
   const listComments = useCallback(() => dispatch(listCommentsAction()), [
     dispatch,
   ]);
-  const createComment = useCallback(() => dispatch(createCommentAction()), [
+  const createComment = useCallback((values) => dispatch(createCommentAction(values)), [
     dispatch,
   ]);
 
