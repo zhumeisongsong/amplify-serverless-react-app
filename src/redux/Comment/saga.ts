@@ -24,7 +24,7 @@ function* createSaga() {
       userImage,
       isOfficialAccount,
       roomID,
-      isNgWord: false,
+      isNgWord: true,
     };
 
     try {
@@ -52,6 +52,9 @@ function* createSaga() {
 function* listSaga() {
   yield takeEvery(actionTypes.LIST, function* _() {
     const roomID: string = yield select((state) => state.room.id);
+    const { userName, userId, userImage, isOfficialAccount } = yield select(
+      (state) => state.user
+    );
 
     try {
       const filter = {};
@@ -61,6 +64,23 @@ function* listSaga() {
           limit: 50,
           roomID,
           sortDirection: 'DESC',
+          filter: {
+            or: [
+              {
+                isNgWord: {
+                  eq: false
+                }
+              },
+              {
+                isNgWord: {
+                  eq: true
+                },
+                userId: {
+                  eq: userId
+                }
+              }
+            ]
+          }
         })
       );
 
