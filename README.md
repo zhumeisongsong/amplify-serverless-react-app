@@ -69,3 +69,5 @@ https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2-mac.html#cliv2-ma
 https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html
 
 https://github.com/aws-amplify/amplify-js/issues/3703
+
+https://github.com/praveen001/react-clean-architecture

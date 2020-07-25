@@ -1,5 +1,13 @@
 import { handleActions } from 'redux-actions';
 import actionTypes from './actionTypes';
+import { ModelCommentConditionInput } from '../../API';
+
+
+export interface CommentState {
+  listData: ModelCommentConditionInput[];
+  pagePrev: number;
+  loadNew: boolean
+}
 
 const initialState: any = {
   listData: [],
