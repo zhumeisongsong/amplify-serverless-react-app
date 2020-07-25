@@ -5,6 +5,8 @@ import commentActionTypes from '../Comment/actionTypes';
 import { createRoom } from '../../graphql/mutations';
 import { getRoom } from '../../graphql/queries';
 
+
+
 function* createSaga() {
   yield takeEvery(actionTypes.CREATE, function* _({ payload }: any) {
     const { id }: any = payload;
@@ -42,13 +44,13 @@ function* getSaga() {
         });
 
         yield put({
-          type: commentActionTypes.LIST
+          type: commentActionTypes.LIST,
+          payload: {},
         });
-
       } else {
         yield put({
           type: actionTypes.CREATE,
-          payload: { id }
+          payload: { id },
         });
       }
     } catch (error) {

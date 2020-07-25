@@ -4,13 +4,12 @@ import { ModelCommentConditionInput } from '../../API';
 
 export interface CommentState {
   listData?: ModelCommentConditionInput[];
-  pagePrev?: number;
   loadNew?: boolean;
+  nextToken?: string;
 }
 
 const initialState: CommentState = {
   listData: [],
-  pagePrev: 1,
   loadNew: true,
 };
 
@@ -19,11 +18,10 @@ export default handleActions(
     [actionTypes.LIST_SUCCESS]: (
       state: CommentState,
       {
-        payload: { listData, pagePrev },
+        payload: { listData, nextToken },
       }: { payload: CommentState; type: string }
     ) => ({
       ...state,
-      pagePrev,
       listData,
     }),
     [actionTypes.CREATE_SUCCESS]: (

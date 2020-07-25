@@ -10,4 +10,5 @@ export default {
   LIST: 'LIST_comment',
   LIST_SUCCESS: 'LIST_SUCCESS_comment',
   TOGGLE_LOAD_NEW: 'TOGGLE_LOAD_NEW',
+  SET_SUCCESS: 'SET_SUCCESS'
 };

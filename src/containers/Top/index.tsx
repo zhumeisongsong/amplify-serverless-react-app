@@ -50,16 +50,16 @@ export default () => {
 
   useEffect(() => {
     getRoom();
-    // Subscribe to creation
-    const api: any = API.graphql(
-      graphqlOperation(subscriptions.onCreateComment)
-    );
-    const subscription = api.subscribe({
-      next: (listData: any) => {
-        const values = listData.value.data.onCreateComment;
-        setComment({ listData: [values] });
-      },
-    });
+    // // Subscribe to creation
+    // const api: any = API.graphql(
+    //   graphqlOperation(subscriptions.onCreateComment)
+    // );
+    // const subscription = api.subscribe({
+    //   next: (listData: any) => {
+    //     const values = listData.value.data.onCreateComment;
+    //     setComment({ listData: [values] });
+    //   },
+    // });
   }, [getRoom]);
 
   return (
