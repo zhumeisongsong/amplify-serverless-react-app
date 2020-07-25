@@ -3,11 +3,11 @@ import styled from 'styled-components';
 import { TopProps } from '../../containers/Top';
 import iconComment from '../../assets/images/icon-comment.svg';
 
-export default ({ totalCount }: TopProps) => {
+export default ({ commentTotalCount }: TopProps) => {
   return (
     <CommentCount>
       <img src={iconComment} alt="comment" />
-      コメント数： {totalCount}
+      コメント数： {commentTotalCount}
     </CommentCount>
   )
 }

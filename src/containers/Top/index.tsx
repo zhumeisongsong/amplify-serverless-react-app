@@ -13,12 +13,12 @@ export interface TopProps {
   loadNew?: boolean;
   listComments?: any;
   createComment?: any;
-  totalCount?: number;
+  commentTotalCount?: number;
 }
 
 export default () => {
   const dispatch = useDispatch();
-  const totalCount = useSelector((store: Store) => store.room.totalCount);
+  const commentTotalCount = useSelector((store: Store) => store.room.commentTotalCount);
   const comments = useSelector((store: Store) => store.comment.listData);
   const loadNew = useSelector((store: Store) => store.comment.loadNew);
   const getRoom = useCallback(() => dispatch(getRoomAction()), [dispatch]);
@@ -39,7 +39,7 @@ export default () => {
     <Top
       comments={comments}
       loadNew={loadNew}
-      totalCount={totalCount}
+      commentTotalCount={commentTotalCount}
       listComments={listComments}
       createComment={createComment}
     />

@@ -6,7 +6,7 @@ import Introduction from '../../components/Introduction';
 import { PageContainer, TabContainer, TabTitle, TabTitleItem, TabContent } from './style';
 import { TopProps } from '../../containers/Top';
 
-export default ({ comments, loadNew, listComments, createComment, totalCount }: TopProps) => {
+export default ({ comments, loadNew, listComments, createComment, commentTotalCount }: TopProps) => {
   return (
     <PageContainer>
       <header className="hidden-sp"></header>
@@ -19,12 +19,12 @@ export default ({ comments, loadNew, listComments, createComment, totalCount }: 
             <div className="comment">
               <TabContainer>
                 <TabTitle className="hidden-pc">
-                  <TabTitleItem>コメント({totalCount})</TabTitleItem>
+                  <TabTitleItem>コメント({commentTotalCount})</TabTitleItem>
                   <TabTitleItem>紹介</TabTitleItem>
                 </TabTitle>
 
                 <TabContent>
-                  <CommentCount totalCount={totalCount} />
+                  <CommentCount commentTotalCount={commentTotalCount} />
                   <CommentList
                     listComments={listComments}
                     comments={comments}

@@ -6,7 +6,7 @@ export const getRoom = /* GraphQL */ `
   query GetRoom($id: ID!) {
     getRoom(id: $id) {
       id
-      totalCount
+      commentTotalCount
       comments {
         items {
           id
@@ -36,7 +36,7 @@ export const listRooms = /* GraphQL */ `
     listRooms(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        totalCount
+        commentTotalCount
         comments {
           nextToken
         }
@@ -54,7 +54,7 @@ export const getComment = /* GraphQL */ `
       roomID
       room {
         id
-        totalCount
+        commentTotalCount
         comments {
           nextToken
         }
@@ -84,7 +84,7 @@ export const listComments = /* GraphQL */ `
         roomID
         room {
           id
-          totalCount
+          commentTotalCount
           createdAt
           updatedAt
         }
@@ -123,7 +123,7 @@ export const getCommentsByRoom = /* GraphQL */ `
         roomID
         room {
           id
-          totalCount
+          commentTotalCount
           createdAt
           updatedAt
         }

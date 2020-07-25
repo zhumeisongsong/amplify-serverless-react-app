@@ -1,6 +1,6 @@
 type Room @model {
   id: ID!
-  totalCount: Int
+  commentTotalCount: Int
   comments: [Comment] @connection(keyName: "byRoom", fields: ["id"])
 }
 
