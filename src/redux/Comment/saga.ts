@@ -39,7 +39,7 @@ function* createSaga() {
         yield put({
           type: actionTypes.CREATE_SUCCESS,
           payload: {
-            data: res.data.createComment,
+            listData: [res.data.createComment],
           },
         });
       }

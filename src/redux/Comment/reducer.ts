@@ -1,15 +1,15 @@
-import { handleActions } from 'redux-actions';
+import handleActions from '../../utils/handleActions';
 import actionTypes from './actionTypes';
 import { ModelCommentConditionInput } from '../../API';
 
 
 export interface CommentState {
-  listData: ModelCommentConditionInput[];
-  pagePrev: number;
-  loadNew: boolean
+  listData?: ModelCommentConditionInput[];
+  pagePrev?: number;
+  loadNew?: boolean
 }
 
-const initialState: any = {
+const initialState: CommentState = {
   listData: [],
   pagePrev: 1,
   loadNew: true,
@@ -18,28 +18,26 @@ const initialState: any = {
 export default handleActions(
   {
     [actionTypes.LIST_SUCCESS]: (
-      state,
-      { payload: { listData, pagePrev } }
+      state: CommentState,
+      { payload: { listData, pagePrev } }: { payload: CommentState, type: string }
     ) => ({
       ...state,
       pagePrev,
       listData,
     }),
     [actionTypes.TOGGLE_LOAD_NEW_SUCCESS]: (
-      state,
-      { payload: { loadNew } }
+      state: CommentState,
+      { payload: { loadNew } }: { payload: CommentState, type: string }
     ) => ({
       ...state,
       loadNew,
     }),
-    [actionTypes.CREATE_SUCCESS]: (state, { payload: { data } }) => {
-      const listData = [...state.listData, data];
-
-      return {
+    [actionTypes.CREATE_SUCCESS]: (state: CommentState, { payload: { listData } }: { payload: CommentState, type: string }) => (
+      {
         ...state,
-        listData,
-      };
-    },
+        listData: [...state.listData, ...listData],
+      }
+    ),
   },
   initialState
 );
