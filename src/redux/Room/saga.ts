@@ -36,8 +36,6 @@ function* getSaga() {
         graphqlOperation(getRoom, { id })
       );
 
-      console.log(res)
-
       if (res.data.getRoom) {
         yield put({
           type: actionTypes.GET_SUCCESS,

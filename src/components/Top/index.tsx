@@ -3,10 +3,24 @@ import CommentCount from '../../components/CommentCount';
 import CommentList from '../../components/CommentList';
 import CommentSubmit from '../../components/CommentSubmit';
 import Introduction from '../../components/Introduction';
-import { PageContainer, TabContainer, TabTitle, TabTitleItem, TabContent } from './style';
+import {
+  PageContainer,
+  TabContainer,
+  TabTitle,
+  TabTitleItem,
+  TabContent,
+} from './style';
 import { TopProps } from '../../containers/Top';
 
-export default ({ comments, loadNew, listComments, createComment, commentTotalCount }: TopProps) => {
+export default ({
+  comments,
+  loadNew,
+  listComments,
+  createComment,
+  commentTotalCount,
+  toggleLoadNew,
+  setComment,
+}: TopProps) => {
   return (
     <PageContainer>
       <header className="hidden-sp"></header>
@@ -29,6 +43,7 @@ export default ({ comments, loadNew, listComments, createComment, commentTotalCo
                     listComments={listComments}
                     comments={comments}
                     loadNew={loadNew}
+                    toggleLoadNew={toggleLoadNew}
                   />
                   <CommentSubmit createComment={createComment} />
                 </TabContent>

@@ -5,7 +5,9 @@ import { TopProps } from '../../containers/Top';
 
 export default ({ createComment }: TopProps) => {
   const onFinish = (values: any) => {
-    createComment(values);
+    if (createComment) {
+      createComment(values);
+    }
   };
   return (
     <CommentForm>

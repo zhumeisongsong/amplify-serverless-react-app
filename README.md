@@ -71,3 +71,9 @@ https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html
 https://github.com/aws-amplify/amplify-js/issues/3703
 
 https://github.com/praveen001/react-clean-architecture
+
+https://aws.amazon.com/cn/premiumsupport/knowledge-center/dynamodb-table-throttled/?nc1=h_ls
+
+https://docs.aws.amazon.com/zh_cn/amazondynamodb/latest/developerguide/WorkingWithItems.html#WorkingWithItems.AtomicCounters
+
+https://juejin.im/post/5e0968ed51882549766f3b9b

@@ -3,7 +3,8 @@ import { API, graphqlOperation } from 'aws-amplify';
 import actionTypes from './actionTypes';
 import { createComment } from '../../graphql/mutations';
 import { getCommentsByRoom } from '../../graphql/queries';
-import { CreateCommentInput } from '../../API';
+import { CreateCommentInput, ModelCommentConditionInput } from '../../API';
+import * as subscriptions from '../../graphql/subscriptions';
 
 function* createSaga() {
   yield takeEvery(actionTypes.CREATE, function* _({
@@ -33,19 +34,18 @@ function* createSaga() {
         graphqlOperation(createComment, { input: data })
       );
 
-      console.log(res);
-
-      if (res.data.createComment) {
-        yield put({
-          type: actionTypes.CREATE_SUCCESS,
-          payload: {
-            listData: [res.data.createComment],
-          },
-        });
-      }
+      // if (res.data.createComment) {
+      //   yield put({
+      //     type: actionTypes.CREATE_SUCCESS,
+      //     payload: {
+      //       listData: [res.data.createComment],
+      //     },
+      //   });
+      // }
     } catch (error) {
       console.log(error.errors[0].message);
     }
+
   });
 }
 
@@ -57,7 +57,6 @@ function* listSaga() {
     );
 
     try {
-      const filter = {};
       const res = yield call(
         [API, 'graphql'],
         graphqlOperation(getCommentsByRoom, {
@@ -68,19 +67,19 @@ function* listSaga() {
             or: [
               {
                 isNgWord: {
-                  eq: false
-                }
+                  eq: false,
+                },
               },
               {
                 isNgWord: {
-                  eq: true
+                  eq: true,
                 },
                 userId: {
-                  eq: userId
-                }
-              }
-            ]
-          }
+                  eq: userId,
+                },
+              },
+            ],
+          },
         })
       );
 
