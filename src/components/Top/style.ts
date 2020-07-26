@@ -125,6 +125,7 @@ export const TabTitle = styled(TabList)`
 `;
 
 export const TabTitleItem = styled(Tab)`
+  position: relative;
   width: 30%;
   max-width: 200px;
   height: 48px;
@@ -139,6 +140,16 @@ export const TabTitleItem = styled(Tab)`
 
   &.react-tabs__tab--selected {
     color: #e5012c;
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 100px;
+      height: 2px;
+      margin-left: -50px;
+      background-color: #e5012c;
+    }
   }
 `;
 

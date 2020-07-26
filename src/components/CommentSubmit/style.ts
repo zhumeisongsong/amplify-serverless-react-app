@@ -43,6 +43,7 @@ export const CommentForm = styled.div`
   }
 
   button {
+    flex-shrink: 0;
     width: 50px;
     height: 40px;
     background-color: #e5012c;

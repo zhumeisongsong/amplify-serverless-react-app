@@ -53,6 +53,7 @@ export const CommentList = styled.div`
     height: calc(100vh - 57vw);
     ul {
       padding-top: 48px;
+      padding-bottom: 64px;
     }
   }
 `;
