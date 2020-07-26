@@ -3,13 +3,18 @@ import { Form, Input, Button } from 'antd';
 import { CommentForm } from './style';
 import { TopProps } from '../../containers/Top';
 
-export default ({ createComment }: TopProps) => {
+export default ({ createComment, toggleLoadNew }: TopProps) => {
   const [form] = Form.useForm();
 
   const onFinish = (values: any) => {
     if (createComment) {
       createComment(values);
+
       form.resetFields();
+
+      if (toggleLoadNew) {
+        toggleLoadNew(true);
+      }
     }
   };
   return (

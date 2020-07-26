@@ -46,7 +46,10 @@ export default ({
                     toggleLoadNew={toggleLoadNew}
                     cacheComments={cacheComments}
                   />
-                  <CommentSubmit createComment={createComment} />
+                  <CommentSubmit
+                    createComment={createComment}
+                    toggleLoadNew={toggleLoadNew}
+                  />
                 </TabContent>
                 <TabContent className="hidden-pc">
                   <Introduction />
