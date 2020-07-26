@@ -38,9 +38,15 @@ export const CommentList = styled.div`
   }
 
   .user-name {
+    width: 100%;
+    display: flex;
+    align-items: center;
     color: #888;
     font-weight: 500;
     font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+    img {
+      margin-left: 5px;
+    }
   }
 
   .content {

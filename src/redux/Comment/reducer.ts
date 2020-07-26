@@ -1,9 +1,9 @@
 import handleActions from '../../utils/handleActions';
 import actionTypes from './actionTypes';
-import { ModelCommentConditionInput } from '../../API';
+import { CreateCommentInput } from '../../API';
 
 export interface CommentState {
-  listData?: ModelCommentConditionInput[];
+  listData?: CreateCommentInput[];
   cacheData?: any[];
   loadNew?: boolean;
   nextToken?: string;

@@ -11,12 +11,12 @@ import {
 import Top from '../../components/Top';
 import { Store } from '../../redux/types';
 import { Action } from 'redux';
-import { ModelCommentConditionInput } from '../../API';
+import { CreateCommentInput } from '../../API';
 import * as subscriptions from '../../graphql/subscriptions';
 import { REQUESTED_TIME_INTERVAL } from '../../constants';
 
 export interface TopProps {
-  comments?: ModelCommentConditionInput[];
+  comments?: CreateCommentInput[];
   loadNew?: boolean;
   commentTotalCount?: number;
   listComments?: () => Action<any>;

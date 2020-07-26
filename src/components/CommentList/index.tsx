@@ -1,7 +1,9 @@
 import React, { useEffect } from 'react';
 import { CommentList } from './style';
 import { TopProps } from '../../containers/Top';
-import avatarDefault from '../../assets/images/avatar-default.svg';
+import { CreateCommentInput } from '../../API';
+import imageAvatarDefault from '../../assets/images/avatar-default.svg';
+import imageOfficial from '../../assets/images/official.png';
 
 export default ({
   listComments,
@@ -35,22 +37,31 @@ export default ({
     <CommentList>
       <ul onScroll={handleScroll} id="commentList">
         {comments &&
-          comments.map((item: any) => (
-            <li key={item.id}>
-              <div
-                className={`image ${item.userImage ? '' : 'is-default'}`}
-                style={{
-                  backgroundImage: `url('${
-                    item.userImage ? item.userImage : avatarDefault
-                    }')`,
-                }}
-              />
-              <div className="text">
-                <div className="user-name">{item.userName}</div>
-                <div className="content">{item.content}</div>
-              </div>
-            </li>
-          ))}
+          comments.map((item: CreateCommentInput) => {
+            if (item.id) {
+              return (
+                <li key={item.id}>
+                  <div
+                    className={`image ${item.userImage ? '' : 'is-default'}`}
+                    style={{
+                      backgroundImage: `url('${
+                        item.userImage ? item.userImage : imageAvatarDefault
+                        }')`,
+                    }}
+                  />
+                  <div className="text">
+                    <div className="user-name">
+                      {item.userName}{' '}
+                      {item.isOfficialAccount && (
+                        <img src={imageOfficial} alt="offical-account" />
+                      )}
+                    </div>
+                    <div className="content">{item.content}</div>
+                  </div>
+                </li>
+              );
+            }
+          })}
       </ul>
     </CommentList>
   );
