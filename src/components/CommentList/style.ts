@@ -3,11 +3,10 @@ import styled from 'styled-components';
 export const CommentList = styled.div`
   position: relative;
   width: 100%;
-  height: calc(40vw - 86px);
+  height: calc(40vw - 102px);
   ul {
     width: 100%;
     height: 100%;
-    padding: 0 0 16px;
     list-style: none;
     overflow: auto;
   }

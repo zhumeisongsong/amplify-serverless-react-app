@@ -14,7 +14,8 @@ import { TopProps } from '../../containers/Top';
 
 export default ({
   comments,
-  loadNew,
+  toNew,
+  hasNew,
   listComments,
   createComment,
   commentTotalCount,
@@ -40,11 +41,11 @@ export default ({
                 <TabContent>
                   <CommentCount commentTotalCount={commentTotalCount} />
                   <CommentList
-                    listComments={listComments}
                     comments={comments}
-                    loadNew={loadNew}
+                    toNew={toNew}
+                    hasNew={hasNew}
+                    listComments={listComments}
                     toggleLoadNew={toggleLoadNew}
-                    cacheComments={cacheComments}
                   />
                   <CommentSubmit
                     createComment={createComment}

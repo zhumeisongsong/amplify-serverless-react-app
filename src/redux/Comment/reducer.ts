@@ -5,14 +5,16 @@ import { CreateCommentInput } from '../../API';
 export interface CommentState {
   listData?: CreateCommentInput[];
   cacheData?: any[];
-  loadNew?: boolean;
+  toNew?: boolean;
+  hasNew?: boolean;
   nextToken?: string;
 }
 
 const initialState: CommentState = {
   listData: [],
   cacheData: [],
-  loadNew: true,
+  toNew: true,
+  hasNew: false
 };
 
 export default handleActions(
@@ -47,7 +49,14 @@ export default handleActions(
       { payload }: { payload: boolean; type: string }
     ) => ({
       ...state,
-      loadNew: payload,
+      toNew: payload,
+    }),
+    [actionTypes.TOGGLE_HAS_NEW]: (
+      state: CommentState,
+      { payload }: { payload: boolean; type: string }
+    ) => ({
+      ...state,
+      hasNew: payload,
     }),
   },
   initialState

@@ -9,24 +9,24 @@ import { Button } from 'antd';
 export default ({
   listComments,
   comments,
-  loadNew,
-  cacheComments,
+  toNew,
+  hasNew,
   toggleLoadNew,
 }: TopProps) => {
   useEffect(() => {
     const list = document.getElementById('commentList');
 
-    if (list && loadNew) {
+    if (list && toNew) {
       list.scrollTop = list.scrollHeight;
     }
-  }, [comments, loadNew]);
+  }, [comments, toNew]);
 
   const handleScroll = () => {
     const list = document.getElementById('commentList');
 
     if (list && toggleLoadNew) {
       if (list.scrollTop < list.scrollHeight - list.offsetHeight) {
-        if (loadNew) {
+        if (toNew) {
           toggleLoadNew(false);
         }
       } else {
@@ -40,6 +40,7 @@ export default ({
 
     if (list && toggleLoadNew) {
       toggleLoadNew(true);
+
       setTimeout(() => {
         list.scrollTop = list.scrollHeight;
       }, 500);
@@ -78,7 +79,7 @@ export default ({
       </ul>
       <Button
         className={`button ${
-          loadNew ? 'hidden' : ''
+          hasNew && !toNew ? '' : 'hidden'
           }`}
         onClick={handleButtonClick}
       >

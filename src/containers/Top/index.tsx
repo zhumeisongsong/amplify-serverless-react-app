@@ -5,7 +5,7 @@ import {
   listCommentsAction,
   createCommentAction,
   toggleLoadNewAction,
-  createCommentSuccessAction,
+  toggleHasNewAction,
   updateRenderCommentsAction,
 } from '../../redux/Comment/actions';
 import Top from '../../components/Top';
@@ -18,11 +18,13 @@ import { REQUESTED_TIME_INTERVAL } from '../../constants';
 export interface TopProps {
   comments?: CreateCommentInput[];
   cacheComments?: CreateCommentInput[];
-  loadNew?: boolean;
+  toNew?: boolean;
+  hasNew?: boolean;
   commentTotalCount?: number;
   listComments?: () => Action<any>;
   createComment?: (values: any) => Action<any>;
-  toggleLoadNew?: (loadNew: boolean) => Action<any>;
+  toggleLoadNew?: (toNew: boolean) => Action<any>;
+  toggleHasNew?: (hasNew: boolean) => Action<any>;
 }
 
 export default () => {
@@ -32,7 +34,8 @@ export default () => {
   );
   const comments = useSelector((store: Store) => store.comment.listData);
   const cacheComments = useSelector((store: Store) => store.comment.cacheData);
-  const loadNew = useSelector((store: Store) => store.comment.loadNew);
+  const toNew = useSelector((store: Store) => store.comment.toNew);
+  const hasNew = useSelector((store: Store) => store.comment.hasNew);
   const getRoom = useCallback(() => dispatch(getRoomAction()), [dispatch]);
   const listComments = useCallback(() => dispatch(listCommentsAction()), [
     dispatch,
@@ -42,7 +45,11 @@ export default () => {
     [dispatch]
   );
   const toggleLoadNew = useCallback(
-    (loadNew) => dispatch(toggleLoadNewAction(loadNew)),
+    (toNew) => dispatch(toggleLoadNewAction(toNew)),
+    [dispatch]
+  );
+  const toggleHasNew = useCallback(
+    (hasNew) => dispatch(toggleHasNewAction(hasNew)),
     [dispatch]
   );
   const updateRenderComments = useCallback(
@@ -52,6 +59,7 @@ export default () => {
 
   useEffect(() => {
     getRoom();
+
     setInterval(() => {
       listComments();
     }, REQUESTED_TIME_INTERVAL);
@@ -79,21 +87,28 @@ export default () => {
 
         return notDuplicate;
       });
+
       if (notDuplicate) {
-        updateRenderComments();
+        if (toNew) {
+          updateRenderComments();
+        }
       }
+
+      toggleHasNew(notDuplicate);
     }
-  }, [cacheComments, comments, updateRenderComments]);
+  }, [cacheComments, comments, toNew, updateRenderComments]);
 
   return (
     <Top
       comments={comments}
-      loadNew={loadNew}
+      toNew={toNew}
+      hasNew={hasNew}
       commentTotalCount={commentTotalCount}
       cacheComments={cacheComments}
       listComments={listComments}
       createComment={createComment}
       toggleLoadNew={toggleLoadNew}
+      toggleHasNew={toggleHasNew}
     />
   );
 };

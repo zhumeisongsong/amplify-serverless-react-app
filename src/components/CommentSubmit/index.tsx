@@ -17,6 +17,7 @@ export default ({ createComment, toggleLoadNew }: TopProps) => {
       }
     }
   };
+
   return (
     <CommentForm>
       <Form
