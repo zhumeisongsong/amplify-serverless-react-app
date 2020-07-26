@@ -18,7 +18,6 @@ import { COMMENT_LIMIT } from '../../constants';
 const setIntervalWithConditionHelper = (index: number, time: number) =>
   eventChannel((emitter) => {
     index -= 1;
-    console.log(index);
     const iv = setInterval(
       () => {
         if (index >= 0) {
@@ -34,26 +33,6 @@ const setIntervalWithConditionHelper = (index: number, time: number) =>
       clearInterval(iv);
     };
   });
-
-// const getNewJson = (mainJson: any, addJson: any) => {
-//   let newJson: any = [];
-
-//   addJson.map((newItem: any) => {
-//     let noRepeat = true;
-
-//     mainJson.map((oldItem: any) => {
-//       if (oldItem.id == newItem.id) {
-//         noRepeat = false;
-//       }
-//     });
-//     if (noRepeat) {
-//       newJson.push(newItem);
-//       console.log(newJson);
-//     }
-//   });
-
-//   return newJson;
-// };
 
 function* createSaga() {
   yield takeEvery(actionTypes.CREATE, function* _({
@@ -131,13 +110,6 @@ function* listSaga() {
         })
       );
       const data = res.data.getCommentsByRoom.items;
-      // let duplicateRemovalData: CreateCommentInput[] = getNewJson(
-      //   listData,
-      //   data
-      // );
-
-      // console.log(listData);
-      // console.log(data);
 
       yield put({
         type: actionTypes.SET_CACHE_SUCCESS,

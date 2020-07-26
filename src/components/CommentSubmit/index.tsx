@@ -4,33 +4,30 @@ import { CommentForm } from './style';
 import { TopProps } from '../../containers/Top';
 
 export default ({ createComment }: TopProps) => {
+  const [form] = Form.useForm();
+
   const onFinish = (values: any) => {
     if (createComment) {
       createComment(values);
+      form.resetFields();
     }
   };
   return (
     <CommentForm>
       <Form
         name="form"
+        form={form}
         initialValues={{
-          content: ''
+          content: '',
         }}
         onFinish={onFinish}
       >
-        <Form.Item
-          name="content"
-          rules={[{ required: true }]}
-        >
-          <Input />
+        <Form.Item name="content" rules={[{ required: true }, { max: 100 }]}>
+          <Input placeholder="コメント入力してください" />
         </Form.Item>
 
-        <Form.Item>
-          <Button htmlType="submit">
-            送る
-        </Button>
-        </Form.Item>
+        <Button htmlType="submit">送る</Button>
       </Form>
     </CommentForm>
-  )
-}
+  );
+};
