@@ -4,7 +4,7 @@ export const CommentList = styled.div`
   width: 100%;
   height: calc(40vw - 86px);
   ul {
-    width:100%;
+    width: 100%;
     height: 100%;
     padding: 0 0 16px;
     list-style: none;
@@ -22,7 +22,13 @@ export const CommentList = styled.div`
     width: 32px;
     height: 32px;
     border-radius: 50%;
-    background-color: #888;
+    background-color: #bdbdbd;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    &.is-default {
+      background-size: 80% auto;
+    }
   }
 
   .text {
@@ -34,10 +40,9 @@ export const CommentList = styled.div`
   .user-name {
     color: #888;
     font-weight: 500;
-    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
   }
 
   .content {
-
   }
-`
+`;

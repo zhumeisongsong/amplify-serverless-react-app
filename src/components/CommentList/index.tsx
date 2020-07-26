@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { CommentList } from './style';
 import { TopProps } from '../../containers/Top';
+import avatarDefault from '../../assets/images/avatar-default.svg';
 
 export default ({
   listComments,
@@ -36,7 +37,14 @@ export default ({
         {comments &&
           comments.map((item: any) => (
             <li key={item.id}>
-              <div className="image" />
+              <div
+                className={`image ${item.userImage ? '' : 'is-default'}`}
+                style={{
+                  backgroundImage: `url('${
+                    item.userImage ? item.userImage : avatarDefault
+                    }')`,
+                }}
+              />
               <div className="text">
                 <div className="user-name">{item.userName}</div>
                 <div className="content">{item.content}</div>
