@@ -5,8 +5,9 @@ export const CommentForm = styled.div`
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 52px;
-  padding: 0 16px 12px;
+  height: 64px;
+  padding: 12px 16px;
+  background-color: #fff;
 
   .ant-form {
     display: flex;

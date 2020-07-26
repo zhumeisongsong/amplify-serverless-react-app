@@ -9,14 +9,14 @@ export default ({ commentTotalCount }: TopProps) => {
       <img src={iconComment} alt="comment" />
       コメント数： {commentTotalCount}
     </CommentCount>
-  )
-}
+  );
+};
 
 const CommentCount = styled.div`
   display: flex;
   align-items: center;
   padding: 8px 16px;
-  background: #F5F5F5 left center no-repeat;
+  background: #f5f5f5 left center no-repeat;
   background-size: 10px auto;
   color: #888888;
   font-size: 12px;
@@ -28,4 +28,8 @@ const CommentCount = styled.div`
     margin-right: 4px;
     opacity: 0.5;
   }
-`
+
+  @media (max-width: 768px) {
+    display: none;
+  }
+`;

@@ -13,7 +13,6 @@ export const PageContainer = styled.div`
   }
 
   .main {
-    box-sizing: border-box;
     width: 100%;
     max-width: 1640px;
     margin: 0 auto;
@@ -102,16 +101,21 @@ export const PageContainer = styled.div`
   }
 `;
 
-export const TabContainer = styled(Tabs)``;
+export const TabContainer = styled(Tabs)`
+  position: relative;
+  width: 100%;
+  height: 100%;
+`;
 
 export const TabTitle = styled(TabList)`
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
-  list-style: none;
-  margin: 0;
-  padding: 0;
+  position: absolute;
+  left: 0;
+  top: 0;
+  background-color: #fff;
 
   @media (min-width: 769px) {
     &.hidden-pc {
@@ -134,16 +138,20 @@ export const TabTitleItem = styled(Tab)`
   }
 
   &.react-tabs__tab--selected {
-    color: #E5012C;
+    color: #e5012c;
   }
 `;
 
 export const TabContent = styled(TabPanel)`
-  height: 100%;  
+  height: 100%;
 
   @media (min-width: 769px) {
     &.hidden-pc {
       display: none;
     }
   }
+
+  /* @media (max-width: 768px) {
+    padding-top: 48px;
+  } */
 `;

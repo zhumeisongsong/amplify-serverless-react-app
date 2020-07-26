@@ -30,4 +30,9 @@ const Introduction = styled.div`
     text-align: center;
     letter-spacing: 0.75px;
   }
+
+  @media(max-height: 768px) {
+    height: calc(100vh - 57vw);
+    padding-top: 48px;
+  }
 `;

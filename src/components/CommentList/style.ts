@@ -49,6 +49,10 @@ export const CommentList = styled.div`
     }
   }
 
-  .content {
+  @media (max-width: 768px) {
+    height: calc(100vh - 57vw);
+    ul {
+      padding-top: 48px;
+    }
   }
 `;
