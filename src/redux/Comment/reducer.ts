@@ -4,12 +4,14 @@ import { ModelCommentConditionInput } from '../../API';
 
 export interface CommentState {
   listData?: ModelCommentConditionInput[];
+  cacheData?: any[];
   loadNew?: boolean;
   nextToken?: string;
 }
 
 const initialState: CommentState = {
   listData: [],
+  cacheData: [],
   loadNew: true,
 };
 
@@ -23,6 +25,15 @@ export default handleActions(
     ) => ({
       ...state,
       listData,
+    }),
+    [actionTypes.SET_CACHE_SUCCESS]: (
+      state: CommentState,
+      {
+        payload: { cacheData },
+      }: { payload: CommentState; type: string }
+    ) => ({
+      ...state,
+      cacheData,
     }),
     [actionTypes.CREATE_SUCCESS]: (
       state: CommentState,

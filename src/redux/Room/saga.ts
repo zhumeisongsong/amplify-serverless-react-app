@@ -5,8 +5,6 @@ import commentActionTypes from '../Comment/actionTypes';
 import { createRoom } from '../../graphql/mutations';
 import { getRoom } from '../../graphql/queries';
 
-
-
 function* createSaga() {
   yield takeEvery(actionTypes.CREATE, function* _({ payload }: any) {
     const { id }: any = payload;
@@ -14,7 +12,7 @@ function* createSaga() {
     try {
       const res = yield call(
         [API, 'graphql'],
-        graphqlOperation(createRoom, { input: { id, totalCount: 0 } })
+        graphqlOperation(createRoom, { input: { id, commentTotalCount: 0 } })
       );
 
       if (res.data.createRoom) {
@@ -45,7 +43,6 @@ function* getSaga() {
 
         yield put({
           type: commentActionTypes.LIST,
-          payload: {},
         });
       } else {
         yield put({

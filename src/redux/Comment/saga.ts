@@ -1,60 +1,59 @@
 import { eventChannel, END } from 'redux-saga';
-import { put, takeEvery, all, call, fork, select } from 'redux-saga/effects';
+import {
+  put,
+  takeEvery,
+  all,
+  call,
+  fork,
+  select,
+  debounce,
+} from 'redux-saga/effects';
 import { API, graphqlOperation } from 'aws-amplify';
 import actionTypes from './actionTypes';
 import { createComment } from '../../graphql/mutations';
 import { getCommentsByRoom } from '../../graphql/queries';
-import { CreateCommentInput, ModelCommentConditionInput } from '../../API';
-import * as subscriptions from '../../graphql/subscriptions';
-import { REQUESTED_TIME_INTERVAL, COMMENT_LIMIT } from '../../constants';
-
-const setIntervalHelper = () =>
-  eventChannel((emitter) => {
-    const iv = setInterval(() => {
-      emitter('');
-    }, REQUESTED_TIME_INTERVAL);
-    // The subscriber must return an unsubscribe function
-    return () => {
-      clearInterval(iv);
-    };
-  });
+import { CreateCommentInput } from '../../API';
+import { COMMENT_LIMIT } from '../../constants';
 
 const setIntervalWithConditionHelper = (index: number, time: number) =>
   eventChannel((emitter) => {
     index -= 1;
     console.log(index);
-    const iv = setInterval(() => {
-      if (index >= 1) {
-        emitter(index);
-      } else {
-        emitter(END);
-      }
-    }, time);
+    const iv = setInterval(
+      () => {
+        if (index >= 0) {
+          emitter(index);
+        } else {
+          emitter(END);
+        }
+      },
+      time
+    );
     // The subscriber must return an unsubscribe function
     return () => {
       clearInterval(iv);
     };
   });
 
-const mergeJson = (mainJson: any, addJson: any) => {
-  const mergedJson = mainJson.concat(addJson);
-  let newJson: any = [];
+// const getNewJson = (mainJson: any, addJson: any) => {
+//   let newJson: any = [];
 
-  mergedJson.map((item1: any) => {
-    let noRepeat = true;
+//   addJson.map((newItem: any) => {
+//     let noRepeat = true;
 
-    addJson.map((item2: any) => {
-      if (item1.id == item2.id) {
-        noRepeat = false;
-      }
-    });
-    if (noRepeat) {
-      newJson.push(item1);
-    }
-  });
+//     mainJson.map((oldItem: any) => {
+//       if (oldItem.id == newItem.id) {
+//         noRepeat = false;
+//       }
+//     });
+//     if (noRepeat) {
+//       newJson.push(newItem);
+//       console.log(newJson);
+//     }
+//   });
 
-  return newJson;
-};
+//   return newJson;
+// };
 
 function* createSaga() {
   yield takeEvery(actionTypes.CREATE, function* _({
@@ -99,85 +98,80 @@ function* createSaga() {
 }
 
 function* listSaga() {
-  yield takeEvery(actionTypes.LIST, function* _({
-    payload,
-  }: {
-    type: string;
-    payload: { nextToken?: string };
-  }) {
+  yield takeEvery(actionTypes.LIST, function* _() {
     const roomID: string = yield select((state) => state.room.id);
-    const { userName, userId, userImage, isOfficialAccount } = yield select(
+    const { userId } = yield select(
       (state) => state.user
     );
-    const listCommentChannel = yield call(setIntervalHelper);
-    yield takeEvery(listCommentChannel, function* () {
-      try {
-        const { listData } = yield select((state) => state.comment);
-        const res = yield call(
-          [API, 'graphql'],
-          graphqlOperation(getCommentsByRoom, {
-            limit: COMMENT_LIMIT,
-            roomID,
-            sortDirection: 'DESC',
-            filter: {
-              or: [
-                {
-                  isNgWord: {
-                    eq: false,
-                  },
-                },
-                {
-                  isNgWord: {
-                    eq: true,
-                  },
-                  userId: {
-                    eq: userId,
-                  },
-                },
-              ],
-            },
-          })
-        );
-        const data = res.data.getCommentsByRoom.items;
-        const duplicateRemovalData: CreateCommentInput[] = [];
 
-        data.map((newItem: CreateCommentInput) => {
-          let noRepeat = true;
-          listData.map((oldItem: CreateCommentInput) => {
-            if (newItem.id === oldItem.id) {
-              noRepeat = false;
-            }
-          });
-          if (noRepeat) {
-            duplicateRemovalData.push(newItem);
-          }
-        });
-        console.log(duplicateRemovalData);
+    try {
+      const res: any = yield call(
+        [API, 'graphql'],
+        graphqlOperation(getCommentsByRoom, {
+          limit: COMMENT_LIMIT,
+          roomID,
+          sortDirection: 'DESC',
+          filter: {
+            or: [
+              {
+                isNgWord: {
+                  eq: false,
+                },
+              },
+              {
+                isNgWord: {
+                  eq: true,
+                },
+                userId: {
+                  eq: userId,
+                },
+              },
+            ],
+          },
+        })
+      );
+      const data = res.data.getCommentsByRoom.items;
+      // let duplicateRemovalData: CreateCommentInput[] = getNewJson(
+      //   listData,
+      //   data
+      // );
 
-        const setCommentChannel = yield call(
-          setIntervalWithConditionHelper,
-          duplicateRemovalData.length + 1,
-          Math.round(REQUESTED_TIME_INTERVAL / duplicateRemovalData.length)
-        );
-        yield takeEvery(setCommentChannel, function* () {
-          const newListData = yield select((state) => state.comment.listData);
-          yield put({
-            type: actionTypes.LIST_SUCCESS,
-            payload: {
-              listData: [
-                data[duplicateRemovalData.length - 1],
-                ...newListData,
-              ].reverse(),
-            },
-          });
-        });
-      } catch (error) {
-        console.log(error.errors[0].message);
-      }
+      // console.log(listData);
+      // console.log(data);
+
+      yield put({
+        type: actionTypes.SET_CACHE_SUCCESS,
+        payload: {
+          cacheData: data,
+        },
+      });
+    } catch (error) {
+      console.log(error);
+      console.log(error.errors[0].message);
+    }
+  });
+}
+
+function* updateRenderDataSaga() {
+  yield debounce(200, actionTypes.UPDATE_RENDER_DATA, function* _() {
+    const { listData, cacheData } = yield select((state) => state.comment);
+
+    yield put({
+      type: actionTypes.LIST_SUCCESS,
+      payload: {
+        listData: [...listData, cacheData[cacheData.length - 1]],
+      },
+    });
+
+    yield put({
+      type: actionTypes.SET_CACHE_SUCCESS,
+      payload: {
+        cacheData: cacheData.slice(0, cacheData.length - 1),
+      },
     });
   });
 }
 
 export default function* rootSaga() {
-  yield all([fork(createSaga), fork(listSaga)]);
+  yield all([fork(createSaga), fork(listSaga), fork(updateRenderDataSaga)]);
 }

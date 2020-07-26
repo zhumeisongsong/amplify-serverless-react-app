@@ -1,18 +1,19 @@
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { API, graphqlOperation } from 'aws-amplify';
 import { getRoomAction } from '../../redux/Room/actions';
 import {
   listCommentsAction,
   createCommentAction,
   toggleLoadNewAction,
   createCommentSuccessAction,
+  updateRenderCommentsAction,
 } from '../../redux/Comment/actions';
 import Top from '../../components/Top';
 import { Store } from '../../redux/types';
 import { Action } from 'redux';
 import { ModelCommentConditionInput } from '../../API';
 import * as subscriptions from '../../graphql/subscriptions';
+import { REQUESTED_TIME_INTERVAL } from '../../constants';
 
 export interface TopProps {
   comments?: ModelCommentConditionInput[];
@@ -30,6 +31,7 @@ export default () => {
     (store: Store) => store.room.commentTotalCount
   );
   const comments = useSelector((store: Store) => store.comment.listData);
+  const cacheComments = useSelector((store: Store) => store.comment.cacheData);
   const loadNew = useSelector((store: Store) => store.comment.loadNew);
   const getRoom = useCallback(() => dispatch(getRoomAction()), [dispatch]);
   const listComments = useCallback(() => dispatch(listCommentsAction()), [
@@ -47,9 +49,17 @@ export default () => {
     (loadNew) => dispatch(toggleLoadNewAction(loadNew)),
     [dispatch]
   );
+  const updateRenderComments = useCallback(
+    () => dispatch(updateRenderCommentsAction()),
+    [dispatch]
+  );
 
   useEffect(() => {
     getRoom();
+    setInterval(() => {
+      listComments();
+    }, REQUESTED_TIME_INTERVAL);
+
     // // Subscribe to creation
     // const api: any = API.graphql(
     //   graphqlOperation(subscriptions.onCreateComment)
@@ -60,7 +70,24 @@ export default () => {
     //     setComment({ listData: [values] });
     //   },
     // });
-  }, [getRoom]);
+  }, [getRoom, listComments]);
+
+  useEffect(() => {
+    if (comments && cacheComments && cacheComments.length > 0) {
+      let notDuplicate = true;
+
+      comments.map((item: any) => {
+        if (item.id === cacheComments[cacheComments.length - 1].id) {
+          notDuplicate = false;
+        }
+
+        return notDuplicate;
+      });
+      if (notDuplicate) {
+        updateRenderComments();
+      }
+    }
+  }, [cacheComments, comments, updateRenderComments]);
 
   return (
     <Top

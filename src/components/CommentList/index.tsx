@@ -14,7 +14,7 @@ export default ({
     if (list && loadNew) {
       list.scrollTop = list.scrollHeight;
     }
-  }, [comments]);
+  }, [comments, loadNew]);
 
   const handleScroll = () => {
     const list = document.getElementById('commentList');
