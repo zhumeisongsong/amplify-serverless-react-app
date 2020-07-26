@@ -4,11 +4,13 @@ import { TopProps } from '../../containers/Top';
 import { CreateCommentInput } from '../../API';
 import imageAvatarDefault from '../../assets/images/avatar-default.svg';
 import imageOfficial from '../../assets/images/official.png';
+import { Button } from 'antd';
 
 export default ({
   listComments,
   comments,
   loadNew,
+  cacheComments,
   toggleLoadNew,
 }: TopProps) => {
   useEffect(() => {
@@ -30,6 +32,17 @@ export default ({
       } else {
         toggleLoadNew(true);
       }
+    }
+  };
+
+  const handleButtonClick = () => {
+    const list = document.getElementById('commentList');
+
+    if (list && toggleLoadNew) {
+      toggleLoadNew(true);
+      setTimeout(() => {
+        list.scrollTop = list.scrollHeight;
+      }, 500);
     }
   };
 
@@ -63,6 +76,14 @@ export default ({
             }
           })}
       </ul>
+      <Button
+        className={`button ${
+          loadNew ? 'hidden' : ''
+          }`}
+        onClick={handleButtonClick}
+      >
+        最新コメントへ
+      </Button>
     </CommentList>
   );
 };

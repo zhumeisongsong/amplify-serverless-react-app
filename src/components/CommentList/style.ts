@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export const CommentList = styled.div`
+  position: relative;
   width: 100%;
   height: calc(40vw - 86px);
   ul {
@@ -49,11 +50,36 @@ export const CommentList = styled.div`
     }
   }
 
+  .button {
+    position: absolute;
+    left: 50%;
+    bottom: 20px;
+    width: 120px;
+    height: 24px;
+    margin-left: -70px;
+    font-size: 12px;
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.8);
+    border-radius: 4px;
+    transition: bottom 0.2s ease-in;
+    &:hover {
+      opacity: 1;
+    }
+
+    &.hidden {
+      bottom: -32px;
+    }
+  }
+
   @media (max-width: 768px) {
     height: calc(100vh - 57vw);
     ul {
       padding-top: 48px;
       padding-bottom: 64px;
+    }
+
+    .button {
+      bottom: 80px;
     }
   }
 `;

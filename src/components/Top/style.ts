@@ -116,6 +116,7 @@ export const TabTitle = styled(TabList)`
   left: 0;
   top: 0;
   background-color: #fff;
+  z-index: 9;
 
   @media (min-width: 769px) {
     &.hidden-pc {

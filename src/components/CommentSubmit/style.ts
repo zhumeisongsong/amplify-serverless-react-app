@@ -40,6 +40,7 @@ export const CommentForm = styled.div`
     border: none;
     font-size: 12px;
     padding: 12px 0;
+    line-height: 1;
   }
 
   button {
@@ -56,5 +57,16 @@ export const CommentForm = styled.div`
 
   .ant-form-item-explain {
     display: none;
+  }
+
+  @media (max-width: 768px) {
+    input {
+      font-size: 16px;
+    }
+
+    button {
+      width: 80px;
+      font-size: 16px;
+    }
   }
 `;

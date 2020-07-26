@@ -17,12 +17,12 @@ import { REQUESTED_TIME_INTERVAL } from '../../constants';
 
 export interface TopProps {
   comments?: CreateCommentInput[];
+  cacheComments?: CreateCommentInput[];
   loadNew?: boolean;
   commentTotalCount?: number;
   listComments?: () => Action<any>;
   createComment?: (values: any) => Action<any>;
   toggleLoadNew?: (loadNew: boolean) => Action<any>;
-  setComment?: any;
 }
 
 export default () => {
@@ -39,10 +39,6 @@ export default () => {
   ]);
   const createComment = useCallback(
     (values) => dispatch(createCommentAction(values)),
-    [dispatch]
-  );
-  const setComment = useCallback(
-    (values) => dispatch(createCommentSuccessAction(values)),
     [dispatch]
   );
   const toggleLoadNew = useCallback(
@@ -94,9 +90,9 @@ export default () => {
       comments={comments}
       loadNew={loadNew}
       commentTotalCount={commentTotalCount}
+      cacheComments={cacheComments}
       listComments={listComments}
       createComment={createComment}
-      setComment={setComment}
       toggleLoadNew={toggleLoadNew}
     />
   );

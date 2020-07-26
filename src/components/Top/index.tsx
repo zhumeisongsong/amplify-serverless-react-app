@@ -19,7 +19,7 @@ export default ({
   createComment,
   commentTotalCount,
   toggleLoadNew,
-  setComment,
+  cacheComments,
 }: TopProps) => {
   return (
     <PageContainer>
@@ -44,6 +44,7 @@ export default ({
                     comments={comments}
                     loadNew={loadNew}
                     toggleLoadNew={toggleLoadNew}
+                    cacheComments={cacheComments}
                   />
                   <CommentSubmit createComment={createComment} />
                 </TabContent>
