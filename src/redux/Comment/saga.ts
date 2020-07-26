@@ -19,16 +19,13 @@ import isNgWord from '../../utils/isNgWord';
 const setIntervalWithConditionHelper = (index: number, time: number) =>
   eventChannel((emitter) => {
     index -= 1;
-    const iv = setInterval(
-      () => {
-        if (index >= 0) {
-          emitter(index);
-        } else {
-          emitter(END);
-        }
-      },
-      time
-    );
+    const iv = setInterval(() => {
+      if (index >= 0) {
+        emitter(index);
+      } else {
+        emitter(END);
+      }
+    }, time);
     // The subscriber must return an unsubscribe function
     return () => {
       clearInterval(iv);
@@ -80,9 +77,7 @@ function* createSaga() {
 function* listSaga() {
   yield takeEvery(actionTypes.LIST, function* _() {
     const roomID: string = yield select((state) => state.room.id);
-    const { userId } = yield select(
-      (state) => state.user
-    );
+    const { userId } = yield select((state) => state.user);
 
     try {
       const res: any = yield call(
@@ -125,8 +120,8 @@ function* listSaga() {
   });
 }
 
-function* updateRenderDataSaga() {
-  yield debounce(200, actionTypes.UPDATE_RENDER_DATA, function* _() {
+function* updateRenderListSaga() {
+  yield debounce(270, actionTypes.UPDATE_RENDER, function* _() {
     const { listData, cacheData } = yield select((state) => state.comment);
 
     yield put({
@@ -135,6 +130,12 @@ function* updateRenderDataSaga() {
         listData: [...listData, cacheData[cacheData.length - 1]],
       },
     });
+  });
+}
+
+function* updateCacheListSaga() {
+  yield debounce(270, actionTypes.UPDATE_CACHE, function* _() {
+    const { cacheData } = yield select((state) => state.comment);
 
     yield put({
       type: actionTypes.SET_CACHE_SUCCESS,
@@ -146,5 +147,10 @@ function* updateRenderDataSaga() {
 }
 
 export default function* rootSaga() {
-  yield all([fork(createSaga), fork(listSaga), fork(updateRenderDataSaga)]);
+  yield all([
+    fork(createSaga),
+    fork(listSaga),
+    fork(updateRenderListSaga),
+    fork(updateCacheListSaga),
+  ]);
 }

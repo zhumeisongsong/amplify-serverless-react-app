@@ -74,13 +74,13 @@ export default ({
                   </div>
                 </li>
               );
+            } else {
+              return null;
             }
           })}
       </ul>
       <Button
-        className={`button ${
-          hasNew && !toNew ? '' : 'hidden'
-          }`}
+        className={`button ${hasNew && !toNew ? '' : 'hidden'}`}
         onClick={handleButtonClick}
       >
         最新コメントへ

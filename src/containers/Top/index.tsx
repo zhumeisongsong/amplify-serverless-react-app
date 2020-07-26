@@ -6,7 +6,8 @@ import {
   createCommentAction,
   toggleLoadNewAction,
   toggleHasNewAction,
-  updateRenderCommentsAction,
+  updateCommentsAction,
+  updateCacheCommentsAction,
 } from '../../redux/Comment/actions';
 import Top from '../../components/Top';
 import { Store } from '../../redux/types';
@@ -52,8 +53,12 @@ export default () => {
     (hasNew) => dispatch(toggleHasNewAction(hasNew)),
     [dispatch]
   );
-  const updateRenderComments = useCallback(
-    () => dispatch(updateRenderCommentsAction()),
+  const updateComments = useCallback(
+    () => dispatch(updateCommentsAction()),
+    [dispatch]
+  );
+  const updateCacheComments = useCallback(
+    () => dispatch(updateCacheCommentsAction()),
     [dispatch]
   );
 
@@ -80,7 +85,7 @@ export default () => {
     if (comments && cacheComments && cacheComments.length > 0) {
       let notDuplicate = true;
 
-      comments.map((item: any) => {
+      comments.map((item: CreateCommentInput) => {
         if (item.id === cacheComments[cacheComments.length - 1].id) {
           notDuplicate = false;
         }
@@ -88,15 +93,15 @@ export default () => {
         return notDuplicate;
       });
 
-      if (notDuplicate) {
-        if (toNew) {
-          updateRenderComments();
-        }
+      if (notDuplicate && toNew) {
+        updateComments();
       }
+
+      updateCacheComments();
 
       toggleHasNew(notDuplicate);
     }
-  }, [cacheComments, comments, toNew, updateRenderComments]);
+  }, [cacheComments]);
 
   return (
     <Top

@@ -11,6 +11,8 @@ export const toggleHasNewAction = createAction(actionTypes.TOGGLE_HAS_NEW);
 
 export const toggleLoadNewAction = createAction(actionTypes.TOGGLE_LOAD_NEW);
 
-export const updateRenderCommentsAction = createAction(actionTypes.UPDATE_RENDER_DATA);
+export const updateCommentsAction = createAction(actionTypes.UPDATE_RENDER);
+
+export const updateCacheCommentsAction = createAction(actionTypes.UPDATE_CACHE);
 
 
