@@ -14,6 +14,7 @@ import { createComment } from '../../graphql/mutations';
 import { getCommentsByRoom } from '../../graphql/queries';
 import { CreateCommentInput } from '../../API';
 import { COMMENT_LIMIT } from '../../constants';
+import isNgWord from '../../utils/isNgWord';
 
 const setIntervalWithConditionHelper = (index: number, time: number) =>
   eventChannel((emitter) => {
@@ -53,7 +54,7 @@ function* createSaga() {
       userImage,
       isOfficialAccount,
       roomID,
-      isNgWord: true,
+      isNgWord: isNgWord(content),
     };
 
     try {
