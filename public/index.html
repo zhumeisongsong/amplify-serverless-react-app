@@ -9,9 +9,10 @@
   <meta name="description" content="Web site created using create-react-app" />
   <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
   <script>
+    const randomUserId = Math.random().toString(36).slice(-8);
     const roomId = "room-test-2";
-    const userName = "dev";
-    const userId = "localhost-001";
+    const userName = randomUserId;
+    const userId = randomUserId;
     const userImage = "";
     const isOfficialAccount = true;
 
