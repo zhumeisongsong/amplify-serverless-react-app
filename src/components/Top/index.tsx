@@ -20,7 +20,7 @@ export default ({
   createComment,
   commentTotalCount,
   toggleLoadNew,
-  cacheComments,
+  toggleHasNew,
 }: TopProps) => {
   return (
     <PageContainer>
@@ -46,6 +46,7 @@ export default ({
                     hasNew={hasNew}
                     listComments={listComments}
                     toggleLoadNew={toggleLoadNew}
+                    toggleHasNew={toggleHasNew}
                   />
                   <CommentSubmit
                     createComment={createComment}

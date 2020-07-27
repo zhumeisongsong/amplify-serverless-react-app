@@ -53,10 +53,9 @@ export default () => {
     (hasNew) => dispatch(toggleHasNewAction(hasNew)),
     [dispatch]
   );
-  const updateComments = useCallback(
-    () => dispatch(updateCommentsAction()),
-    [dispatch]
-  );
+  const updateComments = useCallback(() => dispatch(updateCommentsAction()), [
+    dispatch,
+  ]);
   const updateCacheComments = useCallback(
     () => dispatch(updateCacheCommentsAction()),
     [dispatch]
@@ -99,7 +98,9 @@ export default () => {
 
       updateCacheComments();
 
-      toggleHasNew(notDuplicate);
+      if (notDuplicate && !toNew) {
+        toggleHasNew(notDuplicate);
+      }
     }
   }, [cacheComments]);
 

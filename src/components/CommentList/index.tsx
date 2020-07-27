@@ -12,12 +12,14 @@ export default ({
   toNew,
   hasNew,
   toggleLoadNew,
+  toggleHasNew
 }: TopProps) => {
   useEffect(() => {
     const list = document.getElementById('commentList');
 
-    if (list && toNew) {
+    if (list && toNew && toggleHasNew) {
       list.scrollTop = list.scrollHeight;
+      toggleHasNew(false);
     }
   }, [comments, toNew]);
 
@@ -38,8 +40,9 @@ export default ({
   const handleButtonClick = () => {
     const list = document.getElementById('commentList');
 
-    if (list && toggleLoadNew) {
+    if (list && toggleLoadNew && toggleHasNew) {
       toggleLoadNew(true);
+      toggleHasNew(false);
 
       setTimeout(() => {
         list.scrollTop = list.scrollHeight;
