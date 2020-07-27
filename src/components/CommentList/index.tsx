@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { CommentList } from './style';
 import { TopProps } from '../../containers/Top';
 import { CreateCommentInput } from '../../API';
-import imageAvatarDefault from '../../assets/images/avatar-default.svg';
 import { Button } from 'antd';
 
 export default ({
@@ -11,7 +10,7 @@ export default ({
   toNew,
   hasNew,
   toggleLoadNew,
-  toggleHasNew
+  toggleHasNew,
 }: TopProps) => {
   useEffect(() => {
     const list = document.getElementById('commentList');
@@ -60,9 +59,7 @@ export default ({
                   <div
                     className={`image ${item.userImage ? '' : 'is-default'}`}
                     style={{
-                      backgroundImage: `url('${
-                        item.userImage ? item.userImage : imageAvatarDefault
-                        }')`,
+                      backgroundImage: `url('${item.userImage}')`,
                     }}
                   />
                   <div className="text">
