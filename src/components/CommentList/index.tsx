@@ -3,7 +3,6 @@ import { CommentList } from './style';
 import { TopProps } from '../../containers/Top';
 import { CreateCommentInput } from '../../API';
 import imageAvatarDefault from '../../assets/images/avatar-default.svg';
-import imageOfficial from '../../assets/images/official.png';
 import { Button } from 'antd';
 
 export default ({
@@ -70,7 +69,7 @@ export default ({
                     <div className="user-name">
                       {item.userName}{' '}
                       {item.isOfficialAccount && (
-                        <img src={imageOfficial} alt="offical-account" />
+                        <img src="" alt="offical-account" />
                       )}
                     </div>
                     <div className="content">{item.content}</div>

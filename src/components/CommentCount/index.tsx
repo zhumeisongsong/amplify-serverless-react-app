@@ -1,12 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 import { TopProps } from '../../containers/Top';
-import iconComment from '../../assets/images/icon-comment.svg';
 
 export default ({ commentTotalCount }: TopProps) => {
   return (
     <CommentCount>
-      <img src={iconComment} alt="comment" />
+      <img src="" alt="comment" />
       コメント数： {commentTotalCount}
     </CommentCount>
   );
