@@ -1,7 +1,6 @@
 import handleActions from '../../utils/handleActions';
 import actionTypes from './actionTypes';
 import { CreateCommentInput } from '../../API';
-import { reverse } from 'dns';
 
 export interface CommentState {
   listData?: CreateCommentInput[];
@@ -33,21 +32,13 @@ export default handleActions(
     [actionTypes.LIST_HISTORY_SUCCESS]: (
       state: CommentState,
       { payload: { listData } }: { payload: CommentState; type: string }
-    ) => {
-      let combineListData = [...state.listData];
-
-      if (listData && listData.length > 0) {
-        combineListData = [...listData, ...state.listData];
-      }
-
-      return {
-        ...state,
-        listData: [
-          ...(listData && listData.length > 0 ? [...listData] : []),
-          ...state.listData,
-        ],
-      };
-    },
+    ) => ({
+      ...state,
+      listData: [
+        ...(listData && listData.length > 0 ? [...listData] : []),
+        ...state.listData,
+      ],
+    }),
     [actionTypes.UPDATE_RENDER_SUCCESS]: (
       state: CommentState,
       { payload: { listData } }: { payload: CommentState; type: string }

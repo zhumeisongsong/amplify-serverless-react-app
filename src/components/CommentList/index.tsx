@@ -35,7 +35,15 @@ export default ({
     }
     if (list) {
       if (list.scrollTop === 0 && listHistoryComments) {
+        const beforeListHeight = list.scrollHeight;
+
         listHistoryComments();
+
+        setTimeout(() => {
+          const newListHeight = list.scrollHeight;
+
+          list.scrollTop = newListHeight - beforeListHeight - 50;
+        }, 500);
       }
     }
   };

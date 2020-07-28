@@ -3,12 +3,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getRoomAction } from '../../redux/Room/actions';
 import {
   listCommentsAction,
-  listHistoryCommentsAction,
   createCommentAction,
   toggleLoadNewAction,
   toggleHasNewAction,
   updateCommentsAction,
   updateCacheCommentsAction,
+  listHistoryCommentsAction
 } from '../../redux/Comment/actions';
 import Top from '../../components/Top';
 import { Store } from '../../redux/types';
