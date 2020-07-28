@@ -16,7 +16,7 @@ export default ({
   comments,
   toNew,
   hasNew,
-  listComments,
+  listHistoryComments,
   createComment,
   commentTotalCount,
   toggleLoadNew,
@@ -44,7 +44,7 @@ export default ({
                     comments={comments}
                     toNew={toNew}
                     hasNew={hasNew}
-                    listComments={listComments}
+                    listHistoryComments={listHistoryComments}
                     toggleLoadNew={toggleLoadNew}
                     toggleHasNew={toggleHasNew}
                   />

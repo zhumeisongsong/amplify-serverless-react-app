@@ -78,6 +78,7 @@ function* listSaga() {
   yield takeEvery(actionTypes.LIST, function* _() {
     const roomID: string = yield select((state) => state.room.id);
     const { userId } = yield select((state) => state.user);
+    const { initLoading } = yield select((state) => state.comment);
 
     try {
       const res: any = yield call(
@@ -105,17 +106,89 @@ function* listSaga() {
           },
         })
       );
-      const data = res.data.getCommentsByRoom.items;
 
       yield put({
-        type: actionTypes.SET_CACHE_SUCCESS,
+        type: actionTypes.UPDATE_CACHE_SUCCESS,
         payload: {
-          cacheData: data,
+          cacheData: res.data.getCommentsByRoom.items,
         },
       });
+
+      if (initLoading) {
+        yield put({
+          type: actionTypes.LIST_SUCCESS,
+          payload: {
+            nextToken: res.data.getCommentsByRoom.nextToken,
+          },
+        });
+
+        yield put({
+          type: actionTypes.TOGGLE_IS_INIT_LOADING,
+          payload: false,
+        });
+      }
     } catch (error) {
       console.log(error);
       console.log(error.errors[0].message);
+    }
+  });
+}
+
+function* listHistorySaga() {
+  yield takeEvery(actionTypes.LIST_HISTORY, function* _() {
+    const roomID: string = yield select((state) => state.room.id);
+    const { userId } = yield select((state) => state.user);
+    const { nextToken } = yield select((state) => state.comment);
+
+    const variables: any = {
+      limit: COMMENT_LIMIT,
+      roomID,
+      sortDirection: 'DESC',
+      filter: {
+        or: [
+          {
+            isNgWord: {
+              eq: false,
+            },
+          },
+          {
+            isNgWord: {
+              eq: true,
+            },
+            userId: {
+              eq: userId,
+            },
+          },
+        ],
+      },
+    };
+
+    if (nextToken) {
+      variables.nextToken = nextToken;
+
+      try {
+        const res: any = yield call(
+          [API, 'graphql'],
+          graphqlOperation(getCommentsByRoom, variables)
+        );
+
+        yield put({
+          type: actionTypes.LIST_HISTORY_SUCCESS,
+          payload: {
+            listData: res.data.getCommentsByRoom.items.reverse(),
+          },
+        });
+
+        yield put({
+          type: actionTypes.LIST_SUCCESS,
+          payload: {
+            nextToken: res.data.getCommentsByRoom.nextToken,
+          },
+        });
+      } catch (error) {
+        console.log(error);
+        console.log(error.errors[0].message);
+      }
     }
   });
 }
@@ -125,7 +198,7 @@ function* updateRenderListSaga() {
     const { listData, cacheData } = yield select((state) => state.comment);
 
     yield put({
-      type: actionTypes.LIST_SUCCESS,
+      type: actionTypes.UPDATE_RENDER_SUCCESS,
       payload: {
         listData: [...listData, cacheData[cacheData.length - 1]],
       },
@@ -138,7 +211,7 @@ function* updateCacheListSaga() {
     const { cacheData } = yield select((state) => state.comment);
 
     yield put({
-      type: actionTypes.SET_CACHE_SUCCESS,
+      type: actionTypes.UPDATE_CACHE_SUCCESS,
       payload: {
         cacheData: cacheData.slice(0, cacheData.length - 1),
       },
@@ -150,6 +223,7 @@ export default function* rootSaga() {
   yield all([
     fork(createSaga),
     fork(listSaga),
+    fork(listHistorySaga),
     fork(updateRenderListSaga),
     fork(updateCacheListSaga),
   ]);

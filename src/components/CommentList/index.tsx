@@ -5,7 +5,7 @@ import { CreateCommentInput } from '../../API';
 import { Button } from 'antd';
 
 export default ({
-  listComments,
+  listHistoryComments,
   comments,
   toNew,
   hasNew,
@@ -31,6 +31,12 @@ export default ({
         }
       } else {
         toggleLoadNew(true);
+      }
+    }
+    if (list) {
+      if (list.scrollTop === 0 && listHistoryComments) {
+        console.log('loading history');
+        listHistoryComments();
       }
     }
   };

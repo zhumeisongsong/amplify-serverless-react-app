@@ -3,6 +3,8 @@ import actionTypes from './actionTypes';
 
 export const listCommentsAction = createAction(actionTypes.LIST);
 
+export const listHistoryCommentsAction = createAction(actionTypes.LIST_HISTORY);
+
 export const createCommentAction = createAction(actionTypes.CREATE);
 
 export const createCommentSuccessAction = createAction(actionTypes.CREATE_SUCCESS);

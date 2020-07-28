@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getRoomAction } from '../../redux/Room/actions';
 import {
   listCommentsAction,
+  listHistoryCommentsAction,
   createCommentAction,
   toggleLoadNewAction,
   toggleHasNewAction,
@@ -23,6 +24,7 @@ export interface TopProps {
   hasNew?: boolean;
   commentTotalCount?: number;
   listComments?: () => Action<any>;
+  listHistoryComments?: () => Action<any>;
   createComment?: (values: any) => Action<any>;
   toggleLoadNew?: (toNew: boolean) => Action<any>;
   toggleHasNew?: (hasNew: boolean) => Action<any>;
@@ -39,6 +41,9 @@ export default () => {
   const hasNew = useSelector((store: Store) => store.comment.hasNew);
   const getRoom = useCallback(() => dispatch(getRoomAction()), [dispatch]);
   const listComments = useCallback(() => dispatch(listCommentsAction()), [
+    dispatch,
+  ]);
+  const listHistoryComments = useCallback(() => dispatch(listHistoryCommentsAction()), [
     dispatch,
   ]);
   const createComment = useCallback(
@@ -111,7 +116,7 @@ export default () => {
       hasNew={hasNew}
       commentTotalCount={commentTotalCount}
       cacheComments={cacheComments}
-      listComments={listComments}
+      listHistoryComments={listHistoryComments}
       createComment={createComment}
       toggleLoadNew={toggleLoadNew}
       toggleHasNew={toggleHasNew}

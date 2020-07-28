@@ -8,6 +8,5 @@ export default {
   GET: 'GET_room',
   GET_SUCCESS: 'GET_SUCCESS_room',
   LIST: 'LIST_room',
-  LIST_SUCCESS: 'LIST_SUCCESS_room',
-  RESET: 'RESET'
+  LIST_SUCCESS: 'LIST_SUCCESS_room'
 };

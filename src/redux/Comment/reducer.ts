@@ -1,38 +1,65 @@
 import handleActions from '../../utils/handleActions';
 import actionTypes from './actionTypes';
 import { CreateCommentInput } from '../../API';
+import { reverse } from 'dns';
 
 export interface CommentState {
   listData?: CreateCommentInput[];
   cacheData?: any[];
   toNew?: boolean;
   hasNew?: boolean;
-  nextToken?: string;
+  initLoading?: boolean;
+  nextToken?: string | null;
 }
 
 const initialState: CommentState = {
   listData: [],
   cacheData: [],
   toNew: true,
-  hasNew: false
+  hasNew: false,
+  initLoading: true,
+  nextToken: null,
 };
 
 export default handleActions(
   {
     [actionTypes.LIST_SUCCESS]: (
       state: CommentState,
-      {
-        payload: { listData, nextToken },
-      }: { payload: CommentState; type: string }
+      { payload: { nextToken } }: { payload: CommentState; type: string }
+    ) => ({
+      ...state,
+      nextToken,
+    }),
+    [actionTypes.LIST_HISTORY_SUCCESS]: (
+      state: CommentState,
+      { payload: { listData } }: { payload: CommentState; type: string }
+    ) => {
+      let combineListData = [...state.listData];
+
+      if (listData && listData.length > 0) {
+        combineListData = [...listData, ...state.listData];
+      }
+
+      alert('LIST_HISTORY_SUCCESS');
+
+      return {
+        ...state,
+        listData: [
+          ...(listData && listData.length > 0 ? [...listData] : []),
+          ...state.listData,
+        ],
+      };
+    },
+    [actionTypes.UPDATE_RENDER_SUCCESS]: (
+      state: CommentState,
+      { payload: { listData } }: { payload: CommentState; type: string }
     ) => ({
       ...state,
       listData,
     }),
-    [actionTypes.SET_CACHE_SUCCESS]: (
+    [actionTypes.UPDATE_CACHE_SUCCESS]: (
       state: CommentState,
-      {
-        payload: { cacheData },
-      }: { payload: CommentState; type: string }
+      { payload: { cacheData } }: { payload: CommentState; type: string }
     ) => ({
       ...state,
       cacheData,
@@ -57,6 +84,13 @@ export default handleActions(
     ) => ({
       ...state,
       hasNew: payload,
+    }),
+    [actionTypes.TOGGLE_IS_INIT_LOADING]: (
+      state: CommentState,
+      { payload }: { payload: boolean; type: string }
+    ) => ({
+      ...state,
+      initLoading: payload,
     }),
   },
   initialState
