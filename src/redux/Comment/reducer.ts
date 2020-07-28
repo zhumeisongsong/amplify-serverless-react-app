@@ -40,8 +40,6 @@ export default handleActions(
         combineListData = [...listData, ...state.listData];
       }
 
-      alert('LIST_HISTORY_SUCCESS');
-
       return {
         ...state,
         listData: [
