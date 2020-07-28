@@ -35,7 +35,6 @@ export default ({
     }
     if (list) {
       if (list.scrollTop === 0 && listHistoryComments) {
-        console.log('loading history');
         listHistoryComments();
       }
     }
