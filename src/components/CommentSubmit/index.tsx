@@ -6,15 +6,22 @@ import { TopProps } from '../../containers/Top';
 export default ({ createComment, toggleLoadNew }: TopProps) => {
   const [form] = Form.useForm();
   const [isDisabled, setDisabled] = useState(true);
+  const [delayDisabled, setDelayDisabled] = useState(false);
   const [value, setValue] = useState('');
   const input = useRef<Input>(null);
 
   const onFinish = (values: any) => {
+    if (delayDisabled) return false;
+    setDelayDisabled(true);
+    setDisabled(true);
     if (createComment) {
       createComment(values);
 
       form.resetFields();
       input.current?.focus();
+      setTimeout(() => {
+        setDelayDisabled(false);
+      }, 3000);
 
       if (toggleLoadNew) {
         toggleLoadNew(true);
@@ -23,8 +30,8 @@ export default ({ createComment, toggleLoadNew }: TopProps) => {
   };
 
   useEffect(() => {
-    setDisabled(!form.getFieldValue('content'));
-  }, [form, value]);
+    !delayDisabled && setDisabled(!form.getFieldValue('content'));
+  }, [delayDisabled, form, value]);
 
   return (
     <CommentForm>
