@@ -32,7 +32,7 @@ export default ({ createComment, toggleLoadNew }: TopProps) => {
           <Input placeholder="コメント入力してください" />
         </Form.Item>
 
-        <Button htmlType="submit">送る</Button>
+        <Button htmlType="submit" style={{opacity: form.getFieldValue('content') ? 1 : 0.7}}>送る</Button>
       </Form>
     </CommentForm>
   );
