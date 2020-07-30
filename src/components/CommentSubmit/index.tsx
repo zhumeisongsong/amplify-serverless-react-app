@@ -28,7 +28,7 @@ export default ({ createComment, toggleLoadNew }: TopProps) => {
         }}
         onFinish={onFinish}
       >
-        <Form.Item name="content" rules={[{ required: true }, { max: 100 }]}>
+        <Form.Item name="content" normalize={(value) => value.trim()} rules={[{ required: true }, { max: 100 }]}>
           <Input placeholder="コメント入力してください" />
         </Form.Item>
 
