@@ -71,15 +71,19 @@ export default ({
                 <li key={item.id}>
                   <div
                     className={`image ${item.userImage ? '' : 'is-default'}`}
-                    style={{
-                      backgroundImage: `url('${item.userImage}')`,
-                    }}
+                    style={
+                      item.userImage
+                        ? {
+                          backgroundImage: `url('${item.userImage}')`,
+                        }
+                        : {}
+                    }
                   />
                   <div className="text">
                     <div className="user-name">
-                      {item.userName}{' '}
+                      {item.userName}
                       {item.isOfficialAccount && (
-                        <img src="" alt="offical-account" />
+                        <div className="icon-official-account"></div>
                       )}
                     </div>
                     <div className="content">{item.content}</div>
