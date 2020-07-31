@@ -1,22 +1,52 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Form, Input, Button } from 'antd';
 import { CommentForm } from './style';
 import { TopProps } from '../../containers/Top';
 
-export default ({ createComment, toggleLoadNew }: TopProps) => {
+interface InputProps extends TopProps {
+  toggleError?: any;
+}
+
+export default ({ createComment, toggleLoadNew, toggleError }: InputProps) => {
   const [form] = Form.useForm();
+  const [isDisabled, setDisabled] = useState(true);
+  const [delayDisabled, setDelayDisabled] = useState(false);
+  const [value, setValue] = useState('');
+  const input = useRef<Input>(null);
 
   const onFinish = (values: any) => {
+    if (delayDisabled) return false;
+
+    if(values.content.length > 80) {
+      toggleError(true);
+      setTimeout(() => {
+        toggleError(false);
+      }, 1500);
+      return false;
+    }
+
+    setDelayDisabled(true);
+    setDisabled(true);
+
     if (createComment) {
       createComment(values);
 
       form.resetFields();
+      input.current?.focus();
+
+      setTimeout(() => {
+        setDelayDisabled(false);
+      }, 3000);
 
       if (toggleLoadNew) {
         toggleLoadNew(true);
       }
     }
   };
+
+  useEffect(() => {
+    !delayDisabled && setDisabled(!form.getFieldValue('content'));
+  }, [delayDisabled, form, value]);
 
   return (
     <CommentForm>
@@ -28,11 +58,11 @@ export default ({ createComment, toggleLoadNew }: TopProps) => {
         }}
         onFinish={onFinish}
       >
-        <Form.Item name="content" rules={[{ required: true }, { max: 100 }]}>
-          <Input placeholder="コメント入力してください" />
+        <Form.Item name="content" normalize={(value) => value.trim()} rules={[{ required: true }, { max: 100 }]}>
+          <Input placeholder="コメント入力してください" ref={input} onChange={(e) => setValue(e.target.value)} />
         </Form.Item>
 
-        <Button htmlType="submit">送る</Button>
+        <Button htmlType="submit" disabled={isDisabled} style={{opacity: isDisabled ? 0.5 : 1}}>送る</Button>
       </Form>
     </CommentForm>
   );
