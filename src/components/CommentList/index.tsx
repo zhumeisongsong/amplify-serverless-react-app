@@ -21,7 +21,7 @@ export default ({
       list.scrollTop = list.scrollHeight;
       toggleHasNew(false);
     }
-  }, [comments, toNew, toggleHasNew]);
+  }, [comments, toNew]);
 
   useEffect(() => {
     if (!beforeHeight) return;
@@ -48,11 +48,6 @@ export default ({
       if (list.scrollTop === 0 && listHistoryComments) {
         listHistoryComments();
         setBeforeHeight(list.scrollHeight);
-        // setTimeout(() => {
-        //   const newListHeight = list.scrollHeight;
-
-        //   list.scrollTop = newListHeight - beforeListHeight - 50;
-        // }, 500);
       }
     }
   };
