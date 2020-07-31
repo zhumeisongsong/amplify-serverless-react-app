@@ -32,7 +32,7 @@ const Introduction = styled.div`
     letter-spacing: 0.75px;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 992px) {
     height: calc(${windowHeight}px - 67vw);
     padding-top: 48px;
     overflow-y: scroll;

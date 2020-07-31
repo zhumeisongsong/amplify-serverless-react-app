@@ -58,7 +58,7 @@ export const PageContainer = styled.div`
     position: relative;
   }
 
-  @media (min-width: 769px) {
+  @media (min-width: 993px) {
     .comment-video-container {
       .wrapper {
         flex-direction: row;
@@ -84,7 +84,7 @@ export const PageContainer = styled.div`
     }
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 992px) {
     .hidden-sp {
       display: none;
     }
@@ -127,7 +127,7 @@ export const TabTitle = styled(TabList)`
   background-color: #fff;
   z-index: 9;
 
-  @media (min-width: 769px) {
+  @media (min-width: 993px) {
     &.hidden-pc {
       display: none;
     }
@@ -166,7 +166,7 @@ export const TabTitleItem = styled(Tab)`
 export const TabContent = styled(TabPanel)`
   height: 100%;
 
-  @media (min-width: 769px) {
+  @media (min-width: 993px) {
     &.hidden-pc {
       display: none;
     }

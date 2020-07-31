@@ -34,7 +34,7 @@ const CommentCount = styled.div`
     background-size: contain;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 992px) {
     display: none;
   }
 `;
