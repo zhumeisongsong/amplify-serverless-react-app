@@ -171,8 +171,4 @@ export const TabContent = styled(TabPanel)`
       display: none;
     }
   }
-
-  /* @media (max-width: 768px) {
-    padding-top: 48px;
-  } */
 `;
