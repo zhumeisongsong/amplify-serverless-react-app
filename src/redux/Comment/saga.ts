@@ -10,7 +10,6 @@ import {
 } from 'redux-saga/effects';
 import { API, graphqlOperation } from 'aws-amplify';
 import actionTypes from './actionTypes';
-import roomActionTypes from '../Room/actionTypes';
 import { createComment } from '../../graphql/mutations';
 import { getCommentsByRoom, getRoom } from '../../graphql/queries';
 import { CreateCommentInput } from '../../API';
@@ -18,7 +17,6 @@ import { COMMENT_LIMIT } from '../../constants';
 import isNgWord from '../../utils/isNgWord';
 import { updateRoomSaga, getRoomSaga } from '../Room/saga';
 import { showToastSaga } from '../Toast/saga';
-import messages from '../../constants/messages';
 
 const setIntervalWithConditionHelper = (index: number, time: number) =>
   eventChannel((emitter) => {
@@ -75,7 +73,7 @@ function* createSaga() {
         yield call(updateRoomSaga);
       }
     } catch (error) {
-      showToastSaga(messages.submitError);
+      yield call(showToastSaga, 'submitError');
     }
   });
 }
@@ -136,8 +134,7 @@ function* listSaga() {
 
       yield call(getRoomSaga);
     } catch (error) {
-      console.log(error);
-      console.log(error.errors[0].message);
+      yield call(showToastSaga, 'unexpectedError');
     }
   });
 }
@@ -194,8 +191,7 @@ function* listHistorySaga() {
           },
         });
       } catch (error) {
-        console.log(error);
-        console.log(error.errors[0].message);
+        yield call(showToastSaga, 'unexpectedError');
       }
     }
   });

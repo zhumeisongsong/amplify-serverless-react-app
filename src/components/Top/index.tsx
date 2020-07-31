@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import ReactPlayerLoader from "@brightcove/react-player-loader";
+import ReactPlayerLoader from '@brightcove/react-player-loader';
 import CommentCount from '../../components/CommentCount';
 import CommentList from '../../components/CommentList';
 import CommentSubmit from '../../components/CommentSubmit';
@@ -13,11 +13,14 @@ import {
 } from './style';
 import { TopProps } from '../../containers/Top';
 import ErrorToast from '../ErrorToast';
+import Toast from '../Toast';
 
 export default ({
   comments,
   toNew,
   hasNew,
+  showToast,
+  toastMessage,
   listHistoryComments,
   createComment,
   commentTotalCount,
@@ -40,7 +43,7 @@ export default ({
                 videoId="6167142434001"
                 applicationId=""
                 options={{
-                  autoplay: "play",
+                  autoplay: 'play',
                   playsinline: true,
                 }}
               />
@@ -69,6 +72,7 @@ export default ({
                     toggleError={setError}
                   />
                   <ErrorToast msgJsx={errorJsx} />
+                  <Toast showToast={showToast} toastMessage={toastMessage} />
                 </TabContent>
                 <TabContent className="hidden-pc">
                   <Introduction />

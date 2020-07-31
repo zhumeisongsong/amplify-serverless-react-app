@@ -4,6 +4,7 @@ import actionTypes from './actionTypes';
 import commentActionTypes from '../Comment/actionTypes';
 import { createRoom, updateRoom } from '../../graphql/mutations';
 import { getRoom } from '../../graphql/queries';
+import { showToastSaga } from '../Toast/saga';
 
 export function* getRoomSaga() {
   const id = yield select((state) => state.room.id);
@@ -20,8 +21,7 @@ export function* getRoomSaga() {
 
     return res;
   } catch (error) {
-    console.log(error);
-    console.log(error.errors[0].message);
+    yield call(showToastSaga, 'unexpectedError');
   }
 }
 
@@ -50,8 +50,7 @@ export function* updateRoomSaga() {
       });
     }
   } catch (error) {
-    console.log(error);
-    console.log(error.errors[0].message);
+    yield call(showToastSaga, 'unexpectedError');
   }
 }
 
@@ -71,7 +70,7 @@ function* createSaga() {
         });
       }
     } catch (error) {
-      console.log(error.errors[0].message);
+      yield call(showToastSaga, 'unexpectedError');
     }
   });
 }
@@ -102,7 +101,7 @@ function* getSaga() {
         });
       }
     } catch (error) {
-      console.log(error.errors[0].message);
+      yield call(showToastSaga, 'unexpectedError');
     }
   });
 }

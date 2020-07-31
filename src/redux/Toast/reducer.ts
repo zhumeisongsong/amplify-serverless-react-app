@@ -3,31 +3,28 @@ import actionTypes from './actionTypes';
 
 export interface ToastState {
   message: string;
-  isError: boolean;
+  showToast: false;
 }
 
 const initialState: ToastState = {
   message: '',
-  isError: false,
+  showToast: false,
 };
 
 export default handleActions(
   {
     [actionTypes.SHOW_SUCCESS]: (
       state: ToastState,
-      { payload: { message, isError } }: { payload: ToastState; type: string }
+      { payload: { message } }: { payload: ToastState; type: string }
     ) => ({
       ...state,
       message,
-      isError,
+      showToast: true,
     }),
-    [actionTypes.HIDDEN_SUCCESS]: (
-      state: ToastState,
-      { payload: { message, isError } }: { payload: ToastState; type: string }
-    ) => ({
+    [actionTypes.HIDDEN_SUCCESS]: (state: ToastState) => ({
       ...state,
-      message,
-      isError,
+      message: '',
+      isError: false,
     }),
   },
   initialState

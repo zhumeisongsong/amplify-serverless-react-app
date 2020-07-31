@@ -23,6 +23,8 @@ export interface TopProps {
   toNew?: boolean;
   hasNew?: boolean;
   commentTotalCount?: number;
+  showToast?: boolean;
+  toastMessage?: string;
   listComments?: () => Action<any>;
   listHistoryComments?: () => Action<any>;
   createComment?: (values: any) => Action<any>;
@@ -39,6 +41,8 @@ export default () => {
   const cacheComments = useSelector((store: Store) => store.comment.cacheData);
   const toNew = useSelector((store: Store) => store.comment.toNew);
   const hasNew = useSelector((store: Store) => store.comment.hasNew);
+  const showToast = useSelector((store: Store) => store.toast.showToast);
+  const toastMessage = useSelector((store: Store) => store.toast.message);
   const getRoom = useCallback(() => dispatch(getRoomAction()), [dispatch]);
   const listComments = useCallback(() => dispatch(listCommentsAction()), [
     dispatch,
@@ -120,6 +124,8 @@ export default () => {
       createComment={createComment}
       toggleLoadNew={toggleLoadNew}
       toggleHasNew={toggleHasNew}
+      showToast={showToast}
+      toastMessage={toastMessage}
     />
   );
 };
