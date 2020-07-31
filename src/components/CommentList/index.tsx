@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { CommentList } from './style';
 import { TopProps } from '../../containers/Top';
 import { CreateCommentInput } from '../../API';
@@ -12,6 +12,8 @@ export default ({
   toggleLoadNew,
   toggleHasNew,
 }: TopProps) => {
+  const [beforeHeight, setBeforeHeight] = useState(0);
+
   useEffect(() => {
     const list = document.getElementById('commentList');
 
@@ -20,6 +22,15 @@ export default ({
       toggleHasNew(false);
     }
   }, [comments, toNew]);
+
+  useEffect(() => {
+    if (!beforeHeight) return;
+    const list = document.getElementById('commentList');
+    
+    const newListHeight = list.scrollHeight;
+    list.scrollTop = newListHeight - beforeHeight;
+    setBeforeHeight(0);
+  }, [comments]);
 
   const handleScroll = () => {
     const list = document.getElementById('commentList');
@@ -35,15 +46,8 @@ export default ({
     }
     if (list) {
       if (list.scrollTop === 0 && listHistoryComments) {
-        const beforeListHeight = list.scrollHeight;
-
         listHistoryComments();
-
-        setTimeout(() => {
-          const newListHeight = list.scrollHeight;
-
-          list.scrollTop = newListHeight - beforeListHeight - 50;
-        }, 500);
+        setBeforeHeight(list.scrollHeight);
       }
     }
   };
