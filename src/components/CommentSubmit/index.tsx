@@ -16,8 +16,11 @@ export default ({ createComment, toggleLoadNew, toggleError }: InputProps) => {
 
   const onFinish = (values: any) => {
     if (delayDisabled) return false;
+    const value = {
+      content: values.content.trim(),
+    };
 
-    if(values.content.length > 80) {
+    if (value.content.length > 80) {
       toggleError(<>投稿できる文字数の上限を<br />超えています。</>);
       return false;
     }
@@ -26,7 +29,7 @@ export default ({ createComment, toggleLoadNew, toggleError }: InputProps) => {
     setDisabled(true);
 
     if (createComment) {
-      createComment(values);
+      createComment(value);
 
       form.resetFields();
       input.current?.focus();
@@ -42,8 +45,8 @@ export default ({ createComment, toggleLoadNew, toggleError }: InputProps) => {
   };
 
   useEffect(() => {
-    !delayDisabled && setDisabled(!form.getFieldValue('content'));
-  }, [delayDisabled, form, value]);
+    !delayDisabled && setDisabled(!value.trim());
+  }, [delayDisabled, value]);
 
   return (
     <CommentForm>
@@ -55,7 +58,7 @@ export default ({ createComment, toggleLoadNew, toggleError }: InputProps) => {
         }}
         onFinish={onFinish}
       >
-        <Form.Item name="content" normalize={(value) => value.trim()} rules={[{ required: true }, { max: 100 }]}>
+        <Form.Item name="content" rules={[{ required: true }]}>
           <Input placeholder="コメント入力してください" ref={input} onChange={(e) => setValue(e.target.value)} />
         </Form.Item>
 
