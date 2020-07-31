@@ -153,7 +153,7 @@ export const TabTitleItem = styled(Tab)`
     &::after {
       content: '';
       position: absolute;
-      bottom: 0;
+      bottom: 8px;
       left: 50%;
       width: 100px;
       height: 2px;
