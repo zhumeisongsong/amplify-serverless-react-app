@@ -18,10 +18,7 @@ export default ({ createComment, toggleLoadNew, toggleError }: InputProps) => {
     if (delayDisabled) return false;
 
     if(values.content.length > 80) {
-      toggleError(true);
-      setTimeout(() => {
-        toggleError(false);
-      }, 1500);
+      toggleError(<>投稿できる文字数の上限を<br />超えています。</>);
       return false;
     }
 
