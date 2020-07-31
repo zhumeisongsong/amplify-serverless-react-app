@@ -134,7 +134,7 @@ function* listSaga() {
 
       yield call(getRoomSaga);
     } catch (error) {
-      yield call(showToastSaga, 'unexpectedError');
+      console.log(error);
     }
   });
 }
@@ -191,7 +191,7 @@ function* listHistorySaga() {
           },
         });
       } catch (error) {
-        yield call(showToastSaga, 'unexpectedError');
+        console.log(error);
       }
     }
   });

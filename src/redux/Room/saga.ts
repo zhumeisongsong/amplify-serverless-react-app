@@ -21,7 +21,7 @@ export function* getRoomSaga() {
 
     return res;
   } catch (error) {
-    yield call(showToastSaga, 'unexpectedError');
+    console.log(error);
   }
 }
 
@@ -50,7 +50,7 @@ export function* updateRoomSaga() {
       });
     }
   } catch (error) {
-    yield call(showToastSaga, 'unexpectedError');
+    console.log(error);
   }
 }
 
@@ -70,7 +70,7 @@ function* createSaga() {
         });
       }
     } catch (error) {
-      yield call(showToastSaga, 'unexpectedError');
+      console.log(error);
     }
   });
 }
@@ -101,7 +101,7 @@ function* getSaga() {
         });
       }
     } catch (error) {
-      yield call(showToastSaga, 'unexpectedError');
+      console.log(error);
     }
   });
 }
