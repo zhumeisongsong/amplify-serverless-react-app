@@ -99,7 +99,7 @@ export const CommentList = styled.div`
   }
 
 
-  @media screen and (max-width: 992px) and (orientation: landscape) {
+  /* @media screen and (max-width: 992px) and (orientation: landscape) {
     height: 100vh;
-  }
+  } */
 `;
