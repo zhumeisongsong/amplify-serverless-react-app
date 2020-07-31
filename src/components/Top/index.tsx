@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import CommentCount from '../../components/CommentCount';
 import CommentList from '../../components/CommentList';
 import CommentSubmit from '../../components/CommentSubmit';
@@ -9,9 +9,9 @@ import {
   TabTitle,
   TabTitleItem,
   TabContent,
-  ErrorToast,
 } from './style';
 import { TopProps } from '../../containers/Top';
+import ErrorToast from '../ErrorToast';
 
 export default ({
   comments,
@@ -23,7 +23,7 @@ export default ({
   toggleLoadNew,
   toggleHasNew,
 }: TopProps) => {
-  const [hasError, setError] = useState(false);
+  const [errorJsx, setError] = useState(false);
 
   return (
     <PageContainer>
@@ -56,9 +56,7 @@ export default ({
                     toggleLoadNew={toggleLoadNew}
                     toggleError={setError}
                   />
-                  {hasError && <ErrorToast>
-                    投稿できる文字数の上限を<br />超えています。
-                  </ErrorToast>}
+                  <ErrorToast msgJsx={errorJsx} />
                 </TabContent>
                 <TabContent className="hidden-pc">
                   <Introduction />
