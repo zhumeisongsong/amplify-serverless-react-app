@@ -62,6 +62,8 @@ function* createSaga() {
         graphqlOperation(createComment, { input: data })
       );
 
+      console.log(res);
+
       if (res.data.createComment) {
         yield put({
           type: actionTypes.CREATE_SUCCESS,
@@ -73,6 +75,7 @@ function* createSaga() {
         yield call(updateRoomSaga);
       }
     } catch (error) {
+      console.log(error);
       console.log(error.errors[0].message);
     }
   });
