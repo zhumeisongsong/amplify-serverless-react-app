@@ -17,6 +17,8 @@ import { CreateCommentInput } from '../../API';
 import { COMMENT_LIMIT } from '../../constants';
 import isNgWord from '../../utils/isNgWord';
 import { updateRoomSaga, getRoomSaga } from '../Room/saga';
+import { showToastSaga } from '../Toast/saga';
+import messages from '../../constants/messages';
 
 const setIntervalWithConditionHelper = (index: number, time: number) =>
   eventChannel((emitter) => {
@@ -62,8 +64,6 @@ function* createSaga() {
         graphqlOperation(createComment, { input: data })
       );
 
-      console.log(res);
-
       if (res.data.createComment) {
         yield put({
           type: actionTypes.CREATE_SUCCESS,
@@ -75,8 +75,7 @@ function* createSaga() {
         yield call(updateRoomSaga);
       }
     } catch (error) {
-      console.log(error);
-      console.log(error.errors[0].message);
+      showToastSaga(messages.submitError);
     }
   });
 }

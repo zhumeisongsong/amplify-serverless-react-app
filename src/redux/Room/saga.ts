@@ -11,8 +11,6 @@ export function* getRoomSaga() {
   try {
     const res = yield call([API, 'graphql'], graphqlOperation(getRoom, { id }));
 
-    console.log(res);
-
     if (res.data.getRoom) {
       yield put({
         type: actionTypes.GET_SUCCESS,
