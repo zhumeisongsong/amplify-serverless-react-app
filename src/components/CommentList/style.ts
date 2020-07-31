@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+const windowHeight = window.innerHeight;
+
 export const CommentList = styled.div`
   position: relative;
   width: 100%;
@@ -81,7 +83,7 @@ export const CommentList = styled.div`
   }
 
   @media (max-width: 768px) {
-    height: calc(100vh - 57vw);
+    height: calc(${windowHeight}px - 57vw);
     ul {
       padding-top: 48px;
       padding-bottom: 64px;
