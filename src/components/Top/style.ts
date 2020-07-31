@@ -177,18 +177,3 @@ export const TabContent = styled(TabPanel)`
   } */
 `;
 
-export const ErrorToast = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 200px;
-  padding: 10px 0;
-  margin-top: -30px;
-  margin-left: -100px;
-  line-height: 25px;
-  text-align: center;
-  font-size: 14px;
-  color: #fff;
-  background-color: #171616;
-  border-radius: 5px;
-`;

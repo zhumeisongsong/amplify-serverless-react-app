@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-
+import React, { useState, useEffect } from 'react';
 import ReactPlayerLoader from "@brightcove/react-player-loader";
 import CommentCount from '../../components/CommentCount';
 import CommentList from '../../components/CommentList';
@@ -11,9 +10,9 @@ import {
   TabTitle,
   TabTitleItem,
   TabContent,
-  ErrorToast,
 } from './style';
 import { TopProps } from '../../containers/Top';
+import ErrorToast from '../ErrorToast';
 
 export default ({
   comments,
@@ -25,7 +24,7 @@ export default ({
   toggleLoadNew,
   toggleHasNew,
 }: TopProps) => {
-  const [hasError, setError] = useState(false);
+  const [errorJsx, setError] = useState(false);
 
   return (
     <PageContainer>
@@ -69,9 +68,7 @@ export default ({
                     toggleLoadNew={toggleLoadNew}
                     toggleError={setError}
                   />
-                  {hasError && <ErrorToast>
-                    投稿できる文字数の上限を<br />超えています。
-                  </ErrorToast>}
+                  <ErrorToast msgJsx={errorJsx} />
                 </TabContent>
                 <TabContent className="hidden-pc">
                   <Introduction />
