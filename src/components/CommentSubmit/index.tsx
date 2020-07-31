@@ -62,7 +62,7 @@ export default ({ createComment, toggleLoadNew, toggleError }: InputProps) => {
           <Input placeholder="コメント入力してください" ref={input} onChange={(e) => setValue(e.target.value)} />
         </Form.Item>
 
-        <Button htmlType="submit" disabled={isDisabled} style={{opacity: isDisabled ? 0.5 : 1}}>送る</Button>
+        <Button htmlType="submit" disabled={isDisabled} style={{opacity: isDisabled ? 0.5 : 1, cursor: isDisabled ? 'default' : 'pointer'}}>送る</Button>
       </Form>
     </CommentForm>
   );
