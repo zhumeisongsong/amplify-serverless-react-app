@@ -198,7 +198,7 @@ function* listHistorySaga() {
 }
 
 function* updateRenderListSaga() {
-  yield debounce(220, actionTypes.UPDATE_RENDER, function* _() {
+  yield debounce(200, actionTypes.UPDATE_RENDER, function* _() {
     const { listData, cacheData } = yield select((state) => state.comment);
 
     yield put({
@@ -211,7 +211,7 @@ function* updateRenderListSaga() {
 }
 
 function* updateCacheListSaga() {
-  yield debounce(220, actionTypes.UPDATE_CACHE, function* _() {
+  yield debounce(200, actionTypes.UPDATE_CACHE, function* _() {
     const { cacheData } = yield select((state) => state.comment);
 
     yield put({
