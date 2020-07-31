@@ -16,6 +16,9 @@ export default ({ createComment, toggleLoadNew, toggleError }: InputProps) => {
 
   const onFinish = (values: any) => {
     if (delayDisabled) return false;
+    const value = {
+      content: values.content.trim(),
+    };
 
     if (values.content.length > 80) {
       toggleError(
@@ -32,7 +35,7 @@ export default ({ createComment, toggleLoadNew, toggleError }: InputProps) => {
     setDisabled(true);
 
     if (createComment) {
-      createComment(values);
+      createComment(value);
 
       form.resetFields();
       input.current?.focus();
@@ -48,8 +51,8 @@ export default ({ createComment, toggleLoadNew, toggleError }: InputProps) => {
   };
 
   useEffect(() => {
-    !delayDisabled && setDisabled(!form.getFieldValue('content'));
-  }, [delayDisabled, form, value]);
+    !delayDisabled && setDisabled(!value.trim());
+  }, [delayDisabled, value]);
 
   return (
     <CommentForm>
@@ -63,8 +66,7 @@ export default ({ createComment, toggleLoadNew, toggleError }: InputProps) => {
       >
         <Form.Item
           name="content"
-          normalize={(value) => value.trim()}
-          rules={[{ required: true }, { max: 100 }]}
+          rules={[{ required: true }]}
         >
           <Input
             placeholder="コメント入力してください"
@@ -76,7 +78,10 @@ export default ({ createComment, toggleLoadNew, toggleError }: InputProps) => {
         <Button
           htmlType="submit"
           disabled={isDisabled}
-          style={{ opacity: isDisabled ? 0.5 : 1 }}
+          style={{ 
+            opacity: isDisabled ? 0.5 : 1,
+            cursor: isDisabled ? 'default' : 'pointer',
+          }}
         >
           送る
         </Button>
