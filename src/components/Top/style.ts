@@ -45,6 +45,15 @@ export const PageContainer = styled.div`
     background-color: #171616;
   }
 
+  .brightcove-react-player-loader {
+    width: 100%;
+    height: 100%;
+    video-js {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
   .comment {
     position: relative;
   }

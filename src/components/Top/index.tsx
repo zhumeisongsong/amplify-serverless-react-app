@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+
+import ReactPlayerLoader from "@brightcove/react-player-loader";
 import CommentCount from '../../components/CommentCount';
 import CommentList from '../../components/CommentList';
 import CommentSubmit from '../../components/CommentSubmit';
@@ -32,7 +34,18 @@ export default ({
         <section className="section-container comment-video-container">
           <div className="title hidden-sp">King Gnu - どろん</div>
           <div className="wrapper">
-            <div className="video"></div>
+            <div className="video">
+              <ReactPlayerLoader
+                accountId="6160987587001"
+                playerId="JUGBWWU4U"
+                videoId="6167142434001"
+                applicationId=""
+                options={{
+                  autoplay: "play",
+                  playsinline: true,
+                }}
+              />
+            </div>
 
             <div className="comment">
               <TabContainer>
