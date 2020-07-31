@@ -11,10 +11,12 @@ import {
 import { API, graphqlOperation } from 'aws-amplify';
 import actionTypes from './actionTypes';
 import { createComment } from '../../graphql/mutations';
-import { getCommentsByRoom } from '../../graphql/queries';
+import { getCommentsByRoom, getRoom } from '../../graphql/queries';
 import { CreateCommentInput } from '../../API';
 import { COMMENT_LIMIT } from '../../constants';
 import isNgWord from '../../utils/isNgWord';
+import { updateRoomSaga, getRoomSaga } from '../Room/saga';
+import { showToastSaga } from '../Toast/saga';
 
 const setIntervalWithConditionHelper = (index: number, time: number) =>
   eventChannel((emitter) => {
@@ -67,9 +69,11 @@ function* createSaga() {
             listData: [res.data.createComment],
           },
         });
+
+        yield call(updateRoomSaga);
       }
     } catch (error) {
-      console.log(error.errors[0].message);
+      yield call(showToastSaga, 'submitError');
     }
   });
 }
@@ -127,9 +131,10 @@ function* listSaga() {
           payload: false,
         });
       }
+
+      yield call(getRoomSaga);
     } catch (error) {
-      console.log(error);
-      console.log(error.errors[0].message);
+      yield call(showToastSaga, 'unexpectedError');
     }
   });
 }
@@ -186,8 +191,7 @@ function* listHistorySaga() {
           },
         });
       } catch (error) {
-        console.log(error);
-        console.log(error.errors[0].message);
+        yield call(showToastSaga, 'unexpectedError');
       }
     }
   });

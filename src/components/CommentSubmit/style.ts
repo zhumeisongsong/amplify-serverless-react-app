@@ -45,11 +45,11 @@ export const CommentForm = styled.div`
 
   button {
     flex-shrink: 0;
-    width: 50px;
+    width: 60px;
     height: 40px;
     background-color: #e5012c;
     color: #fff;
-    font-size: 12px;
+    font-size: 14px;
     border-radius: 4px;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
@@ -60,13 +60,20 @@ export const CommentForm = styled.div`
   }
 
   @media (max-width: 768px) {
+    height: 74px;
+
+    .ant-form-item-control-input-content {
+      height: 50px;
+    }
+
     input {
-      font-size: 16px;
+      font-size: 12px;
     }
 
     button {
-      width: 80px;
-      font-size: 16px;
+      width: 60px;
+      height: 50px;
+      font-size: 14px;
     }
   }
 `;

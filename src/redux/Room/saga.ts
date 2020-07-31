@@ -2,8 +2,57 @@ import { put, takeEvery, all, call, fork, select } from 'redux-saga/effects';
 import { API, graphqlOperation } from 'aws-amplify';
 import actionTypes from './actionTypes';
 import commentActionTypes from '../Comment/actionTypes';
-import { createRoom } from '../../graphql/mutations';
+import { createRoom, updateRoom } from '../../graphql/mutations';
 import { getRoom } from '../../graphql/queries';
+import { showToastSaga } from '../Toast/saga';
+
+export function* getRoomSaga() {
+  const id = yield select((state) => state.room.id);
+
+  try {
+    const res = yield call([API, 'graphql'], graphqlOperation(getRoom, { id }));
+
+    if (res.data.getRoom) {
+      yield put({
+        type: actionTypes.GET_SUCCESS,
+        payload: { commentTotalCount: res.data.getRoom.commentTotalCount },
+      });
+    }
+
+    return res;
+  } catch (error) {
+    yield call(showToastSaga, 'unexpectedError');
+  }
+}
+
+export function* updateRoomSaga() {
+  const id = yield select((state) => state.room.id);
+
+  try {
+    const res = yield call(getRoomSaga);
+
+    if (res.data.getRoom) {
+      yield call(
+        [API, 'graphql'],
+        graphqlOperation(updateRoom, {
+          input: {
+            id,
+            commentTotalCount: res.data.getRoom.commentTotalCount + 1,
+          },
+        })
+      );
+
+      yield put({
+        type: actionTypes.GET_SUCCESS,
+        payload: {
+          commentTotalCount: res.data.getRoom.commentTotalCount + 1,
+        },
+      });
+    }
+  } catch (error) {
+    yield call(showToastSaga, 'unexpectedError');
+  }
+}
 
 function* createSaga() {
   yield takeEvery(actionTypes.CREATE, function* _({ payload }: any) {
@@ -21,7 +70,7 @@ function* createSaga() {
         });
       }
     } catch (error) {
-      console.log(error.errors[0].message);
+      yield call(showToastSaga, 'unexpectedError');
     }
   });
 }
@@ -39,6 +88,7 @@ function* getSaga() {
       if (res.data.getRoom) {
         yield put({
           type: actionTypes.GET_SUCCESS,
+          payload: { commentTotalCount: res.data.getRoom.commentTotalCount },
         });
 
         yield put({
@@ -51,7 +101,7 @@ function* getSaga() {
         });
       }
     } catch (error) {
-      console.log(error.errors[0].message);
+      yield call(showToastSaga, 'unexpectedError');
     }
   });
 }

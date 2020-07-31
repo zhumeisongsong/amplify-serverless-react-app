@@ -20,8 +20,14 @@ export default ({ createComment, toggleLoadNew, toggleError }: InputProps) => {
       content: values.content.trim(),
     };
 
-    if (value.content.length > 80) {
-      toggleError(<>投稿できる文字数の上限を<br />超えています。</>);
+    if (values.content.length > 80) {
+      toggleError(
+        <>
+          投稿できる文字数の上限を
+          <br />
+          超えています。
+        </>
+      );
       return false;
     }
 
@@ -58,11 +64,27 @@ export default ({ createComment, toggleLoadNew, toggleError }: InputProps) => {
         }}
         onFinish={onFinish}
       >
-        <Form.Item name="content" rules={[{ required: true }]}>
-          <Input placeholder="コメント入力してください" ref={input} onChange={(e) => setValue(e.target.value)} />
+        <Form.Item
+          name="content"
+          rules={[{ required: true }]}
+        >
+          <Input
+            placeholder="コメント入力してください"
+            ref={input}
+            onChange={(e) => setValue(e.target.value)}
+          />
         </Form.Item>
 
-        <Button htmlType="submit" disabled={isDisabled} style={{opacity: isDisabled ? 0.5 : 1, cursor: isDisabled ? 'default' : 'pointer'}}>送る</Button>
+        <Button
+          htmlType="submit"
+          disabled={isDisabled}
+          style={{ 
+            opacity: isDisabled ? 0.5 : 1,
+            cursor: isDisabled ? 'default' : 'pointer',
+          }}
+        >
+          送る
+        </Button>
       </Form>
     </CommentForm>
   );

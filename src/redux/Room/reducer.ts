@@ -1,4 +1,5 @@
 import { handleActions } from 'redux-actions';
+import actionTypes from './actionTypes';
 
 const info = JSON.parse(sessionStorage.getItem('info') || '');
 
@@ -14,6 +15,13 @@ const initialState = {
 
 export default handleActions(
   {
+    [actionTypes.GET_SUCCESS]: (
+      state: RoomState,
+      { payload: { commentTotalCount } }: { payload: RoomState; type: string }
+    ) => ({
+      ...state,
+      commentTotalCount,
+    }),
   },
   initialState
 );

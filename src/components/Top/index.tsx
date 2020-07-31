@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import ReactPlayerLoader from '@brightcove/react-player-loader';
 import CommentCount from '../../components/CommentCount';
 import CommentList from '../../components/CommentList';
 import CommentSubmit from '../../components/CommentSubmit';
@@ -12,11 +13,14 @@ import {
 } from './style';
 import { TopProps } from '../../containers/Top';
 import ErrorToast from '../ErrorToast';
+import Toast from '../Toast';
 
 export default ({
   comments,
   toNew,
   hasNew,
+  showToast,
+  toastMessage,
   listHistoryComments,
   createComment,
   commentTotalCount,
@@ -32,7 +36,18 @@ export default ({
         <section className="section-container comment-video-container">
           <div className="title hidden-sp">King Gnu - どろん</div>
           <div className="wrapper">
-            <div className="video"></div>
+            <div className="video">
+              <ReactPlayerLoader
+                accountId="6160987587001"
+                playerId="JUGBWWU4U"
+                videoId="6167142434001"
+                applicationId=""
+                options={{
+                  autoplay: 'play',
+                  playsinline: true,
+                }}
+              />
+            </div>
 
             <div className="comment">
               <TabContainer>
@@ -57,6 +72,7 @@ export default ({
                     toggleError={setError}
                   />
                   <ErrorToast msgJsx={errorJsx} />
+                  <Toast showToast={showToast} toastMessage={toastMessage} />
                 </TabContent>
                 <TabContent className="hidden-pc">
                   <Introduction />

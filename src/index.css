@@ -42,8 +42,8 @@ input:focus {
   outline: none;
 }
 
-@media screen and (-webkit-min-device-pixel-ratio: 0) {
-  button {
-    font-size: 16px;
+@media (max-width: 768px) {
+  body {
+    overflow: hidden;
   }
 }
