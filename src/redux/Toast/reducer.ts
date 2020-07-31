@@ -24,7 +24,7 @@ export default handleActions(
     [actionTypes.HIDDEN_SUCCESS]: (state: ToastState) => ({
       ...state,
       message: '',
-      isError: false,
+      showToast: false,
     }),
   },
   initialState

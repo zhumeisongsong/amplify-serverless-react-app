@@ -3,7 +3,9 @@ import styled from 'styled-components';
 import { TopProps } from '../../containers/Top';
 
 export default ({ showToast, toastMessage }: TopProps) => {
-  return showToast ? <ErrorToast dangerouslySetInnerHTML={{ __html: toastMessage }}></ErrorToast> : null;
+  return showToast ? (
+    <ErrorToast dangerouslySetInnerHTML={{ __html: toastMessage }}></ErrorToast>
+  ) : null;
 };
 
 const ErrorToast = styled.div`
