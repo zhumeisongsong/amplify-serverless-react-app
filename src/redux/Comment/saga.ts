@@ -13,7 +13,7 @@ import actionTypes from './actionTypes';
 import { createComment } from '../../graphql/mutations';
 import { getCommentsByRoom, getRoom } from '../../graphql/queries';
 import { CreateCommentInput } from '../../API';
-import { COMMENT_LIMIT } from '../../constants';
+import { COMMENT_LIMIT, INIT_COMMENT_LIMIT } from '../../constants';
 import isNgWord from '../../utils/isNgWord';
 import { updateRoomSaga, getRoomSaga } from '../Room/saga';
 import { showToastSaga } from '../Toast/saga';
@@ -88,7 +88,7 @@ function* listSaga() {
       const res: any = yield call(
         [API, 'graphql'],
         graphqlOperation(getCommentsByRoom, {
-          limit: COMMENT_LIMIT,
+          limit: initLoading ? INIT_COMMENT_LIMIT : COMMENT_LIMIT,
           roomID,
           sortDirection: 'DESC',
           filter: {
@@ -134,7 +134,7 @@ function* listSaga() {
 
       yield call(getRoomSaga);
     } catch (error) {
-      yield call(showToastSaga, 'unexpectedError');
+      console.log(error);
     }
   });
 }
@@ -191,7 +191,7 @@ function* listHistorySaga() {
           },
         });
       } catch (error) {
-        yield call(showToastSaga, 'unexpectedError');
+        console.log(error);
       }
     }
   });

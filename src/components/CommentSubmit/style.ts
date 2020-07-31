@@ -59,7 +59,7 @@ export const CommentForm = styled.div`
     display: none;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 992px) {
     height: 74px;
 
     .ant-form-item-control-input-content {
