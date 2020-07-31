@@ -24,7 +24,7 @@ const Introduction = styled.div`
   background-color: #f5f5f5;
   .text {
     max-width: 560px;
-    margin: 0 auto; 
+    margin: 0 auto;
     padding: 16px;
     color: #555555;
     font-size: 12px;
@@ -32,7 +32,7 @@ const Introduction = styled.div`
     letter-spacing: 0.75px;
   }
 
-  @media(max-width: 768px) {
+  @media (max-width: 768px) {
     height: calc(${windowHeight}px - 67vw);
     padding-top: 48px;
     overflow-y: scroll;
