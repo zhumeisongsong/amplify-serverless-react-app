@@ -14,9 +14,9 @@ export const PageContainer = styled.div`
 
   .main {
     width: 100%;
-    max-width: 1640px;
+    max-width: 1592px;
     margin: 0 auto;
-    padding: 48px 32px;
+    padding: 48px 16px;
     overflow: hidden;
   }
 
@@ -24,7 +24,7 @@ export const PageContainer = styled.div`
     width: 100%;
     .title {
       width: 100%;
-      padding: 0 0 24px;
+      padding: 0 0 16px;
       font-size: 24px;
       font-family: NotoSansCJKjp-Bold, NotoSansCJKjp;
       font-weight: bold;
@@ -62,23 +62,23 @@ export const PageContainer = styled.div`
     .comment-video-container {
       .wrapper {
         flex-direction: row;
-        height: 40vw;
-        max-height: 660px;
+        height: 44vw;
+        max-height: 819px;
       }
     }
 
     .video {
-      width: 75%;
+      width: 100%;
       height: 100%;
     }
 
     .comment {
       width: 25%;
+      max-width: 340px;
       min-width: 240px;
       margin-left: 8px;
       border: 1px solid rgba(0, 0, 0, 0.12);
       border-radius: 4px;
-      flex-grow: 1;
       flex-shrink: 0;
       overflow: hidden;
     }
@@ -101,7 +101,7 @@ export const PageContainer = styled.div`
 
     .video {
       width: 100vw;
-      height: 57vw;
+      height: 67vw;
     }
 
     .comment {
@@ -176,4 +176,3 @@ export const TabContent = styled(TabPanel)`
     padding-top: 48px;
   } */
 `;
-

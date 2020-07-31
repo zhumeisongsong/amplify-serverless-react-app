@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import ReactPlayerLoader from "@brightcove/react-player-loader";
 import CommentCount from '../../components/CommentCount';
 import CommentList from '../../components/CommentList';

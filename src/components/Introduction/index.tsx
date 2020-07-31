@@ -15,11 +15,12 @@ export default () => {
   );
 };
 
+const windowHeight = window.innerHeight;
+
 const Introduction = styled.div`
   box-sizing: border-box;
   width: 100%;
   height: 100%;
-
   background-color: #f5f5f5;
   .text {
     max-width: 560px;
@@ -31,8 +32,9 @@ const Introduction = styled.div`
     letter-spacing: 0.75px;
   }
 
-  @media(max-height: 768px) {
-    height: calc(100vh - 57vw);
+  @media(max-width: 768px) {
+    height: calc(${windowHeight}px - 67vw);
     padding-top: 48px;
+    overflow-y: scroll;
   }
 `;

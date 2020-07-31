@@ -44,6 +44,6 @@ input:focus {
 
 @media screen and (-webkit-min-device-pixel-ratio: 0) {
   button {
-    font-size: 16px;
+    font-size: 12px;
   }
 }
