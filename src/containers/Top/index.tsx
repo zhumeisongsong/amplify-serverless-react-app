@@ -73,8 +73,10 @@ export default () => {
   useEffect(() => {
     getRoom();
 
-    setInterval(() => {
-      listComments();
+    setTimeout(() => {
+      setInterval(() => {
+        listComments();
+      }, REQUESTED_TIME_INTERVAL);
     }, REQUESTED_TIME_INTERVAL);
 
     // // Subscribe to creation
