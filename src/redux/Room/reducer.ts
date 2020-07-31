@@ -15,7 +15,7 @@ const initialState = {
 
 export default handleActions(
   {
-    [actionTypes.LIST_SUCCESS]: (
+    [actionTypes.GET_SUCCESS]: (
       state: RoomState,
       { payload: { commentTotalCount } }: { payload: RoomState; type: string }
     ) => ({

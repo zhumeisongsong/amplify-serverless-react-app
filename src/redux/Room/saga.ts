@@ -59,6 +59,11 @@ export function* updateRoomSaga() {
           },
         })
       );
+
+      yield put({
+        type: actionTypes.GET_SUCCESS,
+        commentTotalCount: res.data.getRoom.commentTotalCount + 1,
+      });
     }
   } catch (error) {
     console.log(error.errors[0].message);
