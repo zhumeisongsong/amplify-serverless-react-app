@@ -39,12 +39,6 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 
 ## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-## Learn More
-
 https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.htmlaws configure get
 
 Adding backend environment dev to AWS Amplify Console app: d3gkrw4px67m1e
@@ -77,3 +71,5 @@ https://aws.amazon.com/cn/premiumsupport/knowledge-center/dynamodb-table-throttl
 https://docs.aws.amazon.com/zh_cn/amazondynamodb/latest/developerguide/WorkingWithItems.html#WorkingWithItems.AtomicCounters
 
 https://juejin.im/post/5e0968ed51882549766f3b9b
+
+## How to Create Amplify App
