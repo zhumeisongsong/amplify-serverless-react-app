@@ -165,6 +165,8 @@ export const TabTitleItem = styled(Tab)`
 
 export const TabContent = styled(TabPanel)`
   height: 100%;
+  display: flex;
+  flex-direction: column;
 
   @media (min-width: 993px) {
     &.hidden-pc {
