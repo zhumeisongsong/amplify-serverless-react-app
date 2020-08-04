@@ -39,12 +39,6 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 
 ## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-## Learn More
-
 https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.htmlaws configure get
 
 Adding backend environment dev to AWS Amplify Console app: d3gkrw4px67m1e
@@ -77,3 +71,30 @@ https://aws.amazon.com/cn/premiumsupport/knowledge-center/dynamodb-table-throttl
 https://docs.aws.amazon.com/zh_cn/amazondynamodb/latest/developerguide/WorkingWithItems.html#WorkingWithItems.AtomicCounters
 
 https://juejin.im/post/5e0968ed51882549766f3b9b
+
+## How to Create Amplify App
+
+### 1 Install Amplify CLI
+
+https://docs.amplify.aws/start/getting-started/installation/q/integration/react
+
+`npm install -g @aws-amplify/cli`
+
+ Configure Amplify by running the following command:
+
+ `amplify configure`
+
+### 2 Initialize a new backend
+
+https://docs.amplify.aws/start/getting-started/setup/q/integration/react#create-a-new-react-app
+
+`amplify init`
+
+### 3 Add API and Deploy the API 
+https://docs.amplify.aws/lib/graphqlapi/getting-started/q/platform/js
+
+Run `amplify add api` to add the api schema under `./src/api/schema.graphql`
+
+To deploy the API, you can use the Amplify push command: `amplify push`
+
+
