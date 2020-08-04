@@ -74,12 +74,23 @@ https://juejin.im/post/5e0968ed51882549766f3b9b
 
 ## How to Create Amplify App
 
-1 Install Amplify CLI
+### 1 Install Amplify CLI
 
-2 Amplify Configure
+https://docs.amplify.aws/start/getting-started/installation/q/integration/react
 
-3 Add API and Deploy the API
+`npm install -g @aws-amplify/cli`
 
+ Configure Amplify by running the following command:
+
+ `amplify configure`
+
+### 2 Initialize a new backend
+
+https://docs.amplify.aws/start/getting-started/setup/q/integration/react#create-a-new-react-app
+
+`amplify init`
+
+### 3 Add API and Deploy the API 
 https://docs.amplify.aws/lib/graphqlapi/getting-started/q/platform/js
 
 Run `amplify add api` to add the api schema under `./src/api/schema.graphql`
