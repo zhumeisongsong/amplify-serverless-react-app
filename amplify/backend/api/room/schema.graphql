@@ -1,0 +1,24 @@
+type Room @model {
+  id: ID!
+  commentTotalCount: Int
+  comments: [Comment] @connection(keyName: "byRoom", fields: ["id"])
+}
+
+type Comment
+  @model
+  @key(
+    name: "byRoom"
+    fields: ["roomID", "createdAt"]
+    queryField: "getCommentsByRoom"
+  ) {
+  id: ID!
+  roomID: ID!
+  room: Room @connection(fields: ["roomID"])
+  content: String!
+  userId: String!
+  userName: String!
+  userImage: String!
+  isNgWord: Boolean!
+  createdAt: String!
+  isOfficialAccount: Boolean!
+}

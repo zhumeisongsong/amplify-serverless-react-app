@@ -73,3 +73,17 @@ https://docs.aws.amazon.com/zh_cn/amazondynamodb/latest/developerguide/WorkingWi
 https://juejin.im/post/5e0968ed51882549766f3b9b
 
 ## How to Create Amplify App
+
+1 Install Amplify CLI
+
+2 Amplify Configure
+
+3 Add API and Deploy the API
+
+https://docs.amplify.aws/lib/graphqlapi/getting-started/q/platform/js
+
+Run `amplify add api` to add the api schema under `./src/api/schema.graphql`
+
+To deploy the API, you can use the Amplify push command: `amplify push`
+
+
