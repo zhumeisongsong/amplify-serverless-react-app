@@ -200,13 +200,16 @@ function* listHistorySaga() {
 function* updateRenderListSaga() {
   yield debounce(200, actionTypes.UPDATE_RENDER, function* _() {
     const { listData, cacheData } = yield select((state) => state.comment);
-
-    yield put({
-      type: actionTypes.UPDATE_RENDER_SUCCESS,
-      payload: {
-        listData: [...listData, cacheData[cacheData.length - 1]],
-      },
-    });
+    const isSome = listData.some((item) => item.id === cacheData[cacheData.length - 1].id);
+    
+    if (!isSome) {
+      yield put({
+        type: actionTypes.UPDATE_RENDER_SUCCESS,
+        payload: {
+          listData: [...listData, cacheData[cacheData.length - 1]],
+        },
+      });
+    }
   });
 }
 
