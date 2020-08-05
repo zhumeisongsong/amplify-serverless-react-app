@@ -5,7 +5,9 @@ const windowHeight = window.innerHeight;
 export const CommentList = styled.div`
   position: relative;
   width: 100%;
-  height: calc(44vw - 102px);
+  flex: 1;
+  overflow: hidden;
+
   ul {
     width: 100%;
     height: 100%;
@@ -74,9 +76,7 @@ export const CommentList = styled.div`
       bottom: -32px;
     }
   }
-
   @media (max-width: 992px) {
-    height: calc(${windowHeight}px - 67vw);
     
     ul {
       padding-top: 60px;
