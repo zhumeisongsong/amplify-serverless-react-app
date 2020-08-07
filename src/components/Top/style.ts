@@ -107,6 +107,7 @@ export const PageContainer = styled.div`
 
     .comment {
       width: 100%;
+      height: calc(100% - 67vw);
     }
   }
 
@@ -189,5 +190,8 @@ export const TabContent = styled(TabPanel)`
     &.hidden-pc {
       display: none;
     }
+  }
+  @media (max-width: 992px) {
+    padding-top: 60px;
   }
 `;

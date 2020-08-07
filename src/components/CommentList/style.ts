@@ -11,7 +11,7 @@ export const CommentList = styled.div`
   ul {
     width: 100%;
     height: 100%;
-    padding: 12px 0 0 0;
+    padding: 0;
     list-style: none;
     overflow: auto;
   }
@@ -77,12 +77,6 @@ export const CommentList = styled.div`
     }
   }
   @media (max-width: 992px) {
-    
-    ul {
-      padding-top: 60px;
-      padding-bottom: 74px;
-    }
-
     .button {
       bottom: 80px;
     }
