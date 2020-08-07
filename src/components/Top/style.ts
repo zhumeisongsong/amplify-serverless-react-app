@@ -61,6 +61,7 @@ export const PageContainer = styled.div`
   @media (min-width: 993px) {
     .comment-video-container {
       .wrapper {
+        position: relative;
         flex-direction: row;
         height: 44vw;
         max-height: 819px;
@@ -106,6 +107,22 @@ export const PageContainer = styled.div`
 
     .comment {
       width: 100%;
+    }
+  }
+
+  @media screen and (max-width: 992px) and (orientation: landscape) {
+    .video {
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .comment {
+      display: none;
     }
   }
 `;
