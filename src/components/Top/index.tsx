@@ -56,7 +56,7 @@ export default ({
                   <TabTitleItem>紹介</TabTitleItem>
                 </TabTitle>
 
-                <TabContent>
+                <TabContent className="comment-wrap">
                   <CommentCount commentTotalCount={commentTotalCount} />
                   <CommentList
                     comments={comments}

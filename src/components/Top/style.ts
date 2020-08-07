@@ -165,9 +165,16 @@ export const TabTitleItem = styled(Tab)`
 `;
 
 export const TabContent = styled(TabPanel)`
-  height: 100%;
-  display: flex;
-  flex-direction: column;
+  height: 0;
+
+  &.comment-wrap {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  &.react-tabs__tab-panel--selected {
+    height: inherit;
+  }
 
   @media (min-width: 993px) {
     &.hidden-pc {
@@ -175,6 +182,8 @@ export const TabContent = styled(TabPanel)`
     }
   }
   @media (max-width: 992px) {
-    padding-top: 60px;
+    &.comment-wrap {
+      padding-top: 60px;
+    }
   }
 `;
