@@ -45,7 +45,7 @@ export default ({
       }
     }
     if (list) {
-      if (list.scrollTop === 0 && listHistoryComments) {
+      if (list.scrollTop === 0 && listHistoryComments && !beforeHeight) {
         listHistoryComments();
         setBeforeHeight(list.scrollHeight);
       }
