@@ -77,10 +77,8 @@ export const CommentList = styled.div`
     }
   }
   @media (max-width: 992px) {
-    
     ul {
       padding-top: 60px;
-      padding-bottom: 74px;
     }
 
     .button {

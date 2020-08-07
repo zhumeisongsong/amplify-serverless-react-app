@@ -173,4 +173,7 @@ export const TabContent = styled(TabPanel)`
       display: none;
     }
   }
+  @media (max-width: 992px) {
+    height: calc(100vh - 67vw);
+  }
 `;
