@@ -7,27 +7,33 @@ import {
   fork,
   select,
   debounce,
+  take,
 } from 'redux-saga/effects';
 import { API, graphqlOperation } from 'aws-amplify';
 import actionTypes from './actionTypes';
 import { createComment } from '../../graphql/mutations';
 import { getCommentsByRoom } from '../../graphql/queries';
 import { CreateCommentInput } from '../../API';
-import { COMMENT_LIMIT, INIT_COMMENT_LIMIT } from '../../constants';
+import {
+  COMMENT_LIMIT,
+  INIT_COMMENT_LIMIT,
+  INIT_COMMENT_LOADING_MS,
+  COMMENT_LOADING_MS,
+} from '../../constants';
 import isNgWord from '../../utils/isNgWord';
 import { updateRoomSaga, getRoomSaga } from '../Room/saga';
 import { showToastSaga } from '../Toast/saga';
 
-const setIntervalWithConditionHelper = (index: number, time: number) =>
+const initCommentLoadingSetInterval = (index: number) =>
   eventChannel((emitter) => {
-    index -= 1;
     const iv = setInterval(() => {
+      index -= 1;
       if (index >= 0) {
         emitter(index);
       } else {
         emitter(END);
       }
-    }, time);
+    }, INIT_COMMENT_LOADING_MS);
     // The subscriber must return an unsubscribe function
     return () => {
       clearInterval(iv);
@@ -110,13 +116,16 @@ function* listSaga() {
           },
         })
       );
+      const cacheData = res.data.getCommentsByRoom.items;
 
       yield put({
         type: actionTypes.UPDATE_CACHE_SUCCESS,
         payload: {
-          cacheData: res.data.getCommentsByRoom.items,
+          cacheData,
         },
       });
+
+      yield call(getRoomSaga);
 
       if (initLoading) {
         yield put({
@@ -126,13 +135,30 @@ function* listSaga() {
           },
         });
 
-        yield put({
-          type: actionTypes.TOGGLE_IS_INIT_LOADING,
-          payload: false,
-        });
-      }
+        const rederInitComment = yield call(
+          initCommentLoadingSetInterval,
+          cacheData.length
+        );
 
-      yield call(getRoomSaga);
+        try {
+          while (true) {
+            // take(END) will cause the saga to terminate by jumping to the finally block
+            let index = yield take(rederInitComment);
+
+            yield put({
+              type: actionTypes.UPDATE_RENDER_SUCCESS,
+              payload: {
+                listData: [cacheData[index]],
+              },
+            });
+          }
+        } finally {
+          yield put({
+            type: actionTypes.TOGGLE_IS_INIT_LOADING,
+            payload: false,
+          });
+        }
+      }
     } catch (error) {
       console.log(error);
     }
@@ -198,15 +224,17 @@ function* listHistorySaga() {
 }
 
 function* updateRenderListSaga() {
-  yield debounce(200, actionTypes.UPDATE_RENDER, function* _() {
+  yield debounce(COMMENT_LOADING_MS, actionTypes.UPDATE_RENDER, function* _() {
     const { listData, cacheData } = yield select((state) => state.comment);
-    const isSome = listData.some((item) => item.id === cacheData[cacheData.length - 1].id);
+    const isSome = listData.some(
+      (item) => item.id === cacheData[cacheData.length - 1].id
+    );
 
     if (!isSome) {
       yield put({
         type: actionTypes.UPDATE_RENDER_SUCCESS,
         payload: {
-          listData: [...listData, cacheData[cacheData.length - 1]],
+          listData: [cacheData[cacheData.length - 1]],
         },
       });
     }
@@ -214,10 +242,8 @@ function* updateRenderListSaga() {
 }
 
 function* updateCacheListSaga() {
-  yield debounce(200, actionTypes.UPDATE_CACHE, function* _({ payload }: any) {
+  yield debounce(COMMENT_LOADING_MS, actionTypes.UPDATE_CACHE, function* _() {
     const { cacheData } = yield select((state) => state.comment);
-
-    console.log(payload);
 
     yield put({
       type: actionTypes.UPDATE_CACHE_SUCCESS,

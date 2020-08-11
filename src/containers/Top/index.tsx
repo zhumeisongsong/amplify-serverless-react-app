@@ -8,7 +8,7 @@ import {
   toggleHasNewAction,
   updateCommentsAction,
   updateCacheCommentsAction,
-  listHistoryCommentsAction
+  listHistoryCommentsAction,
 } from '../../redux/Comment/actions';
 import Top from '../../components/Top';
 import { Store } from '../../redux/types';
@@ -43,13 +43,15 @@ export default () => {
   const hasNew = useSelector((store: Store) => store.comment.hasNew);
   const showToast = useSelector((store: Store) => store.toast.showToast);
   const toastMessage = useSelector((store: Store) => store.toast.message);
+  const initLoading = useSelector((store: Store) => store.comment.initLoading);
   const getRoom = useCallback(() => dispatch(getRoomAction()), [dispatch]);
   const listComments = useCallback(() => dispatch(listCommentsAction()), [
     dispatch,
   ]);
-  const listHistoryComments = useCallback(() => dispatch(listHistoryCommentsAction()), [
-    dispatch,
-  ]);
+  const listHistoryComments = useCallback(
+    () => dispatch(listHistoryCommentsAction()),
+    [dispatch]
+  );
   const createComment = useCallback(
     (values) => dispatch(createCommentAction(values)),
     [dispatch]
@@ -73,10 +75,6 @@ export default () => {
   useEffect(() => {
     getRoom();
 
-    setInterval(() => {
-      listComments();
-    }, REQUESTED_TIME_INTERVAL);
-
     // // Subscribe to creation
     // const api: any = API.graphql(
     //   graphqlOperation(subscriptions.onCreateComment)
@@ -87,7 +85,15 @@ export default () => {
     //     setComment({ listData: [values] });
     //   },
     // });
-  }, [getRoom, listComments]);
+  }, [getRoom]);
+
+  useEffect(() => {
+    if (!initLoading) {
+      setInterval(() => {
+        listComments();
+      }, REQUESTED_TIME_INTERVAL);
+    }
+  }, [initLoading]);
 
   useEffect(() => {
     if (comments && cacheComments && cacheComments.length > 0) {

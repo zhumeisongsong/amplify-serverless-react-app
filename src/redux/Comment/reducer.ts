@@ -44,7 +44,7 @@ export default handleActions(
       { payload: { listData } }: { payload: CommentState; type: string }
     ) => ({
       ...state,
-      listData,
+      listData: [...state.listData, ...listData],
     }),
     [actionTypes.UPDATE_CACHE_SUCCESS]: (
       state: CommentState,
