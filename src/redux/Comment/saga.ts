@@ -198,7 +198,7 @@ function* listHistorySaga() {
 }
 
 function* updateRenderListSaga() {
-  yield debounce(298, actionTypes.UPDATE_RENDER, function* _() {
+  yield debounce(200, actionTypes.UPDATE_RENDER, function* _() {
     const { listData, cacheData } = yield select((state) => state.comment);
     const isSome = listData.some((item) => item.id === cacheData[cacheData.length - 1].id);
 
@@ -214,8 +214,10 @@ function* updateRenderListSaga() {
 }
 
 function* updateCacheListSaga() {
-  yield debounce(298, actionTypes.UPDATE_CACHE, function* _() {
+  yield debounce(200, actionTypes.UPDATE_CACHE, function* _({ payload }: any) {
     const { cacheData } = yield select((state) => state.comment);
+
+    console.log(payload);
 
     yield put({
       type: actionTypes.UPDATE_CACHE_SUCCESS,

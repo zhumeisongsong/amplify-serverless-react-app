@@ -66,17 +66,15 @@ export default () => {
     dispatch,
   ]);
   const updateCacheComments = useCallback(
-    () => dispatch(updateCacheCommentsAction()),
+    (notDuplicate) => dispatch(updateCacheCommentsAction(notDuplicate)),
     [dispatch]
   );
 
   useEffect(() => {
     getRoom();
 
-    setTimeout(() => {
-      setInterval(() => {
-        listComments();
-      }, REQUESTED_TIME_INTERVAL);
+    setInterval(() => {
+      listComments();
     }, REQUESTED_TIME_INTERVAL);
 
     // // Subscribe to creation
@@ -107,7 +105,7 @@ export default () => {
         updateComments();
       }
 
-      updateCacheComments();
+      updateCacheComments(notDuplicate);
 
       if (notDuplicate && !toNew) {
         toggleHasNew(notDuplicate);

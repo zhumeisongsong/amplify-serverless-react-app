@@ -4,7 +4,6 @@ import actionTypes from './actionTypes';
 import commentActionTypes from '../Comment/actionTypes';
 import { createRoom, updateRoom } from '../../graphql/mutations';
 import { getRoom } from '../../graphql/queries';
-import { showToastSaga } from '../Toast/saga';
 
 export function* getRoomSaga() {
   const id = yield select((state) => state.room.id);
