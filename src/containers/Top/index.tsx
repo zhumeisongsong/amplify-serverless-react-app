@@ -15,7 +15,6 @@ import { Store } from '../../redux/types';
 import { Action } from 'redux';
 import { CreateCommentInput } from '../../API';
 import * as subscriptions from '../../graphql/subscriptions';
-import { REQUESTED_TIME_INTERVAL } from '../../constants';
 
 export interface TopProps {
   comments?: CreateCommentInput[];
@@ -43,11 +42,7 @@ export default () => {
   const hasNew = useSelector((store: Store) => store.comment.hasNew);
   const showToast = useSelector((store: Store) => store.toast.showToast);
   const toastMessage = useSelector((store: Store) => store.toast.message);
-  const initLoading = useSelector((store: Store) => store.comment.initLoading);
-  const getRoom = useCallback(() => dispatch(getRoomAction()), [dispatch]);
-  const listComments = useCallback(() => dispatch(listCommentsAction()), [
-    dispatch,
-  ]);
+  const getRoom = useCallback(() => dispatch(getRoomAction()), [dispatch])
   const listHistoryComments = useCallback(
     () => dispatch(listHistoryCommentsAction()),
     [dispatch]
@@ -68,7 +63,7 @@ export default () => {
     dispatch,
   ]);
   const updateCacheComments = useCallback(
-    (notDuplicate) => dispatch(updateCacheCommentsAction(notDuplicate)),
+    () => dispatch(updateCacheCommentsAction()),
     [dispatch]
   );
 
@@ -88,14 +83,6 @@ export default () => {
   }, [getRoom]);
 
   useEffect(() => {
-    if (!initLoading) {
-      setInterval(() => {
-        listComments();
-      }, REQUESTED_TIME_INTERVAL);
-    }
-  }, [initLoading]);
-
-  useEffect(() => {
     if (comments && cacheComments && cacheComments.length > 0) {
       let notDuplicate = true;
 
@@ -111,7 +98,7 @@ export default () => {
         updateComments();
       }
 
-      updateCacheComments(notDuplicate);
+      updateCacheComments();
 
       if (notDuplicate && !toNew) {
         toggleHasNew(notDuplicate);

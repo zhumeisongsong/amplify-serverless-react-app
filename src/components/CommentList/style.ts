@@ -1,7 +1,5 @@
 import styled from 'styled-components';
 
-const windowHeight = window.innerHeight;
-
 export const CommentList = styled.div`
   position: relative;
   width: 100%;

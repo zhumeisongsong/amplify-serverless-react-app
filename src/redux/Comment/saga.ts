@@ -244,13 +244,20 @@ function* updateRenderListSaga() {
 function* updateCacheListSaga() {
   yield debounce(COMMENT_LOADING_MS, actionTypes.UPDATE_CACHE, function* _() {
     const { cacheData } = yield select((state) => state.comment);
+    const nextCacheData = cacheData.slice(0, cacheData.length - 1);
 
     yield put({
       type: actionTypes.UPDATE_CACHE_SUCCESS,
       payload: {
-        cacheData: cacheData.slice(0, cacheData.length - 1),
+        cacheData: nextCacheData,
       },
     });
+
+    if (nextCacheData.length === 0) {
+      yield put({
+        type: actionTypes.LIST,
+      });
+    }
   });
 }
 
