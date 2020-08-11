@@ -11,7 +11,7 @@ import {
 import { API, graphqlOperation } from 'aws-amplify';
 import actionTypes from './actionTypes';
 import { createComment } from '../../graphql/mutations';
-import { getCommentsByRoom, getRoom } from '../../graphql/queries';
+import { getCommentsByRoom } from '../../graphql/queries';
 import { CreateCommentInput } from '../../API';
 import { COMMENT_LIMIT, INIT_COMMENT_LIMIT } from '../../constants';
 import isNgWord from '../../utils/isNgWord';
