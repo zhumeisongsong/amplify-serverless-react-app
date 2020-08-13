@@ -144,13 +144,19 @@ function* listSaga() {
           while (true) {
             // take(END) will cause the saga to terminate by jumping to the finally block
             let index = yield take(rederInitComment);
+            const { listData, cacheData } = yield select((state) => state.comment);
+            const isSome = listData.some(
+              (item) => item.id === cacheData[index].id
+            );
 
-            yield put({
-              type: actionTypes.UPDATE_RENDER_SUCCESS,
-              payload: {
-                listData: [cacheData[index]],
-              },
-            });
+            if (!isSome) {
+              yield put({
+                type: actionTypes.UPDATE_RENDER_SUCCESS,
+                payload: {
+                  listData: [cacheData[index]],
+                },
+              });
+            }
           }
         } finally {
           yield put({
