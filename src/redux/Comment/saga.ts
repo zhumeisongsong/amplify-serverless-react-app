@@ -203,11 +203,15 @@ function* listHistorySaga() {
     if (nextToken) {
       variables.nextToken = nextToken;
 
+      alert(nextToken);
+
       try {
         const res: any = yield call(
           [API, 'graphql'],
           graphqlOperation(getCommentsByRoom, variables)
         );
+
+        alert(res.data.getCommentsByRoom.nextToken);
 
         yield put({
           type: actionTypes.LIST_HISTORY_SUCCESS,
