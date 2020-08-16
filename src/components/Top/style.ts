@@ -111,7 +111,7 @@ export const PageContainer = styled.div`
     }
   }
 
-  @media screen and (max-width: 992px) and (orientation: landscape) {
+  @media screen and (min-width: 500px) and (max-width: 992px) and (orientation: landscape) {
     .video {
       position: absolute;
       left: 0;
@@ -188,7 +188,7 @@ export const TabContent = styled(TabPanel)`
     display: flex;
     flex-direction: column;
   }
-  
+
   &.react-tabs__tab-panel--selected {
     height: inherit;
   }
