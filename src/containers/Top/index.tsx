@@ -41,6 +41,7 @@ export default () => {
   const hasNew = useSelector((store: Store) => store.comment.hasNew);
   const showToast = useSelector((store: Store) => store.toast.showToast);
   const toastMessage = useSelector((store: Store) => store.toast.message);
+  const initLoading = useSelector((store: Store) => store.comment.initLoading);
   const getRoom = useCallback(() => dispatch(getRoomAction()), [dispatch])
   const listHistoryComments = useCallback(
     () => dispatch(listHistoryCommentsAction()),
@@ -79,7 +80,7 @@ export default () => {
     //     setComment({ listData: [values] });
     //   },
     // });
-  });
+  }, [getRoom]);
 
   useEffect(() => {
     if (comments && cacheComments && cacheComments.length > 0) {
@@ -99,7 +100,7 @@ export default () => {
 
       updateCacheComments();
 
-      if (notDuplicate && !toNew) {
+      if (notDuplicate && !toNew && !initLoading) {
         toggleHasNew(notDuplicate);
       }
     }

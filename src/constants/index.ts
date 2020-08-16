@@ -2,4 +2,4 @@
 export const COMMENT_LIMIT = 10;
 export const INIT_COMMENT_LIMIT = 20;
 export const INIT_COMMENT_LOADING_MS = 150;
-export const COMMENT_LOADING_MS = 300;
+export const COMMENT_LOADING_MS = 200;
