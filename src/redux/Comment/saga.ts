@@ -11,6 +11,7 @@ import {
 } from 'redux-saga/effects';
 import { API, graphqlOperation } from 'aws-amplify';
 import actionTypes from './actionTypes';
+import roomActionTypes from '../Room/actionTypes';
 import { createComment } from '../../graphql/mutations';
 import { getCommentsByRoom } from '../../graphql/queries';
 import { CreateCommentInput } from '../../API';
@@ -21,7 +22,7 @@ import {
   COMMENT_LOADING_MS,
 } from '../../constants';
 import isNgWord from '../../utils/isNgWord';
-import { updateRoomSaga, getRoomSaga } from '../Room/saga';
+import { getRoomSaga } from '../Room/saga';
 import { showToastSaga } from '../Toast/saga';
 
 const initCommentLoadingSetInterval = (index: number) =>
@@ -76,7 +77,9 @@ function* createSaga() {
           },
         });
 
-        // yield call(updateRoomSaga);
+        yield put({
+          type: roomActionTypes.GET
+        });
       }
     } catch (error) {
       yield call(showToastSaga, 'submitError');
@@ -133,6 +136,11 @@ function* listSaga() {
           payload: {
             nextToken: res.data.getCommentsByRoom.nextToken,
           },
+        });
+
+
+        yield put({
+          type: roomActionTypes.GET
         });
 
         const rederInitComment = yield call(
@@ -199,6 +207,8 @@ function* listHistorySaga() {
         ],
       },
     };
+
+    console.log(nextToken);
 
     if (nextToken) {
       variables.nextToken = nextToken;

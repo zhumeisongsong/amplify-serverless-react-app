@@ -24,35 +24,6 @@ export function* getRoomSaga() {
   }
 }
 
-export function* updateRoomSaga() {
-  const id = yield select((state) => state.room.id);
-
-  try {
-    const res = yield call(getRoomSaga);
-
-    if (res.data.getRoom) {
-      yield call(
-        [API, 'graphql'],
-        graphqlOperation(updateRoom, {
-          input: {
-            id,
-            commentTotalCount: res.data.getRoom.commentTotalCount + 1,
-          },
-        })
-      );
-
-      yield put({
-        type: actionTypes.GET_SUCCESS,
-        payload: {
-          commentTotalCount: res.data.getRoom.commentTotalCount + 1,
-        },
-      });
-    }
-  } catch (error) {
-    console.log(error);
-  }
-}
-
 function* createSaga() {
   yield takeEvery(actionTypes.CREATE, function* _({ payload }: any) {
     const { id }: any = payload;
