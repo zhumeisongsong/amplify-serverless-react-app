@@ -2,7 +2,6 @@ import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getRoomAction } from '../../redux/Room/actions';
 import {
-  listCommentsAction,
   createCommentAction,
   toggleLoadNewAction,
   toggleHasNewAction,
@@ -80,7 +79,7 @@ export default () => {
     //     setComment({ listData: [values] });
     //   },
     // });
-  }, [getRoom]);
+  });
 
   useEffect(() => {
     if (comments && cacheComments && cacheComments.length > 0) {

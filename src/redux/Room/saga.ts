@@ -2,7 +2,7 @@ import { put, takeEvery, all, call, fork, select } from 'redux-saga/effects';
 import { API, graphqlOperation } from 'aws-amplify';
 import actionTypes from './actionTypes';
 import commentActionTypes from '../Comment/actionTypes';
-import { createRoom, updateRoom } from '../../graphql/mutations';
+import { createRoom } from '../../graphql/mutations';
 import { getRoom } from '../../graphql/queries';
 
 export function* getRoomSaga() {

@@ -78,7 +78,7 @@ function* createSaga() {
         });
 
         yield put({
-          type: roomActionTypes.GET
+          type: roomActionTypes.GET,
         });
       }
     } catch (error) {
@@ -138,9 +138,8 @@ function* listSaga() {
           },
         });
 
-
         yield put({
-          type: roomActionTypes.GET
+          type: roomActionTypes.GET,
         });
 
         const rederInitComment = yield call(
@@ -152,7 +151,14 @@ function* listSaga() {
           while (true) {
             // take(END) will cause the saga to terminate by jumping to the finally block
             let index = yield take(rederInitComment);
-            const { listData, cacheData } = yield select((state) => state.comment);
+            const { listData, cacheData } = yield select(
+              (state) => state.comment
+            );
+
+            if (!cacheData[index].id) {
+              return;
+            }
+
             const isSome = listData.some(
               (item) => item.id === cacheData[index].id
             );
@@ -208,8 +214,6 @@ function* listHistorySaga() {
       },
     };
 
-    console.log(nextToken);
-
     if (nextToken) {
       variables.nextToken = nextToken;
 
@@ -218,6 +222,7 @@ function* listHistorySaga() {
           [API, 'graphql'],
           graphqlOperation(getCommentsByRoom, variables)
         );
+
 
         yield put({
           type: actionTypes.LIST_HISTORY_SUCCESS,
