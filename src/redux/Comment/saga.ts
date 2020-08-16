@@ -76,7 +76,7 @@ function* createSaga() {
           },
         });
 
-        yield call(updateRoomSaga);
+        // yield call(updateRoomSaga);
       }
     } catch (error) {
       yield call(showToastSaga, 'submitError');
