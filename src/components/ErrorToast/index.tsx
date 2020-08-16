@@ -28,6 +28,7 @@ const ErrorToast = styled.div`
   top: 50%;
   left: 50%;
   width: 200px;
+  height: auto;
   padding: 10px 0;
   margin-top: -30px;
   margin-left: -100px;

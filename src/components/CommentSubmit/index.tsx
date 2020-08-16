@@ -64,10 +64,7 @@ export default ({ createComment, toggleLoadNew, toggleError }: InputProps) => {
         }}
         onFinish={onFinish}
       >
-        <Form.Item
-          name="content"
-          rules={[{ required: true }]}
-        >
+        <Form.Item name="content" rules={[{ required: true }]}>
           <Input
             placeholder="コメント入力してください"
             ref={input}
@@ -78,7 +75,7 @@ export default ({ createComment, toggleLoadNew, toggleError }: InputProps) => {
         <Button
           htmlType="submit"
           disabled={isDisabled}
-          style={{ 
+          style={{
             opacity: isDisabled ? 0.5 : 1,
             cursor: isDisabled ? 'default' : 'pointer',
           }}
