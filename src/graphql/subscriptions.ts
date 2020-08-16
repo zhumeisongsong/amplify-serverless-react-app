@@ -7,21 +7,6 @@ export const onCreateRoom = /* GraphQL */ `
     onCreateRoom {
       id
       commentTotalCount
-      comments {
-        items {
-          id
-          roomID
-          content
-          userId
-          userName
-          userImage
-          isNgWord
-          createdAt
-          isOfficialAccount
-          updatedAt
-        }
-        nextToken
-      }
       createdAt
       updatedAt
     }
@@ -32,21 +17,6 @@ export const onUpdateRoom = /* GraphQL */ `
     onUpdateRoom {
       id
       commentTotalCount
-      comments {
-        items {
-          id
-          roomID
-          content
-          userId
-          userName
-          userImage
-          isNgWord
-          createdAt
-          isOfficialAccount
-          updatedAt
-        }
-        nextToken
-      }
       createdAt
       updatedAt
     }
@@ -57,21 +27,6 @@ export const onDeleteRoom = /* GraphQL */ `
     onDeleteRoom {
       id
       commentTotalCount
-      comments {
-        items {
-          id
-          roomID
-          content
-          userId
-          userName
-          userImage
-          isNgWord
-          createdAt
-          isOfficialAccount
-          updatedAt
-        }
-        nextToken
-      }
       createdAt
       updatedAt
     }
@@ -81,16 +36,7 @@ export const onCreateComment = /* GraphQL */ `
   subscription OnCreateComment {
     onCreateComment {
       id
-      roomID
-      room {
-        id
-        commentTotalCount
-        comments {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
+      type
       content
       userId
       userName
@@ -106,16 +52,7 @@ export const onUpdateComment = /* GraphQL */ `
   subscription OnUpdateComment {
     onUpdateComment {
       id
-      roomID
-      room {
-        id
-        commentTotalCount
-        comments {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
+      type
       content
       userId
       userName
@@ -131,16 +68,7 @@ export const onDeleteComment = /* GraphQL */ `
   subscription OnDeleteComment {
     onDeleteComment {
       id
-      roomID
-      room {
-        id
-        commentTotalCount
-        comments {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
+      type
       content
       userId
       userName

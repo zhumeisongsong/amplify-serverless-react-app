@@ -10,21 +10,6 @@ export const createRoom = /* GraphQL */ `
     createRoom(input: $input, condition: $condition) {
       id
       commentTotalCount
-      comments {
-        items {
-          id
-          roomID
-          content
-          userId
-          userName
-          userImage
-          isNgWord
-          createdAt
-          isOfficialAccount
-          updatedAt
-        }
-        nextToken
-      }
       createdAt
       updatedAt
     }
@@ -38,21 +23,6 @@ export const updateRoom = /* GraphQL */ `
     updateRoom(input: $input, condition: $condition) {
       id
       commentTotalCount
-      comments {
-        items {
-          id
-          roomID
-          content
-          userId
-          userName
-          userImage
-          isNgWord
-          createdAt
-          isOfficialAccount
-          updatedAt
-        }
-        nextToken
-      }
       createdAt
       updatedAt
     }
@@ -66,21 +36,6 @@ export const deleteRoom = /* GraphQL */ `
     deleteRoom(input: $input, condition: $condition) {
       id
       commentTotalCount
-      comments {
-        items {
-          id
-          roomID
-          content
-          userId
-          userName
-          userImage
-          isNgWord
-          createdAt
-          isOfficialAccount
-          updatedAt
-        }
-        nextToken
-      }
       createdAt
       updatedAt
     }
@@ -93,16 +48,7 @@ export const createComment = /* GraphQL */ `
   ) {
     createComment(input: $input, condition: $condition) {
       id
-      roomID
-      room {
-        id
-        commentTotalCount
-        comments {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
+      type
       content
       userId
       userName
@@ -121,16 +67,7 @@ export const updateComment = /* GraphQL */ `
   ) {
     updateComment(input: $input, condition: $condition) {
       id
-      roomID
-      room {
-        id
-        commentTotalCount
-        comments {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
+      type
       content
       userId
       userName
@@ -149,16 +86,7 @@ export const deleteComment = /* GraphQL */ `
   ) {
     deleteComment(input: $input, condition: $condition) {
       id
-      roomID
-      room {
-        id
-        commentTotalCount
-        comments {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
+      type
       content
       userId
       userName

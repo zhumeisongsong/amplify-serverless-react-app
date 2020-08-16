@@ -49,7 +49,6 @@ function* createSaga() {
     payload: { content: string };
   }) {
     const { content } = payload;
-    const roomID: string = yield select((state) => state.room.id);
     const { userName, userId, userImage, isOfficialAccount } = yield select(
       (state) => state.user
     );
@@ -59,7 +58,7 @@ function* createSaga() {
       userId,
       userImage,
       isOfficialAccount,
-      roomID,
+      type: 'type',
       isNgWord: isNgWord(content),
     };
 
@@ -89,7 +88,6 @@ function* createSaga() {
 
 function* listSaga() {
   yield takeEvery(actionTypes.LIST, function* _() {
-    const roomID: string = yield select((state) => state.room.id);
     const { userId } = yield select((state) => state.user);
     const { initLoading, nextToken } = yield select((state) => state.comment);
 
@@ -98,7 +96,7 @@ function* listSaga() {
         [API, 'graphql'],
         graphqlOperation(getCommentsByRoom, {
           limit: initLoading ? INIT_COMMENT_LIMIT : COMMENT_LIMIT,
-          roomID,
+          type: 'type',
           sortDirection: 'DESC',
           filter: {
             or: [
@@ -189,13 +187,12 @@ function* listSaga() {
 
 function* listHistorySaga() {
   yield takeEvery(actionTypes.LIST_HISTORY, function* _() {
-    const roomID: string = yield select((state) => state.room.id);
     const { userId } = yield select((state) => state.user);
     const { nextToken } = yield select((state) => state.comment);
 
     const variables: any = {
       limit: COMMENT_LIMIT,
-      roomID,
+      type: 'type',
       sortDirection: 'DESC',
       filter: {
         or: [

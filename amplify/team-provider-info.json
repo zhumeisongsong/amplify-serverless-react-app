@@ -1,15 +1,15 @@
 {
-    "prd": {
+    "stg": {
         "awscloudformation": {
-            "AuthRoleName": "amplify-livecomment-prd-94002-authRole",
-            "UnauthRoleArn": "arn:aws:iam::959629900841:role/amplify-livecomment-prd-94002-unauthRole",
-            "AuthRoleArn": "arn:aws:iam::959629900841:role/amplify-livecomment-prd-94002-authRole",
+            "AuthRoleName": "amplify-livecommentnoindex-stg-52116-authRole",
+            "UnauthRoleArn": "arn:aws:iam::959629900841:role/amplify-livecommentnoindex-stg-52116-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::959629900841:role/amplify-livecommentnoindex-stg-52116-authRole",
             "Region": "ap-northeast-1",
-            "DeploymentBucketName": "amplify-livecomment-prd-94002-deployment",
-            "UnauthRoleName": "amplify-livecomment-prd-94002-unauthRole",
-            "StackName": "amplify-livecomment-prd-94002",
-            "StackId": "arn:aws:cloudformation:ap-northeast-1:959629900841:stack/amplify-livecomment-prd-94002/0b099670-d5eb-11ea-b8ec-0aff14bc0982",
-            "AmplifyAppId": "d3rehodn2yvs7b"
+            "DeploymentBucketName": "amplify-livecommentnoindex-stg-52116-deployment",
+            "UnauthRoleName": "amplify-livecommentnoindex-stg-52116-unauthRole",
+            "StackName": "amplify-livecommentnoindex-stg-52116",
+            "StackId": "arn:aws:cloudformation:ap-northeast-1:959629900841:stack/amplify-livecommentnoindex-stg-52116/15ea5f30-dffe-11ea-93d9-0a0bafe12bca",
+            "AmplifyAppId": "d33uy4uusa3ynq"
         }
     }
 }

@@ -51,7 +51,7 @@ export type DeleteRoomInput = {
 
 export type CreateCommentInput = {
   id?: string | null,
-  roomID: string,
+  type: string,
   content: string,
   userId: string,
   userName: string,
@@ -62,7 +62,7 @@ export type CreateCommentInput = {
 };
 
 export type ModelCommentConditionInput = {
-  roomID?: ModelIDInput | null,
+  type?: ModelStringInput | null,
   content?: ModelStringInput | null,
   userId?: ModelStringInput | null,
   userName?: ModelStringInput | null,
@@ -75,7 +75,7 @@ export type ModelCommentConditionInput = {
   not?: ModelCommentConditionInput | null,
 };
 
-export type ModelIDInput = {
+export type ModelStringInput = {
   ne?: string | null,
   eq?: string | null,
   le?: string | null,
@@ -101,22 +101,6 @@ export type ModelSizeInput = {
   between?: Array< number | null > | null,
 };
 
-export type ModelStringInput = {
-  ne?: string | null,
-  eq?: string | null,
-  le?: string | null,
-  lt?: string | null,
-  ge?: string | null,
-  gt?: string | null,
-  contains?: string | null,
-  notContains?: string | null,
-  between?: Array< string | null > | null,
-  beginsWith?: string | null,
-  attributeExists?: boolean | null,
-  attributeType?: ModelAttributeTypes | null,
-  size?: ModelSizeInput | null,
-};
-
 export type ModelBooleanInput = {
   ne?: boolean | null,
   eq?: boolean | null,
@@ -126,7 +110,7 @@ export type ModelBooleanInput = {
 
 export type UpdateCommentInput = {
   id: string,
-  roomID?: string | null,
+  type?: string | null,
   content?: string | null,
   userId?: string | null,
   userName?: string | null,
@@ -148,9 +132,25 @@ export type ModelRoomFilterInput = {
   not?: ModelRoomFilterInput | null,
 };
 
+export type ModelIDInput = {
+  ne?: string | null,
+  eq?: string | null,
+  le?: string | null,
+  lt?: string | null,
+  ge?: string | null,
+  gt?: string | null,
+  contains?: string | null,
+  notContains?: string | null,
+  between?: Array< string | null > | null,
+  beginsWith?: string | null,
+  attributeExists?: boolean | null,
+  attributeType?: ModelAttributeTypes | null,
+  size?: ModelSizeInput | null,
+};
+
 export type ModelCommentFilterInput = {
   id?: ModelIDInput | null,
-  roomID?: ModelIDInput | null,
+  type?: ModelStringInput | null,
   content?: ModelStringInput | null,
   userId?: ModelStringInput | null,
   userName?: ModelStringInput | null,
@@ -189,23 +189,6 @@ export type CreateRoomMutation = {
     __typename: "Room",
     id: string,
     commentTotalCount: number | null,
-    comments:  {
-      __typename: "ModelCommentConnection",
-      items:  Array< {
-        __typename: "Comment",
-        id: string,
-        roomID: string,
-        content: string,
-        userId: string,
-        userName: string,
-        userImage: string,
-        isNgWord: boolean,
-        createdAt: string,
-        isOfficialAccount: boolean,
-        updatedAt: string,
-      } | null > | null,
-      nextToken: string | null,
-    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -221,23 +204,6 @@ export type UpdateRoomMutation = {
     __typename: "Room",
     id: string,
     commentTotalCount: number | null,
-    comments:  {
-      __typename: "ModelCommentConnection",
-      items:  Array< {
-        __typename: "Comment",
-        id: string,
-        roomID: string,
-        content: string,
-        userId: string,
-        userName: string,
-        userImage: string,
-        isNgWord: boolean,
-        createdAt: string,
-        isOfficialAccount: boolean,
-        updatedAt: string,
-      } | null > | null,
-      nextToken: string | null,
-    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -253,23 +219,6 @@ export type DeleteRoomMutation = {
     __typename: "Room",
     id: string,
     commentTotalCount: number | null,
-    comments:  {
-      __typename: "ModelCommentConnection",
-      items:  Array< {
-        __typename: "Comment",
-        id: string,
-        roomID: string,
-        content: string,
-        userId: string,
-        userName: string,
-        userImage: string,
-        isNgWord: boolean,
-        createdAt: string,
-        isOfficialAccount: boolean,
-        updatedAt: string,
-      } | null > | null,
-      nextToken: string | null,
-    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -284,18 +233,7 @@ export type CreateCommentMutation = {
   createComment:  {
     __typename: "Comment",
     id: string,
-    roomID: string,
-    room:  {
-      __typename: "Room",
-      id: string,
-      commentTotalCount: number | null,
-      comments:  {
-        __typename: "ModelCommentConnection",
-        nextToken: string | null,
-      } | null,
-      createdAt: string,
-      updatedAt: string,
-    } | null,
+    type: string,
     content: string,
     userId: string,
     userName: string,
@@ -316,18 +254,7 @@ export type UpdateCommentMutation = {
   updateComment:  {
     __typename: "Comment",
     id: string,
-    roomID: string,
-    room:  {
-      __typename: "Room",
-      id: string,
-      commentTotalCount: number | null,
-      comments:  {
-        __typename: "ModelCommentConnection",
-        nextToken: string | null,
-      } | null,
-      createdAt: string,
-      updatedAt: string,
-    } | null,
+    type: string,
     content: string,
     userId: string,
     userName: string,
@@ -348,18 +275,7 @@ export type DeleteCommentMutation = {
   deleteComment:  {
     __typename: "Comment",
     id: string,
-    roomID: string,
-    room:  {
-      __typename: "Room",
-      id: string,
-      commentTotalCount: number | null,
-      comments:  {
-        __typename: "ModelCommentConnection",
-        nextToken: string | null,
-      } | null,
-      createdAt: string,
-      updatedAt: string,
-    } | null,
+    type: string,
     content: string,
     userId: string,
     userName: string,
@@ -380,23 +296,6 @@ export type GetRoomQuery = {
     __typename: "Room",
     id: string,
     commentTotalCount: number | null,
-    comments:  {
-      __typename: "ModelCommentConnection",
-      items:  Array< {
-        __typename: "Comment",
-        id: string,
-        roomID: string,
-        content: string,
-        userId: string,
-        userName: string,
-        userImage: string,
-        isNgWord: boolean,
-        createdAt: string,
-        isOfficialAccount: boolean,
-        updatedAt: string,
-      } | null > | null,
-      nextToken: string | null,
-    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -415,10 +314,6 @@ export type ListRoomsQuery = {
       __typename: "Room",
       id: string,
       commentTotalCount: number | null,
-      comments:  {
-        __typename: "ModelCommentConnection",
-        nextToken: string | null,
-      } | null,
       createdAt: string,
       updatedAt: string,
     } | null > | null,
@@ -434,18 +329,7 @@ export type GetCommentQuery = {
   getComment:  {
     __typename: "Comment",
     id: string,
-    roomID: string,
-    room:  {
-      __typename: "Room",
-      id: string,
-      commentTotalCount: number | null,
-      comments:  {
-        __typename: "ModelCommentConnection",
-        nextToken: string | null,
-      } | null,
-      createdAt: string,
-      updatedAt: string,
-    } | null,
+    type: string,
     content: string,
     userId: string,
     userName: string,
@@ -469,14 +353,7 @@ export type ListCommentsQuery = {
     items:  Array< {
       __typename: "Comment",
       id: string,
-      roomID: string,
-      room:  {
-        __typename: "Room",
-        id: string,
-        commentTotalCount: number | null,
-        createdAt: string,
-        updatedAt: string,
-      } | null,
+      type: string,
       content: string,
       userId: string,
       userName: string,
@@ -491,7 +368,7 @@ export type ListCommentsQuery = {
 };
 
 export type GetCommentsByRoomQueryVariables = {
-  roomID?: string | null,
+  type?: string | null,
   createdAt?: ModelStringKeyConditionInput | null,
   sortDirection?: ModelSortDirection | null,
   filter?: ModelCommentFilterInput | null,
@@ -505,14 +382,7 @@ export type GetCommentsByRoomQuery = {
     items:  Array< {
       __typename: "Comment",
       id: string,
-      roomID: string,
-      room:  {
-        __typename: "Room",
-        id: string,
-        commentTotalCount: number | null,
-        createdAt: string,
-        updatedAt: string,
-      } | null,
+      type: string,
       content: string,
       userId: string,
       userName: string,
@@ -531,23 +401,6 @@ export type OnCreateRoomSubscription = {
     __typename: "Room",
     id: string,
     commentTotalCount: number | null,
-    comments:  {
-      __typename: "ModelCommentConnection",
-      items:  Array< {
-        __typename: "Comment",
-        id: string,
-        roomID: string,
-        content: string,
-        userId: string,
-        userName: string,
-        userImage: string,
-        isNgWord: boolean,
-        createdAt: string,
-        isOfficialAccount: boolean,
-        updatedAt: string,
-      } | null > | null,
-      nextToken: string | null,
-    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -558,23 +411,6 @@ export type OnUpdateRoomSubscription = {
     __typename: "Room",
     id: string,
     commentTotalCount: number | null,
-    comments:  {
-      __typename: "ModelCommentConnection",
-      items:  Array< {
-        __typename: "Comment",
-        id: string,
-        roomID: string,
-        content: string,
-        userId: string,
-        userName: string,
-        userImage: string,
-        isNgWord: boolean,
-        createdAt: string,
-        isOfficialAccount: boolean,
-        updatedAt: string,
-      } | null > | null,
-      nextToken: string | null,
-    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -585,23 +421,6 @@ export type OnDeleteRoomSubscription = {
     __typename: "Room",
     id: string,
     commentTotalCount: number | null,
-    comments:  {
-      __typename: "ModelCommentConnection",
-      items:  Array< {
-        __typename: "Comment",
-        id: string,
-        roomID: string,
-        content: string,
-        userId: string,
-        userName: string,
-        userImage: string,
-        isNgWord: boolean,
-        createdAt: string,
-        isOfficialAccount: boolean,
-        updatedAt: string,
-      } | null > | null,
-      nextToken: string | null,
-    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -611,18 +430,7 @@ export type OnCreateCommentSubscription = {
   onCreateComment:  {
     __typename: "Comment",
     id: string,
-    roomID: string,
-    room:  {
-      __typename: "Room",
-      id: string,
-      commentTotalCount: number | null,
-      comments:  {
-        __typename: "ModelCommentConnection",
-        nextToken: string | null,
-      } | null,
-      createdAt: string,
-      updatedAt: string,
-    } | null,
+    type: string,
     content: string,
     userId: string,
     userName: string,
@@ -638,18 +446,7 @@ export type OnUpdateCommentSubscription = {
   onUpdateComment:  {
     __typename: "Comment",
     id: string,
-    roomID: string,
-    room:  {
-      __typename: "Room",
-      id: string,
-      commentTotalCount: number | null,
-      comments:  {
-        __typename: "ModelCommentConnection",
-        nextToken: string | null,
-      } | null,
-      createdAt: string,
-      updatedAt: string,
-    } | null,
+    type: string,
     content: string,
     userId: string,
     userName: string,
@@ -665,18 +462,7 @@ export type OnDeleteCommentSubscription = {
   onDeleteComment:  {
     __typename: "Comment",
     id: string,
-    roomID: string,
-    room:  {
-      __typename: "Room",
-      id: string,
-      commentTotalCount: number | null,
-      comments:  {
-        __typename: "ModelCommentConnection",
-        nextToken: string | null,
-      } | null,
-      createdAt: string,
-      updatedAt: string,
-    } | null,
+    type: string,
     content: string,
     userId: string,
     userName: string,
