@@ -16,5 +16,31 @@
 				}
 			}
 		}
+	},
+	"function": {
+		"room": {
+			"build": true,
+			"providerPlugin": "awscloudformation",
+			"service": "Lambda",
+			"dependsOn": [
+				{
+					"category": "api",
+					"resourceName": "room",
+					"attributes": [
+						"GraphQLAPIIdOutput",
+						"GraphQLAPIEndpointOutput"
+					]
+				},
+				{
+					"category": "api",
+					"resourceName": "room",
+					"attributes": [
+						"GraphQLAPIIdOutput",
+						"GraphQLAPIEndpointOutput",
+						"GraphQLAPIKeyOutput"
+					]
+				}
+			]
+		}
 	}
 }
