@@ -74,13 +74,6 @@ export default handleActions(
       ...state,
       hasNew: payload,
     }),
-    [actionTypes.TOGGLE_IS_INIT_LOADING]: (
-      state: CommentState,
-      { payload }: { payload: boolean; type: string }
-    ) => ({
-      ...state,
-      initLoading: payload,
-    }),
   },
   initialState
 );
