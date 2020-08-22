@@ -7,7 +7,6 @@ export interface CommentState {
   cacheData?: any[];
   toNew?: boolean;
   hasNew?: boolean;
-  initLoading?: boolean;
   nextToken?: string | null;
 }
 
@@ -16,7 +15,6 @@ const initialState: CommentState = {
   cacheData: [],
   toNew: true,
   hasNew: false,
-  initLoading: true,
   nextToken: null,
 };
 

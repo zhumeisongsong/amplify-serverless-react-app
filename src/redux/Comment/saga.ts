@@ -11,7 +11,6 @@ import {
 } from 'redux-saga/effects';
 import { API, graphqlOperation } from 'aws-amplify';
 import actionTypes from './actionTypes';
-import roomActionTypes from '../Room/actionTypes';
 import { createComment } from '../../graphql/mutations';
 import { getCommentsByRoom } from '../../graphql/queries';
 import { CreateCommentInput } from '../../API';
@@ -76,9 +75,7 @@ function* createSaga() {
           },
         });
 
-        yield put({
-          type: roomActionTypes.GET,
-        });
+        yield call(getCommentTotalCountSaga);
       }
     } catch (error) {
       yield call(showToastSaga, 'submitError');
@@ -160,11 +157,8 @@ function* listInitSaga() {
           });
         }
       } finally {
-        alert(
-          'init finished'
-        )
-      }
 
+      }
     }
     catch (error) {
       console.log(error)
@@ -176,7 +170,6 @@ function* listInitSaga() {
 function* listSaga() {
   yield takeEvery(actionTypes.LIST, function* _() {
     const { userId } = yield select((state) => state.user);
-    const { nextToken } = yield select((state) => state.comment);
 
     try {
       const res: any = yield call(
@@ -215,11 +208,6 @@ function* listSaga() {
           cacheData,
         },
       });
-
-      yield put({
-        type: roomActionTypes.GET_COMMENT_TOTAL_COUNT,
-      });
-
     } catch (error) {
       console.log(error);
     }
@@ -312,7 +300,6 @@ function* updateRenderListSaga() {
 function* updateCacheListSaga() {
   yield debounce(COMMENT_LOADING_MS, actionTypes.UPDATE_CACHE, function* _() {
     const { cacheData } = yield select((state) => state.comment);
-    const { initLoading } = yield select((state) => state.comment);
     const nextCacheData = cacheData.slice(0, cacheData.length - 1);
 
     yield put({
@@ -322,7 +309,7 @@ function* updateCacheListSaga() {
       },
     });
 
-    if (nextCacheData.length === 0 && !initLoading) {
+    if (nextCacheData.length === 0) {
       yield put({
         type: actionTypes.LIST,
       });
