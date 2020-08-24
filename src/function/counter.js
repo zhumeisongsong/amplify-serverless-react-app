@@ -14,28 +14,28 @@ exports.handler = async function (event, context) {
     return;
   }
 
-  console.log(JSON.stringify(event.Records, null, 2));
+  const insertedRecords = event.Records.filter(
+    (record) => record.eventName === SOURCE_EVENT_NAME
+  );
 
-  for (let i = 0; i < event.Records.length; ++i) {
-    const record = event.Records[i];
-    if (record.eventName !== SOURCE_EVENT_NAME) {
-      break;
-    }
-
-    const primaryKey = record.dynamodb.NewImage[SOURCE_ATTR_NAME];
-    const increment = 1;
-    const params = {
-      TableName: TARGET_TABLE_NAME,
-      Key: { [TARGET_PRIMARY_KEY]: primaryKey },
-      UpdateExpression: `SET ${TARGET_ATTR_NAME} = ${TARGET_ATTR_NAME} + :count`,
-      ExpressionAttributeValues: { ':count': { N: increment.toString() } },
-    };
-
-    console.log(
-      `[${record.eventID}] Increase Room #${primaryKey.S} ${TARGET_ATTR_NAME} by ${increment}`
-    );
-    await DDB.updateItem(params).promise();
+  if (insertedRecords.length === 0) {
+    return;
   }
+
+  const [record] = insertedRecords;
+  const primaryKey = record.dynamodb.NewImage[SOURCE_ATTR_NAME];
+  const increment = insertedRecords.length;
+  const params = {
+    TableName: TARGET_TABLE_NAME,
+    Key: { [TARGET_PRIMARY_KEY]: primaryKey },
+    UpdateExpression: `SET ${TARGET_ATTR_NAME} = ${TARGET_ATTR_NAME} + :count`,
+    ExpressionAttributeValues: { ':count': { N: increment.toString() } },
+  };
+
+  // console.log(
+  //   `[${record.eventID}] Increase Table ${TARGET_TABLE_NAME} #${primaryKey.S} ${TARGET_ATTR_NAME} by ${increment}`
+  // );
+  await DDB.updateItem(params).promise();
 
   context.done(null, 'Successfully processed DynamoDB record'); // SUCCESS with message
 };
