@@ -51,6 +51,7 @@ export type DeleteRoomInput = {
 
 export type CreateCommentInput = {
   id?: string | null,
+  roomID: string,
   type: string,
   content: string,
   userId: string,
@@ -62,6 +63,7 @@ export type CreateCommentInput = {
 };
 
 export type ModelCommentConditionInput = {
+  roomID?: ModelIDInput | null,
   type?: ModelStringInput | null,
   content?: ModelStringInput | null,
   userId?: ModelStringInput | null,
@@ -75,7 +77,7 @@ export type ModelCommentConditionInput = {
   not?: ModelCommentConditionInput | null,
 };
 
-export type ModelStringInput = {
+export type ModelIDInput = {
   ne?: string | null,
   eq?: string | null,
   le?: string | null,
@@ -101,6 +103,22 @@ export type ModelSizeInput = {
   between?: Array< number | null > | null,
 };
 
+export type ModelStringInput = {
+  ne?: string | null,
+  eq?: string | null,
+  le?: string | null,
+  lt?: string | null,
+  ge?: string | null,
+  gt?: string | null,
+  contains?: string | null,
+  notContains?: string | null,
+  between?: Array< string | null > | null,
+  beginsWith?: string | null,
+  attributeExists?: boolean | null,
+  attributeType?: ModelAttributeTypes | null,
+  size?: ModelSizeInput | null,
+};
+
 export type ModelBooleanInput = {
   ne?: boolean | null,
   eq?: boolean | null,
@@ -110,6 +128,7 @@ export type ModelBooleanInput = {
 
 export type UpdateCommentInput = {
   id: string,
+  roomID?: string | null,
   type?: string | null,
   content?: string | null,
   userId?: string | null,
@@ -132,24 +151,9 @@ export type ModelRoomFilterInput = {
   not?: ModelRoomFilterInput | null,
 };
 
-export type ModelIDInput = {
-  ne?: string | null,
-  eq?: string | null,
-  le?: string | null,
-  lt?: string | null,
-  ge?: string | null,
-  gt?: string | null,
-  contains?: string | null,
-  notContains?: string | null,
-  between?: Array< string | null > | null,
-  beginsWith?: string | null,
-  attributeExists?: boolean | null,
-  attributeType?: ModelAttributeTypes | null,
-  size?: ModelSizeInput | null,
-};
-
 export type ModelCommentFilterInput = {
   id?: ModelIDInput | null,
+  roomID?: ModelIDInput | null,
   type?: ModelStringInput | null,
   content?: ModelStringInput | null,
   userId?: ModelStringInput | null,
@@ -233,6 +237,7 @@ export type CreateCommentMutation = {
   createComment:  {
     __typename: "Comment",
     id: string,
+    roomID: string,
     type: string,
     content: string,
     userId: string,
@@ -254,6 +259,7 @@ export type UpdateCommentMutation = {
   updateComment:  {
     __typename: "Comment",
     id: string,
+    roomID: string,
     type: string,
     content: string,
     userId: string,
@@ -275,6 +281,7 @@ export type DeleteCommentMutation = {
   deleteComment:  {
     __typename: "Comment",
     id: string,
+    roomID: string,
     type: string,
     content: string,
     userId: string,
@@ -329,6 +336,7 @@ export type GetCommentQuery = {
   getComment:  {
     __typename: "Comment",
     id: string,
+    roomID: string,
     type: string,
     content: string,
     userId: string,
@@ -353,6 +361,7 @@ export type ListCommentsQuery = {
     items:  Array< {
       __typename: "Comment",
       id: string,
+      roomID: string,
       type: string,
       content: string,
       userId: string,
@@ -382,6 +391,7 @@ export type GetCommentsByRoomQuery = {
     items:  Array< {
       __typename: "Comment",
       id: string,
+      roomID: string,
       type: string,
       content: string,
       userId: string,
@@ -430,6 +440,7 @@ export type OnCreateCommentSubscription = {
   onCreateComment:  {
     __typename: "Comment",
     id: string,
+    roomID: string,
     type: string,
     content: string,
     userId: string,
@@ -446,6 +457,7 @@ export type OnUpdateCommentSubscription = {
   onUpdateComment:  {
     __typename: "Comment",
     id: string,
+    roomID: string,
     type: string,
     content: string,
     userId: string,
@@ -462,6 +474,7 @@ export type OnDeleteCommentSubscription = {
   onDeleteComment:  {
     __typename: "Comment",
     id: string,
+    roomID: string,
     type: string,
     content: string,
     userId: string,

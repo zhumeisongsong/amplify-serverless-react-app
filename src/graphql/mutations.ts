@@ -48,6 +48,7 @@ export const createComment = /* GraphQL */ `
   ) {
     createComment(input: $input, condition: $condition) {
       id
+      roomID
       type
       content
       userId
@@ -67,6 +68,7 @@ export const updateComment = /* GraphQL */ `
   ) {
     updateComment(input: $input, condition: $condition) {
       id
+      roomID
       type
       content
       userId
@@ -86,6 +88,7 @@ export const deleteComment = /* GraphQL */ `
   ) {
     deleteComment(input: $input, condition: $condition) {
       id
+      roomID
       type
       content
       userId

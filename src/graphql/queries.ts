@@ -33,6 +33,7 @@ export const getComment = /* GraphQL */ `
   query GetComment($id: ID!) {
     getComment(id: $id) {
       id
+      roomID
       type
       content
       userId
@@ -54,6 +55,7 @@ export const listComments = /* GraphQL */ `
     listComments(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
+        roomID
         type
         content
         userId
@@ -87,6 +89,7 @@ export const getCommentsByRoom = /* GraphQL */ `
     ) {
       items {
         id
+        roomID
         type
         content
         userId

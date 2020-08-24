@@ -36,6 +36,7 @@ export const onCreateComment = /* GraphQL */ `
   subscription OnCreateComment {
     onCreateComment {
       id
+      roomID
       type
       content
       userId
@@ -52,6 +53,7 @@ export const onUpdateComment = /* GraphQL */ `
   subscription OnUpdateComment {
     onUpdateComment {
       id
+      roomID
       type
       content
       userId
@@ -68,6 +70,7 @@ export const onDeleteComment = /* GraphQL */ `
   subscription OnDeleteComment {
     onDeleteComment {
       id
+      roomID
       type
       content
       userId

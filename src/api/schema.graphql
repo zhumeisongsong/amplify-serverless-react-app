@@ -11,6 +11,7 @@ type Comment
     queryField: "getCommentsByRoom"
   ) {
   id: ID!
+  roomID: String!
   type: String!
   content: String!
   userId: String!

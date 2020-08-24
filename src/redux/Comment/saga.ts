@@ -51,10 +51,12 @@ function* createSaga() {
     const { userName, userId, userImage, isOfficialAccount } = yield select(
       (state) => state.user
     );
+    const roomID = yield select((state) => state.room.id);
     const data: CreateCommentInput = {
       content,
       userName,
       userId,
+      roomID,
       userImage,
       isOfficialAccount,
       type: 'type',
@@ -157,13 +159,10 @@ function* listInitSaga() {
           });
         }
       } finally {
-
       }
+    } catch (error) {
+      console.log(error);
     }
-    catch (error) {
-      console.log(error)
-    }
-
   });
 }
 
