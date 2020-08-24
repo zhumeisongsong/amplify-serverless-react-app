@@ -3,8 +3,15 @@ type Room @model {
   commentTotalCount: Int
 }
 
-type Comment @model {
+type Comment
+  @model
+  @key(
+    name: "byRoom"
+    fields: ["type", "createdAt"]
+    queryField: "getCommentsByRoom"
+  ) {
   id: ID!
+  type: String!
   content: String!
   userId: String!
   userName: String!
