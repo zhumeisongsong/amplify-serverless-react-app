@@ -11,7 +11,6 @@ import {
 } from 'redux-saga/effects';
 import { API, graphqlOperation } from 'aws-amplify';
 import actionTypes from './actionTypes';
-import roomActionTypes from '../Room/actionTypes';
 import { createComment } from '../../graphql/mutations';
 import { getCommentsByRoom } from '../../graphql/queries';
 import { CreateCommentInput } from '../../API';
@@ -22,7 +21,7 @@ import {
   COMMENT_LOADING_MS,
 } from '../../constants';
 import isNgWord from '../../utils/isNgWord';
-import { getRoomSaga } from '../Room/saga';
+import { getCommentTotalCountSaga } from '../Room/saga';
 import { showToastSaga } from '../Toast/saga';
 
 const initCommentLoadingSetInterval = (index: number) =>
@@ -49,7 +48,6 @@ function* createSaga() {
     payload: { content: string };
   }) {
     const { content } = payload;
-    const roomID: string = yield select((state) => state.room.id);
     const { userName, userId, userImage, isOfficialAccount } = yield select(
       (state) => state.user
     );
@@ -59,7 +57,7 @@ function* createSaga() {
       userId,
       userImage,
       isOfficialAccount,
-      roomID,
+      type: 'type',
       isNgWord: isNgWord(content),
     };
 
@@ -77,9 +75,7 @@ function* createSaga() {
           },
         });
 
-        yield put({
-          type: roomActionTypes.GET,
-        });
+        yield call(getCommentTotalCountSaga);
       }
     } catch (error) {
       yield call(showToastSaga, 'submitError');
@@ -87,18 +83,17 @@ function* createSaga() {
   });
 }
 
-function* listSaga() {
-  yield takeEvery(actionTypes.LIST, function* _() {
-    const roomID: string = yield select((state) => state.room.id);
+function* listInitSaga() {
+  yield takeEvery(actionTypes.LIST_INIT, function* _() {
     const { userId } = yield select((state) => state.user);
-    const { initLoading, nextToken } = yield select((state) => state.comment);
+    const { nextToken } = yield select((state) => state.comment);
 
     try {
       const res: any = yield call(
         [API, 'graphql'],
         graphqlOperation(getCommentsByRoom, {
-          limit: initLoading ? INIT_COMMENT_LIMIT : COMMENT_LIMIT,
-          roomID,
+          limit: INIT_COMMENT_LIMIT,
+          type: 'type',
           sortDirection: 'DESC',
           filter: {
             or: [
@@ -128,59 +123,91 @@ function* listSaga() {
         },
       });
 
-      yield call(getRoomSaga);
+      // if (!nextToken) {
+      yield put({
+        type: actionTypes.LIST_SUCCESS,
+        payload: {
+          nextToken: res.data.getCommentsByRoom.nextToken,
+        },
+      });
+      // }
 
-      if (initLoading) {
-        if (!nextToken) {
+      const rederInitComment = yield call(
+        initCommentLoadingSetInterval,
+        cacheData.length
+      );
+
+      try {
+        while (true) {
+          // take(END) will cause the saga to terminate by jumping to the finally block
+          let index = yield take(rederInitComment);
+          const { listData, cacheData } = yield select(
+            (state) => state.comment
+          );
+
+          if (!cacheData[index]) {
+            return;
+          }
+
           yield put({
-            type: actionTypes.LIST_SUCCESS,
+            type: actionTypes.UPDATE_RENDER_SUCCESS,
             payload: {
-              nextToken: res.data.getCommentsByRoom.nextToken,
+              listData: [cacheData[index]],
             },
           });
         }
+      } finally {
 
-        yield put({
-          type: roomActionTypes.GET,
-        });
-
-        const rederInitComment = yield call(
-          initCommentLoadingSetInterval,
-          cacheData.length
-        );
-
-        try {
-          while (true) {
-            // take(END) will cause the saga to terminate by jumping to the finally block
-            let index = yield take(rederInitComment);
-            const { listData, cacheData } = yield select(
-              (state) => state.comment
-            );
-
-            if (!cacheData[index]) {
-              return;
-            }
-
-            const isSome = listData.some(
-              (item) => item.id === cacheData[index].id
-            );
-
-            if (!isSome) {
-              yield put({
-                type: actionTypes.UPDATE_RENDER_SUCCESS,
-                payload: {
-                  listData: [cacheData[index]],
-                },
-              });
-            }
-          }
-        } finally {
-          yield put({
-            type: actionTypes.TOGGLE_IS_INIT_LOADING,
-            payload: false,
-          });
-        }
       }
+    }
+    catch (error) {
+      console.log(error)
+    }
+
+  });
+}
+
+function* listSaga() {
+  yield takeEvery(actionTypes.LIST, function* _() {
+    const { userId } = yield select((state) => state.user);
+
+    try {
+      const res: any = yield call(
+        [API, 'graphql'],
+        graphqlOperation(getCommentsByRoom, {
+          limit: COMMENT_LIMIT,
+          type: 'type',
+          sortDirection: 'DESC',
+          filter: {
+            or: [
+              {
+                isNgWord: {
+                  eq: false,
+                },
+              },
+              {
+                isNgWord: {
+                  eq: true,
+                },
+                userId: {
+                  eq: userId,
+                },
+              },
+            ],
+          },
+        })
+      );
+
+      yield call(getCommentTotalCountSaga);
+
+      const cacheData = res.data.getCommentsByRoom.items;
+
+      yield put({
+        type: actionTypes.UPDATE_CACHE_SUCCESS,
+        payload: {
+          cacheData,
+        },
+      });
     } catch (error) {
       console.log(error);
     }
@@ -189,13 +216,12 @@ function* listSaga() {
 
 function* listHistorySaga() {
   yield takeEvery(actionTypes.LIST_HISTORY, function* _() {
-    const roomID: string = yield select((state) => state.room.id);
     const { userId } = yield select((state) => state.user);
     const { nextToken } = yield select((state) => state.comment);
 
     const variables: any = {
       limit: COMMENT_LIMIT,
-      roomID,
+      type: 'type',
       sortDirection: 'DESC',
       filter: {
         or: [
@@ -274,7 +300,6 @@ function* updateRenderListSaga() {
 function* updateCacheListSaga() {
   yield debounce(COMMENT_LOADING_MS, actionTypes.UPDATE_CACHE, function* _() {
     const { cacheData } = yield select((state) => state.comment);
-    const { initLoading } = yield select((state) => state.comment);
     const nextCacheData = cacheData.slice(0, cacheData.length - 1);
 
     yield put({
@@ -284,7 +309,7 @@ function* updateCacheListSaga() {
       },
     });
 
-    if (nextCacheData.length === 0 && !initLoading) {
+    if (nextCacheData.length === 0) {
       yield put({
         type: actionTypes.LIST,
       });
@@ -295,6 +320,7 @@ function* updateCacheListSaga() {
 export default function* rootSaga() {
   yield all([
     fork(createSaga),
+    fork(listInitSaga),
     fork(listSaga),
     fork(listHistorySaga),
     fork(updateRenderListSaga),

@@ -1,17 +1,19 @@
 type Room @model {
   id: ID!
   commentTotalCount: Int
+  comments: [Comment] @connection(keyName: "byRoom", fields: ["id"])
 }
 
 type Comment
   @model
   @key(
     name: "byRoom"
-    fields: ["type", "createdAt"]
+    fields: ["roomID", "createdAt"]
     queryField: "getCommentsByRoom"
   ) {
   id: ID!
-  type: String!
+  roomID: ID!
+  room: Room @connection(fields: ["roomID"])
   content: String!
   userId: String!
   userName: String!

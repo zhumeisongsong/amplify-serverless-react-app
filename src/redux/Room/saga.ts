@@ -5,7 +5,7 @@ import commentActionTypes from '../Comment/actionTypes';
 import { createRoom } from '../../graphql/mutations';
 import { getRoom } from '../../graphql/queries';
 
-export function* getRoomSaga() {
+export function* getCommentTotalCountSaga() {
   const id = yield select((state) => state.room.id);
 
   try {
@@ -62,7 +62,7 @@ function* getSaga() {
         });
 
         yield put({
-          type: commentActionTypes.LIST,
+          type: commentActionTypes.LIST_INIT,
         });
       } else {
         yield put({

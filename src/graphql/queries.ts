@@ -7,21 +7,6 @@ export const getRoom = /* GraphQL */ `
     getRoom(id: $id) {
       id
       commentTotalCount
-      comments {
-        items {
-          id
-          roomID
-          content
-          userId
-          userName
-          userImage
-          isNgWord
-          createdAt
-          isOfficialAccount
-          updatedAt
-        }
-        nextToken
-      }
       createdAt
       updatedAt
     }
@@ -37,9 +22,6 @@ export const listRooms = /* GraphQL */ `
       items {
         id
         commentTotalCount
-        comments {
-          nextToken
-        }
         createdAt
         updatedAt
       }
@@ -51,16 +33,7 @@ export const getComment = /* GraphQL */ `
   query GetComment($id: ID!) {
     getComment(id: $id) {
       id
-      roomID
-      room {
-        id
-        commentTotalCount
-        comments {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
+      type
       content
       userId
       userName
@@ -81,13 +54,7 @@ export const listComments = /* GraphQL */ `
     listComments(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        roomID
-        room {
-          id
-          commentTotalCount
-          createdAt
-          updatedAt
-        }
+        type
         content
         userId
         userName
@@ -103,7 +70,7 @@ export const listComments = /* GraphQL */ `
 `;
 export const getCommentsByRoom = /* GraphQL */ `
   query GetCommentsByRoom(
-    $roomID: ID
+    $type: String
     $createdAt: ModelStringKeyConditionInput
     $sortDirection: ModelSortDirection
     $filter: ModelCommentFilterInput
@@ -111,7 +78,7 @@ export const getCommentsByRoom = /* GraphQL */ `
     $nextToken: String
   ) {
     getCommentsByRoom(
-      roomID: $roomID
+      type: $type
       createdAt: $createdAt
       sortDirection: $sortDirection
       filter: $filter
@@ -120,13 +87,7 @@ export const getCommentsByRoom = /* GraphQL */ `
     ) {
       items {
         id
-        roomID
-        room {
-          id
-          commentTotalCount
-          createdAt
-          updatedAt
-        }
+        type
         content
         userId
         userName

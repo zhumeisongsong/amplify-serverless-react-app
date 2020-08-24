@@ -3,7 +3,7 @@ import actionTypes from './actionTypes';
 
 export interface ToastState {
   message: string;
-  showToast: false;
+  showToast: boolean;
 }
 
 const initialState: ToastState = {

@@ -24,9 +24,9 @@ export default ({
   }, [comments, toNew]);
 
   useEffect(() => {
-    if (!beforeHeight) return;
+    if (!beforeHeight || toNew) return;
     const list = document.getElementById('commentList');
-    
+
     const newListHeight = list.scrollHeight;
     list.scrollTop = newListHeight - beforeHeight;
     setBeforeHeight(0);

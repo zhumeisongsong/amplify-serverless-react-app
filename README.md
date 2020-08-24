@@ -86,9 +86,15 @@ https://docs.amplify.aws/start/getting-started/installation/q/integration/react
 
 ### 2 Initialize a new backend
 
+ Before you run init command, please delete old amplify app files:
+
+`rm -rf amplify`
+
+`rm -rf .graphqlconfig.yml`
+
 https://docs.amplify.aws/start/getting-started/setup/q/integration/react#create-a-new-react-app
 
-`amplify init`
+`amplify init` 
 
 ### 3 Add API and Deploy the API 
 https://docs.amplify.aws/lib/graphqlapi/getting-started/q/platform/js
